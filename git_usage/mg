@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ~/dev/23prime
+git commit -a -m 'Auto Commit'
+git push

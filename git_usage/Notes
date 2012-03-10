@@ -1,0 +1,156 @@
+
+Getting Back a Deleted File
+
+# Examples of how to get a file back
+#   Suppose you deleted git_usage/Notes, then, you 
+#   also committed the delete.
+#
+# Here are the steps to get it back
+
+cd ~/dev/23prime
+m=$(git rev-list -n 1 HEAD -- git_usage/Notes)
+git show --pretty="format:" --name-only ${m}
+git checkout ${m}^ -- git_usage/Notes
+git add git_usage/Notes
+
+
+If you need more information, see the following:
+
+  http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html
+
+
+
+
+$ git ls-files --deleted
+Assuming that looks like what you want, go ahead and checkout each file back from the index.
+
+$ git ls-files -d | xargs git checkout --
+
+
+trouble add directories to git?
+
+So which download get used?
+
+I seem to have better luck with this one, at least
+it doesn't ask me for the password.
+
+   git clone https://code.google.com/p/23prime/
+
+
+
+Had to do the following the first time.
+
+git push origin master
+
+
+You may want to look at the following tutorial:
+
+ http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html
+
+
+
+ git remote show origin
+* remote origin
+  Fetch URL: https://code.google.com/p/23prime/
+  Push  URL: https://code.google.com/p/23prime/
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+
+
+
+You cal also do the following:
+
+  git commit -a -m 'Some text'
+
+  git push
+
+
+
+
+The following is pretty cool:
+
+  gitk
+
+
+It's also very easy to create experimental branches.
+
+  git branch t0
+
+You've added the following t0 branch. So list
+it with the following command:
+
+  git branch
+
+     * master
+     t0
+
+So checkout the t0 branch
+
+  git checkout t0
+
+
+You can make edits, commit etc. Then, merge
+
+  git checkout master
+  git merge t0
+
+Now you can delete the t0 branch
+
+  git branch -d t0
+
+
+So, you're only left with the master
+
+  git branch
+
+   * master
+
+
+
+If you want to see everything can can be deleted without deleting:
+
+  git clean -n -d -x
+
+Once you're ready to clean everything
+
+  git clean -f
+
+
+
+This is the remote that I did with eclipse
+
+git remote add bob ~/git/23prime
+git fetch bob
+
+# This following will show all the changes
+git log -p master..bob/master
+
+
+----------------------------------------------------------
+Here I'm doing it with physiostat
+----------------------------------------------------------
+
+
+cd ~/dev/23prime/iphone/devwork/physiostat
+git remote add physiostat ~/dev/chirico/Objective-C/iphone/devwork/physiostat
+git fetch physiostat
+
+
+
+
+
+You can get status on what has changed.
+
+git diff  --stat
+
+Now to commit these run
+
+git commit -a -m 'Updates'
+git push
+
+

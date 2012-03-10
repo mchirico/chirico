@@ -1,0 +1,18 @@
+#!/bin/bash
+#  Go to the repository and commit any changes.
+#  Then, fetch from physiostat and commit those changes
+#
+#     get remote add physiostat ~/git/23prime
+#
+#  Physiostat 
+#
+#
+cd ~/dev/23prime/iphone/devwork/physiostat
+clean 1
+git commit -a -m 'Pre merge of physiostat'
+git push
+git fetch physiostat
+git merge physiostat/master
+git commit -a -m 'Physiostat remote before update'
+git push
+
