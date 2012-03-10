@@ -1,3 +1,6 @@
+
+
+
 This was taken from the google code page. Here's what
 I did to set this up. Note this was not done for chirico
 
@@ -179,7 +182,12 @@ git diff  --stat
 
 Now to commit these run
 
+git ls-files
+git show
 git commit -a -m 'Updates'
 git push
+
+
+
 
 
