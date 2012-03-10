@@ -180,10 +180,31 @@ You can get status on what has changed.
 
 git diff  --stat
 
+git config --global color.status auto
+git config --global color.branch auto
+
+You may want to ignore some files in git
+
+~/dev/github/chirico$ cat .gitignore 
+*.pyc
+*.swp
+*.log
+.~
+*.db
+*.bak
+boto.egg-info
+build/
+dist/
+MANIFEST
+bin
+
+
+
+
 Now to commit these run
 
 git ls-files
-git show
+git show    #This will show what changed
 git commit -a -m 'Updates'
 git push
 
