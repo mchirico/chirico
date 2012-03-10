@@ -1,3 +1,32 @@
+This was taken from the google code page. Here's what
+I did to set this up. Note this was not done for chirico
+
+
+Global setup:
+ Set up git
+  git config --global user.name "Mike Chirico"
+  git config --global user.email mchirico@gmail.com
+      
+Next steps:
+  mkdir 23prime
+  cd 23prime
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:mchirico/23prime.git
+  git push -u origin master
+      
+Existing Git Repo?
+  cd existing_git_repo
+  git remote add origin git@github.com:mchirico/23prime.git
+  git push -u origin master
+
+
+
+
+
+
 
 Getting Back a Deleted File
 
