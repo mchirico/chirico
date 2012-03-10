@@ -1,0 +1,6 @@
+Sun May 23 19:38:28 EDT 2004
+
+Variables are declared in stuff.h, defined in stuff.c
+and used in user.c 
+
+This is an example of separate compilation.

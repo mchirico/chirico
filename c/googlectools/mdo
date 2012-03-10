@@ -1,0 +1,9 @@
+#!/bin/bash
+rm -f ./Makefile.in ./configure ./config.status
+libtoolize --force
+aclocal
+autoconf
+touch NEWS README AUTHORS ChangeLog
+automake --add-missing
+
+

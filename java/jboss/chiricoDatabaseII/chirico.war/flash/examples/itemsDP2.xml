@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<items>
+    <item>
+        <columnA><![CDATA[Row 1A]]></columnA>
+        <columnB><![CDATA[Row 1B]]></columnB>
+    </item>
+    <item>
+        <columnA><![CDATA[Row 2A]]></columnA>
+        <columnB><![CDATA[Row 2B]]></columnB>
+    </item>
+    <item>
+        <columnA><![CDATA[Row 3A]]></columnA>
+        <columnB><![CDATA[Row 3B]]></columnB>
+    </item>
+</items>

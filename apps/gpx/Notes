@@ -1,0 +1,10 @@
+class MyModel(db.Model):
+    blob = db.BlobProperty()
+
+m = MyModel()
+m.blob = db.Blob(open("image.png", "rb").read())
+
+
+
+['_BlobInfo__entity', '_BlobInfo__factory_for_kind', '_BlobInfo__get_value', '_BlobInfo__key', '_BlobInfo__normalize_and_convert_keys', '__class__', '__delattr__', '__dict__', '__doc__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__str__', '__weakref__', '_all_properties', '_unindexed_properties', 'all', 'content_type', 'creation', 'delete', 'filename', 'from_entity', 'get', 'gql', 'key', 'kind', 'md5_hash', 'open', 'properties', 'size']
+

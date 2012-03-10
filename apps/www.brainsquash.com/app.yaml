@@ -1,0 +1,44 @@
+application: brainsquash
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /static
+  static_dir: static
+
+- url: /js
+  static_dir: js
+
+- url: /favicon.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon.ico
+
+- url: /rpc_relay.html
+  static_files: rpc_relay.html
+  upload: rpc_relay.html
+
+- url: /canvas.html
+  static_files: canvas.html
+  upload: canvas.html
+
+- url: /friend.html
+  static_files: friend.html
+  upload: friend.html
+
+- url: /comments.html
+  static_files: comments.html
+  upload: comments.html
+
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /.*
+  script: index.py
+
+

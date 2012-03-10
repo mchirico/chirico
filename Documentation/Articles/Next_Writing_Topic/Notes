@@ -1,0 +1,47 @@
+Electronics:
+
+Atmel 
+
+- Interrupts
+
+- Timing
+
+- Serial Communication
+
+
+
+
+
+
+
+
+
+Next writing topic:
+
+GWT and APE plus access to spreadsheets. Okay give an overview?
+How would that work?
+
+GWT (AJAX) and demonstrate making calls to APE. From APE you could
+show how to make calls to a spreadsheet.
+
+What is one of the problems with GAE? (No cron, so demonstrate how
+to do cron from (C, Python, Java) from a small box. Note, this could
+then lead into a second article about the soekris box.
+
+That could have several layers (Kernel boot process), or managing networks
+and the bridge tools. However, I want to stick with something closer to what
+I may have to use for work.
+
+Back to the GWT/APE article. May want to show authentication. What would
+really be good is learning more about big table and how data should be 
+stored in big table.
+
+Recommended reading:
+ http://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine
+ (Need to understand memory cache)
+ http://sites.google.com/site/io/under-the-covers-of-the-google-app-engine-datastore
+ (How everything is organized)
+ http://sites.google.com/site/io/working-with-google-app-engine-models
+ (The one above is real world apps)
+ 
+

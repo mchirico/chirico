@@ -1,0 +1,28 @@
+# This file contains the auditctl rules that are loaded
+# whenever the audit daemon is started via the initscripts.
+# The rules are simply the parameters that would be passed
+# to auditctl.
+
+# First rule - delete all
+-D
+
+# Increase the buffers to survive stress events.
+# Make this bigger for busy systems
+-b 320
+
+# Feel free to add below this line. See auditctl man page
+
+# Reference 
+# http://www.ibm.com/developerworks/linux/library/l-security-audit.html
+# Chirico modified
+#-a entry,always -S socket -F a0=2
+
+# Chirico 
+# To search, from the command line use the
+# following command:
+#     ausearch -i -k 'STOCK_LOG'
+-w /usr/local/bin/stock -k STOCK_LOG -p x
+
+#Watch for changes to audit config files
+-w /etc/audit/audit.rules -k AUDIT_RULES
+-w /etc/audit/auditd.conf -k AUDIT_CONF

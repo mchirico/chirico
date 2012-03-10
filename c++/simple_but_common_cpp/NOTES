@@ -1,0 +1,35 @@
+  Obviously you can customize the configure options.
+
+  For example this is a way to install the program in the
+  directory "/home/chirico/junk" with all the executables
+  prefixed with "c2"
+
+         ./configure --bindir=/home/chirico/junk --program-prefix=c2
+
+
+NOTES ON MODIFYING configure.in and Makefile.am
+
+
+
+  If rebuilding the configure and makefile, make changes to
+
+          configure.in
+          Makefile.am
+ 
+  Then, run ./mdo to get the distribution files
+
+          configure
+          Makefile.in
+          aclocal.m4
+
+
+REFERENCES:
+
+   GNU Autoconf, Automake, and Libtool
+     By Vaughan, V. Gary, Ben Elliston, Tom Tromey, Ian Lance Taylor
+
+        
+C++
+
+Take a look at the following:
+http://www.yolinux.com/TUTORIALS/LinuxTutorialC++StringClass.html

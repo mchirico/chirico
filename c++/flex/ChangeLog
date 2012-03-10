@@ -1,0 +1,9 @@
+Sun Jun  3 14:52:29 EDT 2007
+	- trying to fix Makefile.am so that
+	state.cc does not have to be deleted.
+
+
+Mon May 28 20:23:48 EDT 2007
+	- Initial release <mchirico@gmail.com>
+
+	

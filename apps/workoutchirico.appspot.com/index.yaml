@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Running
+  properties:
+  - name: timeEnter
+    direction: desc
+

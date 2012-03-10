@@ -1,0 +1,21 @@
+<html>
+  <body>
+
+    {% for i in array %} 
+      {% ifequal i  3 %}
+           <b>{{ i }}</b>
+    {% else %}
+           {{ i }}
+      {% endifequal %}
+    {% endfor %}
+
+<br>
+It is {% now "jS F Y H:i" %}
+<br>
+<br>
+    <a href="{{ url }}">{{ url_linktext }}</a>
+<br>
+Result: {{ result }}
+
+</body>
+</html>

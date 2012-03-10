@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /home/chirico/dev/chirico/GoogleAppSDK/google_appengine/
+./mdo
+

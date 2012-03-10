@@ -1,0 +1,12 @@
+/*
+ * pical: Personal Calculator
+ * (C) 2007 by Mike Chirico mchirico@gmail.com
+ */
+
+#ifndef _VERSION_H
+#define _VERSION_H
+
+/* sysstat version number */
+#define VERSION	"@VERSION@"
+
+#endif  /* _VERSION_H */

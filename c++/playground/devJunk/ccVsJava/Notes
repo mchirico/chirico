@@ -1,0 +1,39 @@
+Take a look at X,Y. Here's what happens:
+
+0 Fields set to default values    
+1 Y constructor involked (yes the Y, constructor, but it doesn seem you can do anything about this)
+2 X constructor involked (super - don't get confused here. X field initialization is first)
+3 Object constructor involked
+4 X field initialization (See X is initialized first, although, it's constructor is involked second)
+5 X constructor executed (Got those 3 steps 1. involked, initialization, executed)
+6 Y field initialization
+7 Y constructor executed
+
+
+
+sudo openssl pkcs8 -topk8 -nocrypt -in /etc/banssh/clientkey.pem -out PRIVATE.KEY.der -outform der
+sudo openssl x509 -in /etc/banssh/clientcert.pem -out YOUR.CERT.der -outform der 
+
+
+java ImportKey PRIVATE.KEY.der YOUR.CERT.der tomcat
+ Using keystore-file : /home/chirico/keystore.ImportKey
+ One certificate, no chain.
+ Key and certificate stored.
+ Alias:tomcat  Password:importkey
+
+
+
+keytool -keypasswd -new changeit -alias tomcat
+Enter keystore password:importkey    (Note this password)
+
+cp /home/chirico/keystore.ImportKey /home/chirico/.keystore
+
+
+
+
+[chirico@big ccVsJava]$ java GetKey
+java GetKey
+Private key modulus = acce012de527747f4b63838733608dc297bada28391db0a90bec0c9d3274430d6abcb17cab2353d4b70e091452584f5f287f59e9deab0197fb20683e84fabba8a36acfaa5e916ccd927340fb950a2a53aff8c16d1176aa9d4d53a588125928812c09fd45448865c73306f22249044b3dbbbfe91c3f78890f8e96091bb8524e8b
+Private key exponent = 83ac8db57d11ad7179eea0409b638d61a3e05b6f9ee602c12d3676fe297df1c1fd7d3ef93226bf302d3462b2bb745336bd531d1e59ef904d50ac0702ecad69e3fb24f14381564788a3a2700501d29ad86be2e4f2f8d592fd5311048b8d94d5e03bc39bbfd76cf1fbc1c0d0153c28a26b59b909f9816bb67acf2350f7b55faa01
+Cert public key exponent = 10001
+[chirico@big ccVsJava]$ 

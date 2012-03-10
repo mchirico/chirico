@@ -1,0 +1,7 @@
+#!/bin/bash
+mkdir -p app1
+cd app1
+wget https://github.com/downloads/KentBeck/junit/junit4.9b2.zip
+unzip junit4.9b2.zip
+cd junit4.9b2
+java -cp junit-4.9b2.jar:. junit.samples.AllTests

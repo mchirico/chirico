@@ -1,0 +1,14 @@
+#ifndef BIG_INT_HPP
+#define BIG_INT_HPP
+
+#endif
+
+
+
+
+
+
+def f(n):
+   return n*n
+
+k=sum([f(i) for i in xrange(0,100000000)])

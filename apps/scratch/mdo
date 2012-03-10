@@ -1,0 +1,5 @@
+#!/bin/bash
+cd /home/chirico/dev/chirico/GoogleAppSDK/google_appengine/
+./appcfg.py --email=mchirico@gmail.com  update /home/chirico/dev/chirico/apps/scratch2/
+
+

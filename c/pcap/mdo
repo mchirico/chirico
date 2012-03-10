@@ -1,0 +1,3 @@
+#!/bin/bash
+gcc pcap0.c -o pcap0 -lpcap
+sudo ./pcap0

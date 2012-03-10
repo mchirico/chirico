@@ -1,0 +1,167 @@
+queue:
+- name: queue0
+  rate: 500/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+- name: queue1
+  rate: 500/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+- name: queue2
+  rate: 500/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+
+- name: queue3
+  rate: 500/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+
+- name: queueAddToQueue
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueRunRecords
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard0
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard1
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard2
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard3
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+
+- name: queueShard4
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard5
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard6
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard7
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueShard8
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+- name: queueShard9
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h
+
+
+- name: queueDeleteDatabase
+  rate: 500/s
+  bucket_size: 90
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 9
+    task_age_limit: 1h

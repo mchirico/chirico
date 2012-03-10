@@ -1,0 +1,22 @@
+Make sure you have the correct path for JAVA_HOME
+
+$ whereis javac
+/usr/bin/javac
+
+$ ls -l /usr/bin/javac
+lrwxrwxrwx 1 root root 23 2008-07-06 17:14 /usr/bin/javac -> /etc/alternatives/javac
+
+$ ls -l /etc/alternatives/javac
+lrwxrwxrwx 1 root root 48 2008-07-06 17:16 /etc/alternatives/javac -> /usr/lib/jvm/java-1.6.0-openjdk.x86_64/bin/javac
+
+$ export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk.x86_64/
+
+
+To compile this you just type ant
+
+$ ant
+
+To run
+
+$ java -jar Project.jar
+

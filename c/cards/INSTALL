@@ -1,0 +1,9 @@
+Copyright (C) GPL 2006 Mike Chirico <mchirico@users.sourceforge.net>
+
+Installation: the installation is very simple.
+
+      ./configure
+      make 
+      make install
+
+

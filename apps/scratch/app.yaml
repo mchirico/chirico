@@ -1,0 +1,21 @@
+application: mchiricocwxstat
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /static
+  static_dir: static
+
+- url: /.*
+  script: index.py
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+
+

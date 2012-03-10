@@ -1,0 +1,10 @@
+# The config file
+GlobalVar = foo
+GlobalNum = 12
+ 
+[Params]
+SectionName = mySection
+ 
+[mySection]
+myVar = bar
+myNum = 7

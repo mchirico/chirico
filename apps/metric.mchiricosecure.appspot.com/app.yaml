@@ -1,0 +1,115 @@
+application: mchiricosecure
+version: 1
+runtime: python
+api_version: 1
+
+
+handlers:
+
+
+- url: /static
+  static_dir: static
+
+
+- url: /notes
+  script: notes.py
+  login: required
+  secure: always
+
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /lib
+  static_dir: lib
+  login: required
+
+- url: /cron/.*
+  script: cron.py
+
+
+- url: /chirico/.*
+  script: chirico.py
+
+- url: /secure/.*
+  script: secure.py
+  login: required
+  secure: always
+
+- url: /testpost
+  script: testpost.py
+  login: required
+
+- url: /testflash
+  script: testflash.py
+
+- url: /ping\.html
+  script: test.py
+
+- url: /stat/.*
+  script: queuemaster.py
+  login: required
+  secure: always
+
+
+- url: /dev/.*
+  script: dev.py
+  login: required
+  secure: always
+
+
+- url: /queue0
+  script: dev.py
+  login: admin
+
+- url: /queue1
+  script: queuemaster.py
+  login: admin
+
+- url: /queue2
+  script: queuemaster.py
+  login: admin
+
+- url: /queue3
+  script: queuemaster.py
+  login: admin
+
+- url: /queue4
+  script: queuemaster.py
+  login: admin
+
+- url: /queueAddToQueue
+  script: dev.py
+  login: admin
+
+- url: /queueRunRecords
+  script: dev.py
+  login: admin
+
+- url: /queueDeleteDatabase
+  script: dev.py
+  login: admin
+
+
+- url: /queueShard[0-9][0-9]*
+  script: dev.py
+  login: admin
+
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /.*
+  script: index.py
+  login: required
+  secure: always
+
+
+builtins:
+- datastore_admin: on
+
+
+skip_files:
+- mdo
+- (.*\.svn/.*)
+  

@@ -1,0 +1,567 @@
+-- ******************************************
+-- *     This is putting it all together    *
+-- ******************************************
+begin
+   execute immediate 'drop table sreport;create table sreport (a number, b date, c date)'; exception when others then null; 
+end;
+SET SERVEROUTPUT ON
+declare 
+ c0 W_UTL.CURSOR_TYPE;
+ a_ date;
+ b_ date;
+ total number;
+ week  date;
+begin 
+   W_UTL.M_TOT(c0,'03/02/2010');
+   LOOP
+     FETCH c0 into a_,b_;
+     EXIT WHEN c0%NOTFOUND;
+       select sum(recorded),a_ into total,week
+        from hours
+        where trunc(beg_time) >= a_ and trunc(beg_time) <= b_;
+        dbms_output.put_line(total||',    '||a_||'        '||b_);
+        insert into sreport (a,b,c) values (total*60,a_,b_);
+   END LOOP;
+ CLOSE c0;
+end;
+
+
+
+
+
+
+
+
+drop table hours;
+commit;
+create table hours
+ (i int, beg_time date,end_time date,lunch number, extra float, recorded number, notes varchar(300),pay_period int);
+
+drop table rates;
+create table rates
+ (i int, beg_time date,end_time date,lunch number, extra float, notes varchar(300));
+
+
+insert into hours (i,beg_time,end_time,lunch,extra,pay_period) values (1,
+to_date('2010/3/19 08:30','YYYY/MM/DD HH24:MI:SS'),
+to_date('2010/3/19 17:22','YYYY/MM/DD HH24:MI:SS'),
+1,
+0.4,
+12
+);
+
+
+insert into hours (i,beg_time,end_time,lunch,extra,pay_period) values (1,
+to_date('2010/3/19 07:00','YYYY/MM/DD HH24:MI:SS'),
+to_date('2010/3/19 18:30','YYYY/MM/DD HH24:MI:SS'),
+1,
+0.4,
+12
+);
+
+
+
+
+
+select (end_time-beg_time)*24-nvl(lunch,0)+nvl(extra,0) from hours;
+
+select sum(tothrs) from (
+select (end_time-beg_time)*24-nvl(lunch,0)+nvl(extra,0) as tothrs from hours
+);
+
+
+variable net number
+
+declare
+ rate number :=45;
+ report table;
+begin
+--  select ((end_time-beg_time)*24-lunch+extra)*rate into :net from hours;
+  select beg_time,((end_time-beg_time)*24-lunch+extra)*rate into report from hours;
+end;
+.
+
+print :net;
+
+
+
+
+create table
+report as
+select beg_time,((end_time-beg_time)*24-lunch+extra)*95 as net from hours;
+
+
+BEGIN
+  DROP TABLE report
+EXCEPTION
+  WHEN OTHERS THEN
+    IF sqlcode != -0942 THEN RAISE; END IF;
+END;
+/
+
+delete from hours where trunc(beg_time)=to_date('03/21/2010','MM/DD/YYYY');
+select trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM') as first_day from dual;
+select last_day(to_date('03/21/2010','MM/DD/YYYY')) as last_day from dual;
+
+-- First Saturday of month
+
+-- Gives you first day of Month
+select trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM') as first_day from dual;
+-- Give you first Saturday
+select next_day(trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM'),'Saturday') as first_day from dual;
+
+-- Give all Saturdays
+
+select a from 
+(select TO_CHAR ((beg_time),'DAY') as a from hours) 
+
+
+select trunc(beg_time) from hours 
+where rtrim(TO_CHAR ((beg_time),'DAY')) = 'SATURDAY'
+and trunc(beg_time) >=  trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM')
+and trunc(beg_time) <=  last_day(to_date('03/21/2010','MM/DD/YYYY'));
+
+
+-- All Saturdays
+select trunc(beg_time) from hours 
+where rtrim(TO_CHAR (beg_time,'DAY')) = 'SATURDAY'
+and trunc(beg_time) >=  trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM')
+and trunc(beg_time) <=  last_day(to_date('03/21/2010','MM/DD/YYYY'));
+
+-- Working on Weeks
+
+
+select 
+CASE
+WHEN  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM') > (trunc(beg_time)-6) then  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM')
+else trunc(beg_time)-6 end as a ,
+CASE
+WHEN (trunc(beg_time)+7) >= last_day(to_date('02/21/2010','MM/DD/YYYY')) then last_day(to_date('02/21/2010','MM/DD/YYYY'))
+else trunc(beg_time) end as b
+from hours
+where rtrim(TO_CHAR (beg_time,'DAY')) = 'FRIDAY'
+and trunc(beg_time) >=  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM')
+and trunc(beg_time) <  last_day(to_date('02/21/2010','MM/DD/YYYY'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- This give Start and End dates
+
+select a,
+case 
+when  last_day(to_date('03/21/2010','MM/DD/YYYY')) < b then last_day(to_date('03/21/2010','MM/DD/YYYY'))
+ELSE B
+end
+ from 
+(select trunc(beg_time) as a,trunc(beg_time)+7 as b from hours 
+where (rtrim(TO_CHAR ((beg_time),'DAY')) = 'SATURDAY' 
+and trunc(beg_time) >=  trunc(to_date('03/21/2010','MM/DD/YYYY'),'MM')
+and trunc(beg_time) <=  last_day(to_date('03/21/2010','MM/DD/YYYY'))))
+
+
+-- This is total for each week
+
+
+
+
+
+
+
+
+
+SET SERVEROUTPUT ON
+declare 
+cursor c0 is
+
+select 
+CASE
+WHEN  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM') > (trunc(beg_time)-6) then  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM')
+else trunc(beg_time)-6 end as a ,
+CASE
+WHEN (trunc(beg_time)+7) >= last_day(to_date('02/21/2010','MM/DD/YYYY')) then last_day(to_date('02/21/2010','MM/DD/YYYY'))
+else trunc(beg_time) end as b
+from hours
+where rtrim(TO_CHAR (beg_time,'DAY')) = 'FRIDAY'
+and trunc(beg_time) >=  trunc(to_date('02/21/2010','MM/DD/YYYY'),'MM')
+and trunc(beg_time) <  last_day(to_date('02/21/2010','MM/DD/YYYY'));
+
+ total number;
+ week  date;
+begin 
+   for r0 in c0 loop
+
+       select sum(recorded),r0.a into total,week
+        from hours
+        where trunc(beg_time) >= r0.a and trunc(beg_time) <= r0.b;
+        dbms_output.put_line(total||',    '||r0.a||'        '||r0.b);
+   end loop;
+end;
+
+
+create table junk (a number, b date, c date);
+create table sreport (a number, b date, c date);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Return the last Saturdays for the current year.
+
+SELECT TO_CHAR (
+  NEXT_DAY (
+    LAST_DAY (
+        ADD_MONTHS (TRUNC(SYSDATE,'Y'),ROWNUM-1))-7,
+        TO_CHAR (TO_DATE('29-01-1927', 'DD-MM-YYYY'),'DAY')
+  ), 'DD.MM.YYYY') "Last Saturdays in 2004"
+ FROM ALL_OBJECTS
+WHERE ROWNUM <= 12;
+
+
+
+
+select ROWNUM-1 from
+(select * from dual union all select * from dual union all select * from dual union all select * from dual) a,
+(select * from dual union all select * from dual union all select * from dual union all select * from dual) b,
+(select * from dual union all select * from dual union all select * from dual union all select * from dual) c
+
+
+
+
+begin execute immediate 'drop table report'; exception when others then null; end;
+
+
+
+
+select pay_period,sum((end_time-beg_time)*24) from hours 
+where pay_period is not null
+group by pay_period
+order by pay_period;
+
+
+
+
+CREATE OR REPLACE PACKAGE GroupsPackage 
+AS
+  TYPE CURSOR_TYPE IS REF CURSOR;
+  PROCEDURE usp_SelectGroups (results_cursor OUT CURSOR_TYPE); 
+END; 
+/
+CREATE OR REPLACE PACKAGE BODY GroupsPackage 
+AS
+  PROCEDURE usp_SelectGroups (results_cursor OUT CURSOR_TYPE)
+  AS
+  BEGIN
+    OPEN results_cursor FOR
+       SELECT GroupID, GroupName, GroupDescription, LastUpdateDate
+       FROM Groups
+       ORDER BY GroupName;
+  END;
+END;
+
+
+
+
+
+
+
+create or replace PACKAGE W_UTL
+AS
+TYPE CURSOR_TYPE IS REF CURSOR;
+PROCEDURE M_TOT (results_cursor OUT CURSOR_TYPE, mymonth in varchar2);
+PROCEDURE R_CLEAR;
+PROCEDURE R_CREATE;
+PROCEDURE A_DAY(b_time varchar2,e_time  varchar2,actual  int, p_period  int);
+PROCEDURE Reportp;
+end W_UTL;
+
+
+
+
+create or replace PACKAGE BODY  W_UTL
+AS
+-- ************************************************************
+-- *  Table report must exist 
+-- *  Also Note you cannot truncate table 
+-- 
+   TYPE W_R      IS RECORD (
+      DAT DATE,
+      HRS NUMBER(8)
+   );
+
+  TYPE W_T      IS TABLE        OF W_R;
+  A_W_T            W_T       := W_T();
+
+-- you must put as on this one
+PROCEDURE M_TOT (results_cursor OUT CURSOR_TYPE, mymonth in varchar2) as
+BEGIN
+  OPEN results_cursor FOR
+
+select 
+CASE
+WHEN  trunc(to_date(mymonth,'MM/DD/YYYY'),'MM') > (trunc(beg_time)-6) then  trunc(to_date(mymonth,'MM/DD/YYYY'),'MM')
+else trunc(beg_time)-6 end as a ,
+CASE
+WHEN (trunc(beg_time)+7) >= last_day(to_date(mymonth,'MM/DD/YYYY')) then last_day(to_date(mymonth,'MM/DD/YYYY'))
+else trunc(beg_time) end as b
+from hours
+where rtrim(TO_CHAR (beg_time,'DAY')) = 'FRIDAY'
+and trunc(beg_time) >=  trunc(to_date(mymonth,'MM/DD/YYYY'),'MM')
+and trunc(beg_time) <  last_day(to_date(mymonth,'MM/DD/YYYY'));
+
+
+END M_TOT;
+
+
+
+
+
+PROCEDURE R_CLEAR is
+BEGIN 
+   execute immediate 'drop table report'; exception when others then null; 
+END R_CLEAR;
+
+PROCEDURE R_CREATE is
+BEGIN 
+   execute immediate 'create table report (DAT date, hrs number(8))'; exception when others then null; 
+END R_CREATE;
+
+PROCEDURE Reportp is
+ BEGIN
+   execute immediate 'truncate table report';
+   insert into report (DAT,HRS) select beg_time,(end_time-beg_time)*24-nvl(lunch,0)+nvl(extra,0) from hours;
+   commit;
+ END ReportP;
+
+PROCEDURE A_DAY(b_time  varchar2,e_time  varchar2,actual  int, p_period  int) is
+ BEGIN
+--  exec W_UTL.A_DAY('03/21/2010 9:23','18:00',10,13);
+-- select substr(' 03/21/2010 9:23 ',1,instr(' 03/21/2010 9:23 ',' ',2,1))||' '||ltrim(' 9:21') from dual;
+
+-- substr(b_time,1,instr(b_time,' ',2,1))||' '||ltrim(e_time) from dual;
+  insert into hours (beg_time,end_time,recorded,pay_period) values (to_date(b_time,'MM/DD/YYYY HH24:MI'),
+       to_date(substr(b_time,1,instr(b_time,' ',2,1))||' '||ltrim(e_time) 
+          ,'MM/DD/YYYY HH24:MI'),actual,p_period);
+   DBMS_OUTPUT.PUT_LINE('test');
+   insert into junk (a) values (2);
+   commit;
+ END A_DAY;
+
+END W_UTL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace PACKAGE  W2_UTL
+AS
+  PROCEDURE A_DAY;
+  FUNCTION A RETURN VARCHAR2;
+END W2_UTL;
+/
+create or replace PACKAGE BODY  W2_UTL
+AS
+  PROCEDURE A_DAY is
+    BEGIN
+      DBMS_OUTPUT.PUT_LINE('hi');
+    END A_DAY;
+  FUNCTION A RETURN VARCHAR2 is
+    BEGIN
+       return ('stuff');
+  end A;
+END W2_UTL;
+/
+
+
+
+
+
+
+
+
+
+(B_DAY in VARCHAR2,
+                E_DAY in VARCHAR2)
+as
+PRAGMA AUTONOMOUS_TRANSACTION;
+   BEGIN
+   insert into hours (BEG_TIME,END_TIME,PAY_PERIOD) values (to_DATE(B_DAY,'MM/DD/YYYY HH24:MI'),
+      to_DATE(E_DAY,'MM/DD/YYYY HH24:MI'),0);
+   commit;
+   end A_DAY;
+
+
+
+
+
+   PROCEDURE DLOG(
+      P_TABNAM IN VARCHAR2,
+      P_LOGMSG IN VARCHAR2)
+   AS
+      PRAGMA AUTONOMOUS_TRANSACTION;
+   BEGIN
+      INSERT INTO DELETE_LOG (LOG_DATE, TABLE_NAME, LOG_MESSAGE)
+      VALUES (SYSDATE, P_TABNAM, SUBSTR(P_LOGMSG, 1, 200));
+      COMMIT;
+   END DLOG;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT TO_CHAR (
+  NEXT_DAY (
+    LAST_DAY (
+        ADD_MONTHS (TRUNC(SYSDATE,'Y'),ROWNUM-1))-7,
+        TO_CHAR (TO_DATE('29-01-1927', 'DD-MM-YYYY'),'DAY')
+  ), 'MM.DD.YYYY') "Last Saturdays in 2004"
+ FROM ALL_OBJECTS
+WHERE ROWNUM <= 12;
+
+
+
+
+
+
+
+
+
+
+DECLARE
+   cursor c0 is select QUEUE_TABLE from user_queues where NAME='PROCESSTOPIC';
+   a VARCHAR2(30);
+   b VARCHAR2(16);
+   c VARCHAR2(1024);
+   e date;
+   s_stms VARCHAR2(1024);
+   r1 sys_refCursor;
+BEGIN
+  for r0 in c0
+  loop
+        -- select QUEUE,MSG_STATE,ADDRESS  from AQ$||r0.QUEUE_TABLE;
+        --s_stms := 'select QUEUE,MSG_STATE,ADDRESS  from AQ$'||r0.QUEUE_TABLE||' where rownum=1';
+     open r1 for 'select QUEUE,MSG_STATE,ADDRESS  from AQ$'||r0.QUEUE_TABLE;
+          loop
+         fetch r1 into a,b,c;
+          exit when r1%notfound;
+        dbms_output.put_line(a||b||c);
+         end loop;
+     close r1;
+  end loop;
+END;
+/
+
+
+SET SERVEROUTPUT ON
+DECLARE
+   cursor c0 is select QUEUE_TABLE from user_queues where NAME='PROCESSTOPIC';
+   a date;
+   r0 sys_refCursor;
+-- Note function will go in this declaration
+   function m1 (m in date) return number
+   is
+     fr0 sys_refCursor;
+     n0 number;
+     CURSOR f_cur is select sum(recorded) as n0 from hours where beg_time >= m and beg_time <= m+7;
+   Begin
+        for fr in f_cur
+        loop
+		n0:=fr.n0;
+	end loop;
+	return n0;
+   end;
+BEGIN
+
+     open r0 for 'select beg_time from hours where beg_time >= to_date(''01-MAR-10'',''dd-MM-yy'') order by 1 desc';
+     loop
+	         fetch r0 into a;
+                 exit when r0%notfound;
+		 if trunc(a) = to_date('01-MAR-10','dd-MM-yy')
+                 then
+	            dbms_output.put_line(a||' '||m1(a));
+		 end if;
+     end loop;
+     close r0;
+end;

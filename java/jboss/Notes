@@ -1,0 +1,14 @@
+
+Look for the following to run as service, which you'll find
+in the download.
+
+   jboss_init_redhat.sh
+
+
+
+cp /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/oracle-ds.xml /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/deploy/oracle-ds.xml
+
+
+
+Password file
+/home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/conf/props/jmx-console-users.properties

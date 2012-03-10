@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<project default="main">
+    <target name="main" depends="compile, compress">
+        <echo>
+            Building the .jar file.
+        </echo>
+    </target>
+  
+    <target name="compile">
+        <javac srcdir="."/>
+    </target>
+  
+  <target name="compress">
+        <jar jarfile="Project.jar" basedir="." includes="*.class" manifest="MANIFEST.MF" />
+  </target>
+
+  <target name="clean">
+        <delete file="Project.class"/>
+        <delete file="Project.jar"/>
+  </target>
+
+</project>

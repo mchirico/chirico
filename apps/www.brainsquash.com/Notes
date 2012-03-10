@@ -1,0 +1,14 @@
+"""
+    results = db.GqlQuery("SELECT * FROM FirstModel")
+    list = results.fetch(100)
+    a=[]
+    for i in list:
+      a.append(i.prop)
+      a.append(i.prop2)
+
+
+    
+
+
+#    s=another_obj.prop
+"""

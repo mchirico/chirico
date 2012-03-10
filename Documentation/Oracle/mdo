@@ -1,0 +1,15 @@
+#!/bin/bash
+PROG=conn
+proc parse=full sqlcheck=semantics userid=chirico/mike ${PROG}.c ${PROG}-pro.c
+gcc ${PROG}-pro.c -I/u01/app/oracle/product/11.1.0/db_1/precomp/public/ -L/u01/app/oracle/product/11.1.0/db_1/lib/ -lclntsh -o ${PROG}
+
+
+PROG=remote
+proc parse=full sqlcheck=semantics userid=chirico/mike ${PROG}.c ${PROG}-pro.c
+gcc ${PROG}-pro.c -I/u01/app/oracle/product/11.1.0/db_1/precomp/public/ -L/u01/app/oracle/product/11.1.0/db_1/lib/ -lclntsh -o ${PROG}
+
+
+PROG=openadsidb
+proc parse=full sqlcheck=semantics userid=chirico/mike ${PROG}.c ${PROG}-pro.c
+gcc ${PROG}-pro.c -I/u01/app/oracle/product/11.1.0/db_1/precomp/public/ -L/u01/app/oracle/product/11.1.0/db_1/lib/ -lclntsh -o ${PROG}
+

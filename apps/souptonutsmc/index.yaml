@@ -1,0 +1,30 @@
+indexes:
+
+- kind: Cstat
+  properties:
+  - name: hostname
+  - name: date
+    direction: desc
+  - name: date
+    direction: asc
+
+- kind: CstatComputers
+  properties:
+  - name: date
+    direction: desc
+
+- kind: Computer
+  properties:
+  - name: hostname
+    direction: desc
+
+- kind: Cron
+  properties:
+  - name: date
+    direction: desc
+
+
+- kind: Greeting
+  properties:
+  - name: date
+    direction: desc

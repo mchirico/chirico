@@ -1,0 +1,16 @@
+Copyright (C) GPL 2006 Mike Chirico <mchirico@users.sourceforge.net>
+
+Installation: the installation is very simple.
+
+      ./configure
+      make 
+      make install
+
+Usage: stock <Nasdaq Ticker|[,Tickers]>
+ Tickers are case insensitive
+
+  $ stock rhat
+ or
+  $ stock "^DJI,AA,GE,JNJ,MSFT,AXP,GM,JPM,\
+PG,BA,HD,KO,SBC,C,HON,MCD,T,CAT,HP,MMM,UTX,DD,IBM,MO,WMT,DIS,INTC,MRK,XOM,EK,IP"
+

@@ -1,0 +1,242 @@
+Fri Nov 30 10:12:46 EST 2007
+	o Include IstreamExample.h in sources
+
+Sat Nov  3 19:26:20 EDT 2007
+	o added explicit2.cc
+
+Sun Sep 23 17:52:50 EDT 2007
+	o added mainIstream.cc IstreamExample.h
+
+Sun Mar 11 13:28:03 EDT 2007
+	o added state_pattern2.cc
+
+Sun Mar 11 11:45:30 EDT 2007
+	o added state_pattern.cc and changed name of ostream.cc to 
+	ostream_sample.cc to lib confusion.
+
+Sat Mar 10 09:59:35 EST 2007
+	o added strategy_pattern.cc
+
+Mon Jan 22 14:56:02 EST 2007
+	o added ostream.cc
+
+Tue Jul 25 18:44:43 EDT 2006
+	o added b2.cc
+
+Tue Jul 25 10:04:13 EDT 2006
+	o added b.cc
+
+Mon Jul 24 13:42:56 EDT 2006
+	o added hollywood3.cc
+	o added resource_handle.cc
+
+Sat Jul 22 19:16:47 EDT 2006
+	o fixed fib.cc
+
+Tue Jul 18 21:29:11 EDT 2006
+	o autoptr.cc
+
+Thu Apr 13 07:30:19 EDT 2006
+	o time.cc [mtime]
+
+Wed Feb 15 18:13:51 EST 2006
+	o hanoi.cc
+
+Sun Jan 29 12:01:17 EST 2006
+	o sort_input.cc 
+
+Sun Jan 22 08:37:47 EST 2006
+	o cards.cc [updated function seed]
+
+Sat Jan 14 11:23:08 EST 2006
+	o Fixed Error in list3c.cc
+
+Sun Jan  8 19:33:32 EST 2006
+	o Updated string_split.cc
+
+Sun Jan  8 11:01:07 EST 2006
+	o cards.cc
+
+Sat Dec 31 23:42:51 EST 2005
+	o stringstream_num.cc
+
+Wed Dec 21 13:14:03 EST 2005
+	o copy_if_trans.cc fixed bug
+
+Sun Dec 11 12:38:53 EST 2005
+	o Added rtrim and put rational and rational2 in configure
+	
+Thu Dec  8 14:20:10 EST 2005
+	o Added rational2.cc
+
+Tue Nov 29 16:18:36 EST 2005
+	o Added rational.cc
+
+Sun Nov 20 08:20:57 EST 2005
+	o Add string_from_scratch.cc
+
+Sat Oct 22 13:47:27 EDT 2005
+	o std const
+	o integrate2.cc  integrate.cc need virtual destructor 
+
+Sun Sep 11 12:13:41 EDT 2005
+	o raii.cc
+
+Sun Aug 28 09:19:08 EDT 2005
+	o explicit.cc
+
+Sat Aug 20 09:28:16 EDT 2005
+	o Added fib.cc and update configure.in and Makefile.am 
+	  so that SQLite is not compiled into all programs.
+	  Added integrate
+
+Sun Jul 24 20:49:05 EDT 2005
+	o Fixed error in configure.in (I still don't like this).
+
+Sun Jul 24 10:39:17 EDT 2005
+	o Changed configure.in and Makefile.am to exclude sqlite3 programs
+	  if sqlite3 is not installed.
+
+Fri Jul 22 12:37:04 EDT 2005
+	o hollywood.c - I think all deletes need to be checked 
+
+Fri Apr 29 11:33:10 EDT 2005
+	o added hollywood.c and hollywood2.c
+
+Mon Apr 18 18:20:43 EDT 2005
+	o fixed Makefile that got over-written
+
+Wed Mar 30 05:41:14 EST 2005
+	o array_passing example of getting size of array
+
+Sun Jan 30 08:51:24 EST 2005
+	o example of named constructor idiom.
+
+Sat Jan 29 18:07:38 EST 2005
+	o added virtual_function.cc bsd needs  #include <functional>
+
+Sat Jan 29 07:18:17 EST 2005
+	o added string_and_char.cc
+
+Mon Jan 24 08:03:15 EST 2005
+	o sqlite3api.cc  vpt resize issue ... too small. fixed
+
+Sun Jan 23 21:48:40 EST 2005	
+	o stringstream in sqlite3api move outside the loop.
+	o If libs get checked first, then, all TRY_COMPILE's will
+	try to use that library... this is a problem for sqlite3, which
+	isn't in the path
+
+Fri Jan 14 22:52:55 EST 2005
+	o simpler test configure.in
+
+Wed Jan 12 07:38:20 EST 2005
+	o added trans_mult.cc [not added to Makefile.am]
+
+Sun Jan  9 22:16:14 EST 2005
+	o change string_splitTemplate.cc so it has best of 
+	Koenig, Sutter, and my Template
+
+Sun Jan  9 09:43:15 EST 2005
+	o added string_split.cc
+
+Sat Jan  8 13:30:37 EST 2005
+	o added aclocal.m4  which is needed.
+
+Sat Jan  8 11:22:23 EST 2005
+	o configure.in and Makefile.am
+
+Fri Jan  7 08:38:39 EST 2005
+	o added vec_on_heap.cc
+
+Thu Jan  6 07:32:51 EST 2005
+	o added remove_if.cc
+
+Tue Jan  4 22:21:46 EST 2005
+	o added funct_ptrs.cc
+	
+Sat Jan  1 19:41:21 EST 2005
+	o string_toupper.cc now it handles the case of 
+        	  operator+=(std::string& s1, icstring& s2) {  return s1+=s2.c_str();}
+
+Sat Jan  1 18:58:51 EST 2005
+	o added string_toupper.cc which is a case-less string structure.
+	Sutter makes reference but does not build this class. This works
+	for current versions of g++
+
+Thu Dec 23 14:53:43 EST 2004
+	o Fixed a lot of broken headers and 
+	o updated the Makefile 
+	SL3FLAGS = -Wall -W -O2 -s -pipe -Wl,-R/usr/local/lib -lsqlite3 -L/usr/local/lib -I/usr/local/include
+
+Sun Dec 19 19:59:44 EST 2004
+	o iterswap.cc ... just added this program. Needs work.
+
+Sat Nov 27 21:50:12 EST 2004
+	o copy_if_trans.cc changed name in function because this is
+	not really pass by reference. What is different is what it returned.
+
+Sat Nov 27 17:28:27 EST 2004
+	o copy_if_trans.cc  added Delete_ptr
+
+Sat Nov 27 10:04:05 EST 2004
+	o make permutation more general
+
+Thu Nov 25 19:55:57 EST 2004
+	o for_each_sum.cc error on average
+	
+Sun Nov 21 11:27:51 EST 2004
+	o added copy_if_trans.cc, but will need to explain further that
+	this std mutator must take pred functor that is copy by value, whereas
+	copy_if is copy by reference.
+
+Sat Nov 20 19:30:59 EST 2004	
+	o added count_if
+	o transform
+	o copy_if
+
+Sun Nov 14 21:38:26 EST 2004
+	o changed math.h to cmath
+
+Sun Nov 14 21:13:58 EST 2004
+	o added a list sqlite api sqlite3api.cc 
+	
+Sun Nov 14 15:48:35 EST 2004
+	o added within function to list3c.cc
+	
+Sun Nov 14 11:27:15 EST 2004
+	o more clean-up on list3c.cc
+
+Sun Nov 14 11:04:59 EST 2004
+	o list3c compare to a given point. Note
+	list3c is the best way to implement this
+	because it uses vectors.
+
+Sat Nov 13 20:46:42 EST 2004
+	o fixed const problem in list3.cc
+
+Sat Nov 13 16:17:12 EST 2004
+	o fixed error in compile-time_polymorphism.cc with
+	unused variable a
+
+Sat Nov 13 13:31:05 EST 2004
+	o added list2.cc
+
+Thu Nov 11 19:20:13 EST 2004
+	o more on list.cc - added class str_equal
+
+Wed Nov 10 21:27:22 EST 2004
+	o worked on list.cc
+	
+Sat Nov  6 07:21:18 EST 2004
+	o added the useful_classes directory
+	with samples
+
+Sat Oct 16 19:50:20 EDT 2004
+	o added class_template1.cc
+
+Tue Oct 12 06:49:04 EDT 2004
+	o added dynamic resize to 3D vector
+
+Sun Sep 26 11:28:11 EDT 2004
+	o added copy_constructor_assignment.cc  

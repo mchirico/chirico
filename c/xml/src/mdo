@@ -1,0 +1,22 @@
+#!/bin/bash
+gcc `xml2-config --cflags --libs` -o xmlstory xmlstory.c
+gcc `xml2-config --cflags --libs` -o xmladdkey xmladdkey.c
+gcc `xml2-config --cflags --libs` -o xmladdatt xmladdatt.c
+gcc `xml2-config --cflags --libs` -g -o tree2 tree2.c
+gcc `xml2-config --cflags --libs` -g -o batch batch.c
+gcc `xml2-config --cflags --libs` -g -o xml1 xml1.c
+gcc `xml2-config --cflags --libs` -g -o test test.c
+gcc `xml2-config --cflags --libs` -g -o spread spread.c
+gcc `xml2-config --cflags --libs` -g -o xpath2 xpath2.c
+gcc `xml2-config --cflags --libs` -g -o general general.c
+
+#./xmlstory story.xml
+#./xmladdkey story.xml garbo
+#./xmladdatt story.xml attgarbo
+#valgrind --leak-check=yes ./xml1 story.xml xml1
+#valgrind --leak-check=yes ./spread
+#valgrind --leak-check=yes ./tree2
+#valgrind --leak-check=yes ./batch
+valgrind --leak-check=yes ./general
+
+

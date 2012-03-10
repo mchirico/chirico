@@ -1,0 +1,24 @@
+#!/bin/bash
+find . -user ${USER}  -iname '*~' -exec rm -- {} \;
+find . -user ${USER}  -iname '*#*' -exec rm -- {} \;
+find . -user ${USER}  -iname '*.pyc' -exec rm -- {} \;
+clean 1
+clean 1
+DIR=`pwd`
+if [ -f /usr/local/bin/appcfg.py ]
+then
+  appcfg.py --email=dev.mchirico@gmail.com  update $DIR
+else
+
+    if [ -d ~/dev/chirico/GoogleAppSDK/google_appengine/ ]
+    then
+	cd ~/dev/chirico/GoogleAppSDK/google_appengine/
+	./appcfg.py --email=dev.mchirico@gmail.com  update $DIR
+    fi
+fi
+
+
+
+
+
+

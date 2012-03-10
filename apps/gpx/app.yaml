@@ -1,0 +1,22 @@
+application: souptonutsmc
+version: 8
+runtime: python
+api_version: 1
+
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /version
+  script: version.py
+
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /.*
+  login: required
+  secure: always
+  script: index.py

@@ -1,0 +1,2 @@
+sudo cp ./lib/hsqldb.jar /usr/lib/jvm/java-6-sun/lib/.
+sudo cp ./lib/servlet.jar /usr/lib/jvm/java-6-sun/lib/.

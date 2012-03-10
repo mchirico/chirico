@@ -1,0 +1,10 @@
+whoami
+netstat -na
+w
+date
+uptime
+uname -a
+exit
+
+
+

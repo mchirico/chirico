@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>Google IO 2011 - Backends demo</title>
+  </head>
+  <body>
+    {% if was_success %}
+    <p>You are visitor number {{ backend_result }}.</p>
+    {% else %}
+    <p>An error occured while contacting the counter backend.</p>
+    <p>{{ backend_result }}</p>
+    {% endif %}
+
+    <p>The source code for the counter, load tester and front end is available
+    from <a href="{{ source_code }}">here</a>.</p>
+  </body>
+</html>

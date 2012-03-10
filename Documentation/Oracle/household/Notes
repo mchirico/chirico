@@ -1,0 +1,5 @@
+sqlldr username/password control=HouseHoldTrends.ctl
+
+
+select sum(expense),category from trends group by category
+order by sum(expense) desc

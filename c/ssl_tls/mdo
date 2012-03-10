@@ -1,0 +1,11 @@
+#!/bin/bash
+rm -f ./Makefile.in ./configure ./config.status ./install-sh ./missing ./depcomp
+aclocal
+autoconf
+touch NEWS README AUTHORS ChangeLog
+automake --add-missing
+
+
+
+
+

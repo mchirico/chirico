@@ -1,0 +1,10 @@
+Mon Jun  5 07:30:37 EDT 2006
+	o tlssmtp 
+		a. Make this more like mail at the command line.
+		b. check specific 220 return values from EHLO
+		c. before initiating tls, but after starttls check for specific response
+
+
+Mon May 29 16:40:30 EDT 2006
+	o build lib functions after building a working prototype.
+

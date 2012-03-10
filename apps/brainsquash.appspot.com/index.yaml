@@ -1,0 +1,12 @@
+indexes:
+
+- kind: Cstat
+  properties:
+  - name: hostname
+  - name: date
+    direction: desc
+  - name: date
+    direction: asc
+
+
+

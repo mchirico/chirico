@@ -1,0 +1,12 @@
+Copyright (c) GPL 2006 Mike Chirico <mchirico@gmail.com>
+
+Installation: the installation is very simple.
+
+      ./configure
+      make 
+
+You probably don't want to run make install, since these examples
+should all work fine locally.
+
+
+

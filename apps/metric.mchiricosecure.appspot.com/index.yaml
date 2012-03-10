@@ -1,0 +1,6 @@
+indexes:
+- kind: ParsedPts
+  properties:
+  - name: author
+  - name: blob_key
+  - name: rec

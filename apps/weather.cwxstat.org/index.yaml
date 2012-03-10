@@ -1,0 +1,27 @@
+indexes:
+
+- kind: TempHum
+  properties:
+  - name: timeEnter
+    direction: desc
+
+- kind: TempHum
+  properties:
+  - name: sensor
+  - name: timeEnter
+    direction: desc
+
+- kind: Wind2
+  properties:
+  - name: timeEnter
+    direction: desc
+
+- kind: Rain
+  properties:
+  - name: timeEnter
+    direction: desc
+
+- kind: hPa
+  properties:
+  - name: timeEnter
+    direction: desc

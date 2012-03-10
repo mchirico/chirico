@@ -1,0 +1,133 @@
+
+If you're loading data, run dos2unix.
+
+
+
+
+select sum("recorded")*max("rate"),"payPeriod" from hours group by "payPeriod" order by "payPeriod";
+select sum("recorded")*max("rate") from hours;
+
+
+
+SET SERVEROUTPUT ON
+create or replace PROCEDURE stat
+as
+m number;
+BEGIN
+   select sum("recorded")*max("rate") into m from hours;
+   sys.dbms_output.put_line(' '||m);
+END;
+
+
+
+update hoursstage set "stop"=to_timestamp(to_char("date",'mm-dd-yy')||' '||to_char("stop",'HH24:MM'),'MM-DD-yy HH24:MI')
+where "stop" is not null;
+
+update hoursstage set "start"=to_timestamp(to_char("date",'mm-dd-yy')||' '||to_char("start",'HH24:MM'),'MM-DD-yy HH24:MI')
+where "start" is not null;
+
+
+select 
+to_char("stop"-"start",'HH:MI'), "recorded"
+from hoursstage;
+
+
+
+
+
+Step 1:
+
+Note that I'm using orcl2, and you may need to switch to orcl 
+for other instances.
+
+
+create tablespace cwxstat
+datafile '/u01/app/oracle/oradata/orcl2/cwxstat01.dbf'
+size  400M REUSE
+AUTOEXTEND ON NEXT 500K MAXSIZE 800M;
+
+ALTER TABLESPACE cwxstat
+ADD 
+DATAFILE '/u01/app/oracle/oradata/orcl2/cwxstat02.dbf' 
+SIZE 1G REUSE 
+AUTOEXTEND ON NEXT 125K MAXSIZE 12G;
+
+
+
+
+create temporary tablespace temp_cwxstat
+  tempfile '/u01/app/oracle/oradata/orcl2/tmp_cwxstat01.dbf'
+  size 32m 
+  autoextend on 
+  next 32m maxsize 2048m
+  extent management local;
+
+
+
+
+CREATE USER cwxstat IDENTIFIED BY cwxstat
+DEFAULT TABLESPACE cwxstat
+TEMPORARY TABLESPACE temp_cwxstat;
+
+
+GRANT CONNECT, RESOURCE TO cwxstat;
+
+
+
+
+
+Step 2:
+
+
+create table hours(
+id number(9),
+"start" timestamp(6),
+"end" timestamp(6),
+hrs INTERVAL DAY(1) TO SECOND(4),
+recorded float);
+
+
+
+
+
+create sequence hours_seq 
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+
+create trigger hours_trigger
+before insert on hours
+for each row
+begin
+select hours_seq.nextval into :new.id from dual;
+end;
+
+
+
+
+
+
+
+INSERT INTO hours
+("start","end")
+VALUES ('23-MAY-2009 08:00:00 AM','23-MAY-2009 04:00:00 PM');
+
+update hours set hrs="end"-"start";
+
+
+
+
+  1, 'Busted urban myth', '01-JUN-2006 02:00:00 PM',
+  INTERVAL '1 2:31:15.1250' DAY(1) TO SECOND(4)
+  );
+
+
+
+col experiment_desc format a40
+col experiment_start format a30
+col experiment_duration format a20
+
+
+select "start","end","end"-"start" from hours;
+

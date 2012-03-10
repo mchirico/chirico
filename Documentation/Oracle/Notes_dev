@@ -1,0 +1,507 @@
+http://www.pythian.com/news/1937/quick-install-guide-for-oracle-10g-release-2-on-mac-os-x-leopard-intel/
+
+sudo dscl . -create /groups/dba
+sudo dscl . -append /groups/dba gid 4200
+sudo dscl . -append /groups/dba passwd "*"
+sudo dscl . -create /users/oracle
+sudo dscl . -append /users/oracle uid 4200
+sudo dscl . -append /users/oracle gid 4200
+sudo dscl . -append /users/oracle shell /bin/bash
+sudo dscl . -append /users/oracle home /Users/oracle
+sudo dscl . -append /users/oracle realname "Oracle software owner"
+sudo dscl . -append /Groups/dba GroupMembership oracle
+sudo mkdir /Users/oracle
+sudo chown oracle:dba /Users/oracle
+sudo defaults write /Library/Preferences/com.apple.loginwindow HiddenUsersList -array-add oracle
+sudo passwd oracle
+
+
+
+
+
+
+create or replace procedure junk(x in number)
+as
+begin
+ 
+
+  create table junk (a integer, b varchar(10));
+
+
+Now create the procedure:
+
+    create or replace procedure insjunk (x in number, y in varchar2)
+    as
+    begin
+      insert into junk (a,b) values (x,y);
+      end;
+    /
+
+
+begin
+  for x in 0..400000
+  loop
+      insert into a values (x);
+      commit;
+  end loop;
+end;
+
+
+
+begin
+  for x in (select * from junk)
+   loop
+         dbms_output.put_line(x.a);
+    end loop;
+    commit;
+ end;
+
+
+begin
+  for x in (select * from junk)
+   loop
+         dbms_output.put_line(x.a);
+         insert into j (a) values(x.a);
+         commit;
+    end loop;
+    commit;
+ end;
+
+
+
+
+
+Recommended Reading:
+
+"Expert Oracle Database Architecture, 9i and 10g Programming Techniques and Solutions"
+by Thomas Kyte. 2005
+
+
+
+
+
+
+****** Testing area ***
+
+
+Create table test_normal (empno number(10), ename varchar2(30), sal number(10));
+
+Begin
+For i in 1..1000000
+Loop
+   Insert into test_normal 
+   values(i, dbms_random.string('U',30), dbms_random.value(1000,7000));
+   If mod(i, 10000) = 0 then
+   Commit;
+  End if;
+End loop;
+End;
+/
+
+
+Locks:
+
+
+select l1.sid, ' IS BLOCKING ', l2.sid,l1.ctime
+    from v$lock l1, v$lock l2, 
+    where l1.block =1 and l2.request > 0
+    and l1.id1=l2.id1
+
+
+
+select l1.sid,s1.serial#,s1.osuser, ' IS BLOCKING ', l2.sid,l1.ctime
+    from v$lock l1, v$lock l2, v$session s1, v$session s2
+    where l1.block =1 and l2.request > 0
+    and l1.id1=l2.id1 
+    and l1.sid=s1.sid and l2.sid=s2.sid
+
+
+
+select 
+   username,
+   blocking_session, 
+   sid, 
+   serial#, 
+   wait_class,
+   seconds_in_wait
+from 
+   v$session
+where 
+   blocking_session is not NULL
+order by 
+   blocking_session;
+
+
+
+-- This works best 
+
+select 
+c1.*,t.sql_text
+from (select
+   username,
+   blocking_session,
+   sid,
+   serial#,
+   wait_class,
+   seconds_in_wait
+from
+   v$session
+where
+   blocking_session is not NULL
+order by
+   blocking_session) c1, V$SQLTEXT T,
+V$SESSION S where
+S.SID = c1.sid AND S.SQL_ADDRESS=T.ADDRESS ORDER BY T.PIECE
+
+
+
+alter system KILL SESSION 'sid,serial#'
+
+alter system kill session '110,61991'
+
+alter system kill session '136,53622'
+
+
+
+-- This works but it take a long time
+select 
+   s.username,
+   s.blocking_session, 
+   s.sid, 
+   s.serial#, 
+   s.wait_class,
+   s.seconds_in_wait,
+   t.sql_text
+from 
+   v$session s, V$SQLTEXT t
+where 
+   blocking_session is not NULL and
+   s.sql_address=t.address 
+order by 
+   t.piece,
+   blocking_session;
+
+
+
+SELECT T.SQL_TEXT FROM V$SQLTEXT T,
+V$SESSION S WHERE
+S.SID = 110 AND S.SQL_ADDRESS=T.ADDRESS ORDER BY T.PIECE
+
+
+SELECT T.SQL_TEXT FROM V$SQLTEXT T,
+V$SESSION S WHERE
+S.SID = 129 AND S.SQL_ADDRESS=T.ADDRESS ORDER BY T.PIECE
+
+
+
+
+
+
+
+
+
+
+
+
+
+select a.sid, a.serial#, b.sql_text, a.username
+   from v$session a, v$sqlarea b
+   where a.sql_address=b.address
+   and a.username='cwxstat';
+ 
+select
+   username,
+   blocking_session,
+   sid,
+   serial#,
+   wait_class,
+   seconds_in_wait
+from
+   v$session
+where
+   blocking_session is not NULL
+order by
+   blocking_session;
+
+
+SELECT T.SQL_TEXT FROM V$SQLTEXT T, 
+V$SESSION S WHERE 
+S.SID = 110 AND S.SQL_ADDRESS=T.ADDRESS ORDER BY T.PIECE
+
+
+
+
+
+
+
+select 
+type || '-' || id1 || '-' || id2 "RESOURCE", 
+sid, 
+decode( 
+  lmode, 
+  1, '    N', 
+  2, '  SS', 
+  3, '  SX', 
+  4, '    S', 
+  5, '  SSX', 
+  6, '    X' 
+) holding, 
+decode( 
+  request, 
+  1, '    N', 
+  2, '  SS', 
+  3, '  SX', 
+  4, '    S', 
+  5, '  SSX', 
+  6, '    X' 
+) wanting, 
+ctime seconds 
+from 
+sys.v_$lock 
+order by 
+type || '-' || id1 || '-' || id2, 
+ctime desc; 
+
+
+
+
+
+set long 10000000
+set longchunksize 10000000
+set linesize 200
+select dbms_sqltune.report_sql_monitor from dual;
+
+create table t2 (a int, b varchar(3)); 
+
+select * 
+  from ( select /*+ FIRST_ROWS(n) */ 
+  a.*, ROWNUM rnum 
+      from ( 
+         select * from t2 order by b
+       ) a 
+      where ROWNUM <= 
+      :MAX_ROW_TO_FETCH ) 
+where rnum  >= :MIN_ROW_TO_FETCH;
+
+
+SQL> begin
+  2  dbms_stats.gather_table_stats(user, 'T2');
+  3  end;
+  4  
+
+
+
+select to_char(sysdate,'MM-DD-YY HH24:MI:SS') from dual;
+
+
+
+
+create table students (name varchar2(10),
+grade int);
+
+insert into students  (name,grade) values ('bob',50);
+insert into students  (name,grade) values ('sue',66);
+insert into students  (name,grade) values ('joe',75);
+insert into students  (name,grade) values ('lisa',86);
+insert into students  (name,grade) values ('zoe',90);
+
+select 
+
+count(case when grade <= 50 then 1 else null end) fail,
+count(case when grade between 51 and 75 then 1 else null end) ok,
+count(case when grade >75 then 1 else null end) good
+ from students;
+
+
+
+
+
+***  Start reading this ****
+http://download.oracle.com/docs/cd/B14117_01/appdev.101/b10802/d_aqadm.htm#1014384
+
+
+
+
+CREATE or REPLACE TYPE event_message_t AS OBJECT (
+     event_id     NUMBER
+    ,effective_dt DATE
+);
+/
+
+
+
+
+
+Create table bn_message_log
+      (event_id         NUMBER
+      ,msg              event_message_t
+      ,msg_q_handle     RAW(16)
+      ,status           CHAR(1)
+      ,transaction_id   VARCHAR2(4000)
+      ,error_msg        VARCHAR2(4000)
+);
+
+
+prompt creating CREATE_QUEUE_TABLE
+begin
+DBMS_AQADM.CREATE_QUEUE_TABLE
+  ( queue_table        => 'event_qt'
+  ,queue_payload_type => 'event_message_t'
+  ,multiple_consumers => TRUE );
+end;
+/
+
+prompt creating CREATE_QUEUE
+begin
+DBMS_AQADM.CREATE_QUEUE
+      ( queue_name  => 'eventqueue'
+  ,queue_table => 'event_qt' );
+end;
+/
+
+prompt creating START_QUEUE
+begin
+DBMS_AQADM.START_QUEUE
+       ( queue_name => 'eventqueue' );
+end;
+/
+
+
+
+
+-- This one doesn't work
+
+prompt creating enqueue_event_msg
+
+create or replace procedure enqueue_event_msg( p_msg in
+event_message_t
+                  ,effective_dt in DATE )
+  as
+enqueue_options    dbms_aq.enqueue_options_t;
+message_properties dbms_aq.message_properties_t;
+message_handle      RAW(16);
+message            event_message_t;
+delay               integer;
+  begin
+
+-- we can delay the message so that the queue
+    -- will deliver this message sometime in the future
+    delay := (24*60*60)*(effective_dt - sysdate);
+
+–- no delay for dates in the past
+    if ( delay > 1 ) then
+    message_properties.delay := delay;
+    end if;
+
+-- only send our message if the transaction commits!!!
+    enqueue_options.visibility := dbms_aq.ON_COMMIT;
+
+dbms_aq.enqueue( queue_name         => 'eventqueue'
+        ,enqueue_options    => enqueue_options
+        ,message_properties => message_properties
+        ,payload            => p_msg
+        ,msgid              => message_handle );
+
+insert into message_log
+           ( event_id
+           ,msg
+           ,msg_q_handle
+           ,status
+           ,transaction_id
+           ,error_msg)
+    values ( p_msg.event_id
+        ,p_msg
+     ,message_handle
+     ,'P'
+     ,null
+     ,null );
+  end;
+/
+
+
+
+
+
+
+Ref:
+
+http://www.rampant-books.com/art_nanda_datapump.htm
+expdp directory=dpump_dir dumpfile=metadata.dmp content=metadata_only
+
+
+Documentation on RAC
+http://download.oracle.com/docs/cd/B14117_01/rac.101/b10765/toc.htm
+http://download.oracle.com/docs/cd/B14117_01/rac.101/b10765/adddel.htm#BABJDFHF
+
+
+
+
+
+
+
+
+
+
+
+create table user_count (
+number_of_users number(4),
+time_of_day timestamp
+);
+
+CREATE OR REPLACE PROCEDURE insert_user_count AS
+   v_user_count NUMBER(4);
+BEGIN
+  SELECT count(*)
+           INTO v_user_count
+     FROM v$session
+     WHERE username IS NOT NULL;
+
+INSERT INTO user_count
+      VALUES (v_user_count, systimestamp);
+   commit;
+
+END insert_user_count;
+
+
+
+
+
+BEGIN
+DBMS_SCHEDULER.CREATE_PROGRAM (
+   program_name           => 'PROG_INSERT_USER_COUNT',
+program_action         => 'INSERT_USER_COUNT',
+program_type           => 'STORED_PROCEDURE');
+END;
+
+exec dbms_scheduler.enable('PROG_INSERT_USER_COUNT')
+
+
+BEGIN
+DBMS_SCHEDULER.CREATE_SCHEDULE (
+  schedule_name     => 'my_weekend_5min_schedule',
+  start_date        => SYSTIMESTAMP,
+  repeat_interval   => 'FREQ=MINUTELY; INTERVAL=5; BYDAY=SAT,SUN',
+  end_date          => SYSTIMESTAMP + INTERVAL '30' day,
+  comments          => 'Every 5 minutes');
+END;
+/
+
+
+
+
+
+A good reference for triggers:
+http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14251/adfns_triggers.htm#BABCIBBJ
+
+
+
+
+Weblogic
+find . -iname 'startWebLogic.sh'
+http://hostname:port/console 
+http://localhost:7001/console
+
+WebLogic/admin123
+
+cd /home/chirico/Oracle/Middleware/user_projects/domains/base_domain
+./startWebLogic.sh

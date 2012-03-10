@@ -1,0 +1,47 @@
+application: mchiricocwxstat
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /gpg.*
+  script: gpg.py
+
+- url: /pgp.*
+  script: gpg.py
+
+
+
+- url: /static
+  static_dir: static
+
+- url: /favicon.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon.ico
+
+
+
+- url: /test\.html
+  script: test.py
+
+- url: /test/.*
+  script: test.py
+
+- url: /ping\.html
+  script: test.py
+
+- url: /.*
+  script: helloworld.py
+
+
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /mainmenu\.html
+  script: mainmenu.py
+

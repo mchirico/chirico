@@ -1,0 +1,48 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/pical.cc)
+AC_LANG_CPLUSPLUS
+AC_PROG_CC
+
+if test -f VERSION; then
+  VERSION=`cat VERSION`
+  echo "Version set to $VERSION"
+else
+  VERSION='0.0.1'
+fi
+AM_INIT_AUTOMAKE(pical, $VERSION )
+AC_PROG_CXX
+CXXFLAGS='-Wall -W -O2 -s -pipe -ftemplate-depth-50'
+
+
+# 
+# . . . . . . . . . . . . . . . . . . . . . . . . . . . . . -
+define([_CHAR_TRAITS],
+[AC_CACHE_CHECK([whether chartraits accepts "$1" mode], [char_traits_$1],
+[AC_COMPILE_IFELSE([#include <string>
+#include <iostream>
+#include <cctype>
+
+struct ic_traits : public std::char_traits<char> {
+};
+int main(void)
+{
+  return 0;
+
+}],
+            [char_traits_$1=yes],
+            [char_traits_$1=no],
+            [char_traits_$1=no])])
+if test x$char_traits_$1 = xyes; then
+  AC_DEFINE([$2], 1,
+            [Define this if we can use the "$1" char_traits.])
+fi[]dnl
+])# _CHAR_TRAITS
+
+
+AC_DEFUN([AB_CHAR_],   [_CHAR_TRAITS(t, USE_CTRAITS)])
+AM_CONDITIONAL(CHAR_TRAITS,[AB_CHAR_])
+AC_CONFIG_FILES([src/version.h:version.in])         # File must be renamed
+
+
+
+AC_OUTPUT(Makefile)

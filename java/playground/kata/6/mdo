@@ -1,0 +1,4 @@
+#!/bin/bash
+prog="MainBoat"
+javac *.java && java $prog
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/bin
+./run.sh -b 0.0.0.0 -c all

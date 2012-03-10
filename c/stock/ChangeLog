@@ -1,0 +1,39 @@
+Thu Nov 29 16:12:13 EST 2007
+	o Simple clean up.
+
+Thu Nov 29 15:33:24 EST 2007
+	o Updated for Google Code hosting
+
+Thu Sep  6 16:12:40 EDT 2007
+	o Yahoo! kept history the same.
+
+Wed Sep  5 21:43:22 EDT 2007
+	o Yahoo! changed their site to
+	  http://download.finance.yahoo.com/d/quotes.cvs?s=rht&amp;f=sl1d1t1c1ohgv">here</A>.<P>
+
+Tue Dec 26 15:37:45 EST 2006
+	o version 0.0.12 release
+	    Redhat switched to NYSE rhat --> rht
+
+Sun May 14 10:57:15 EDT 2006
+	o version 0.0.9 release
+
+Sat Mar 25 19:15:15 EST 2006
+        o version 0.0.7 release
+
+Sun Mar 12 16:52:33 EST 2006
+	o Added -H history option
+	o version 0.0.6 release
+
+Tue Mar  7 07:33:20 EST 2006
+	o Added -s sector and -i industry
+
+Mon Mar  6 08:17:23 EST 2006
+	o Some cleaning up and documentation.
+
+Mon Mar  6 07:01:41 EST 2006
+	o Divided into src and man directories
+
+Sun Mar  5 19:34:57 EST 2006
+	o Created
+	

@@ -1,0 +1,40 @@
+
+http://download.oracle.com/docs/cd/B19306_01/server.102/b14229/toc.htm
+
+
+
+
+http://my.safaribooksonline.com/9781590592359/configuring_java_message_service
+
+
+This has to be done as sys, until
+I figure out a better way to make it work.
+
+
+
+
+http://www.idevelopment.info/data/Oracle/DBA_tips/Advanced_Queuing/AQ_2.shtml
+
+
+GRANT AQ_ADMINISTRATOR_ROLE TO scott;
+
+
+
+
+
+
+
+CREATE TYPE message_type AS OBJECT (
+    message_id     NUMBER(15)
+  , subject        VARCHAR2(100)
+  , text           VARCHAR2(100)
+  , dollar_value   NUMBER(4,2)
+)
+/
+
+
+CREATE SEQUENCE message_seq
+       INCREMENT BY 1
+       START WITH 1000
+       NOMAXVALUE
+       NOCYCLE;

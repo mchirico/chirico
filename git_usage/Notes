@@ -244,6 +244,9 @@ Branching
  To create a new branch without the last commit
    git checkout -b mybranch master~1
 
+ To close a repository
+   git clone git@github.com:mchirico/chirico.git
+
 
 
    

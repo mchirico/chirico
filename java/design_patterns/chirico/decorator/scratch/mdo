@@ -1,0 +1,12 @@
+#!/bin/bash
+javac Main0.java
+javac A.java
+javac B.java
+javac Cell.java
+javac Fibonacci.java
+javac T.java
+javac f.java
+#java Main0
+#java Fibonacci
+java f
+

@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Cron
+  properties:
+  - name: date
+    direction: desc
+

@@ -1,0 +1,260 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.3.0
+#
+# Creates a tar.gz file of all files after copying them
+# into the $tarfile directory
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./mftp 1
+# will upload the file to sourceforge
+#
+#  Need a quick way to build the array?
+#
+#   find .  !  \(  -iregex '.*simple_but_common_cpp.*'  -o  -regex '.*\.svn.*' -o -iname '*mftp*' -o -regex '\.' -o -iregex '\.\/\..*'  -o -iregex '.*#.*' \)  |awk '{printf "Array[%d]=\x27%s\x27\n",NR,$0 }'
+#
+tarfile="simple_but_common_cpp"
+if [ -d ${tarfile}  ]
+then
+  echo "Deleting directory ${tarfile}"
+  rm -r  ${tarfile}
+fi
+# These are the ones to COPY
+declare -a Array
+Array[1]='./trans_mult.cc'
+Array[2]='./hanoi.cc'
+Array[3]='./hollywood2.cc'
+Array[4]='./integrate2.cc'
+Array[5]='./stringstream_num.cc'
+Array[6]='./NOTES'
+Array[7]='./useful_classes'
+Array[8]='./useful_classes/mysqlite3.h'
+Array[9]='./useful_classes/README'
+Array[10]='./useful_classes/Makefile'
+Array[11]='./useful_classes/sqlite3api.cc'
+Array[12]='./useful_classes/extract.cc'
+Array[13]='./useful_classes/extract.h'
+Array[14]='./useful_classes/simplesqlite3cpp2.cc'
+Array[15]='./sort_input.cc'
+Array[16]='./cards.cc'
+Array[17]='./integrate.cc'
+Array[18]='./missing'
+Array[19]='./ffo.cc'
+Array[20]='./rational.cc'
+Array[21]='./state_pattern.cc'
+Array[22]='./rtrim.cc'
+Array[23]='./string_splitTemplate.cc'
+Array[24]='./README'
+Array[25]='./namedconstructoridiom.cc'
+Array[26]='./depcomp'
+Array[27]='./string_from_scratch.cc'
+Array[28]='./rational2.cc'
+Array[29]='./3Dvector.cc'
+Array[30]='./Makefile.am'
+Array[31]='./copy_output_list_vector.cc'
+Array[32]='./strategy_pattern.cc'
+Array[33]='./configure'
+Array[34]='./for_each_sum.cc'
+Array[35]='./ChangeLog'
+Array[36]='./mdo'
+Array[37]='./COPYING'
+Array[38]='./virtual_function.cc'
+Array[39]='./autoptr.cc'
+Array[40]='./permutation.cc'
+Array[41]='./AUTHORS'
+Array[42]='./Makefile.in'
+Array[43]='./list3.cc'
+Array[44]='./class_template1.cc'
+Array[45]='./list2.cc'
+Array[46]='./time.cc'
+Array[47]='./Makefile'
+Array[48]='./functionoids.cc'
+Array[49]='./string_split.cc'
+Array[50]='./array_passing.cc'
+Array[51]='./explicit2.cc'
+Array[52]='./string_and_char.cc'
+Array[53]='./b2.cc'
+Array[54]='./sqlite3api.cc'
+Array[55]='./resource_handle.cc'
+Array[56]='./for_each_sum2.cc'
+Array[57]='./IstreamExample.h'
+Array[58]='./remove_if.cc'
+Array[59]='./string_toupper.cc'
+Array[60]='./TODO'
+Array[61]='./mkinstalldirs'
+Array[62]='./access_to_private.cc'
+Array[63]='./INSTALL'
+Array[64]='./fib.cc'
+Array[65]='./rand.cc'
+Array[66]='./hollywood.cc'
+Array[67]='./funct_ptrs.cc'
+Array[68]='./vec2.cc'
+Array[69]='./copy_constructor_assignment.cc'
+Array[70]='./install-sh'
+Array[71]='./compile-time_polymorphism.cc'
+Array[72]='./mainIstream.cc'
+Array[73]='./NEWS'
+Array[74]='./copy_if_trans.cc'
+Array[75]='./raii.cc'
+Array[76]='./list3b.cc'
+Array[77]='./configure.in'
+Array[78]='./VERSION'
+Array[79]='./iterswap.cc'
+Array[80]='./hollywood3.cc'
+Array[81]='./vec_on_heap.cc'
+Array[82]='./ostream_sample.cc'
+Array[83]='./b.cc'
+Array[84]='./cstr.cc'
+Array[85]='./aclocal.m4'
+Array[86]='./explicit.cc'
+Array[87]='./state_pattern2.cc'
+Array[88]='./list.cc'
+Array[89]='./vec.cc'
+Array[90]='./list3c.cc'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# Create working directory and populate with source files
+#
+mkdir -p $tarfile
+t=""
+dashOH=""
+for i in `seq ${#Array[@]}`
+do
+  t="${t} ${dashOH} -ipath '${Array[${i}]}'"
+  dashOH='-o'
+done
+r="find .   \( ${t} \) |cpio -pud ./${tarfile}"
+
+eval $r;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#  Standard Upload
+#
+NOARGS=1
+if [ -z $1 ]
+then
+    echo "  To upload file to sourceforge: `basename $0 ` 1"
+    echo "  Run ./mdo and copy configure and Makefile.in to cvs  "
+    exit
+else
+
+      if [[ $1 == 1 ]]
+       then
+
+
+# machine upload.sourceforge.net login anonymous password m@aol.com
+
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+binary
+cd incoming
+put ${tarfile}.tar.gz
+bye
+FTPSTRING
+
+       else
+
+
+# machine upload.sourceforge.net login anonymous password m@aol.com
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+binary
+cd incoming
+put ${1}
+bye
+FTPSTRING
+
+
+
+
+       fi
+
+
+fi
+
+
+
+
+
+

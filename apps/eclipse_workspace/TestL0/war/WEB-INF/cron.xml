@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cron/cronj0</url>
+    <description>Test Insert into database. Second Test</description>
+    <schedule>every 2 hours</schedule>
+    </cron>
+</cronentries>
+

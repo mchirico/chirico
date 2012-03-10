@@ -1,0 +1,75 @@
+You may want to go with the plugin option.
+
+Step 1:
+
+    make
+    cp audisp-example /sbin/audisp-example
+    cp audisp-example.conf /etc/audisp/plugins.d/.
+
+
+
+
+THIS IS FOR MAIN DISPATCH
+
+You'll need to compile the program
+
+  $ gcc skeleton.c -o skeleton -laudit
+  $ mv skeleton /sbin/skeleton
+
+Note if you're using the parsing function, then, you
+may want to do the following
+  $ gcc <file.c> -o <file> -lauparse -laudit
+
+
+Change
+ /etc/audit/auditd.conf
+  dispatcher = /sbin/skeleton
+  #dispatcher = /sbin/audispd 
+
+
+
+Reference:
+ http://people.redhat.com/sgrubb/audit/audit-rt-events.txt
+
+
+
+You can parse audit logs with the following command
+
+  [root@v5 ~]# ausearch -i -a 75
+
+Which will parse all the ":75" entries in the audit log.  Directly below
+is an example
+
+
+  type=CRED_ACQ msg=audit(1197249683.994:75): user pid=23084 uid=0
+  auid=500 subj=system_u:system_r:unconfined_t:s0-s0:c0.c1023
+  msg='op=PAM:setcred acct=root exe="/bin/su" (hostname=?, addr=?,
+  terminal=pts/1 res=success)' 
+
+Which when running the command below:
+
+  [root@v5 ~]# ausearch -i -a 75
+
+Gives the more readable entry directly below:
+
+ type=CRED_ACQ msg=audit(12/09/2007 20:21:23.994:75) : user pid=23084
+ uid=root auid=chirico
+ subj=system_u:system_r:unconfined_t:s0-s0:c0.c1023 msg='op=PAM:setcred
+ acct=root exe=/bin/su (hostname=?, addr=?, terminal=pts/1
+ res=success)'
+
+
+
+
+Linux system auditing:
+ http://www.ibm.com/developerworks/linux/library/l-security-audit.html
+
+
+To find open bugs with audit
+  https://bugzilla.redhat.com/buglist.cgi?cmdtype=runnamed&namedcmd=audit
+
+
+
+Interesting note:
+
+  $ man audispd

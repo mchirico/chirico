@@ -1,0 +1,97 @@
+
+SIZE'
+     Specify the size of the buffer to use in fully buffered mode.
+     SIZE may be, or may be an integer optionally followed by, one of
+     the following multiplicative suffixes:
+          `KB' =>           1000 (KiloBytes)
+          `K'  =>           1024 (KibiBytes)
+          `MB' =>      1000*1000 (MegaBytes)
+          `M'  =>      1024*1024 (MebiBytes)
+          `GB' => 1000*1000*1000 (GigaBytes)
+          `G'  => 1024*1024*1024 (GibiBytes)
+     and so on for `T', `P', `E', `Z', and `Y'.
+
+
+
+
+Red Had Certification:
+https://www.redhat.com/certification/rhcsa/objectives/
+
+
+Article on ServiceMix
+http://architects.dzone.com/articles/pattern-based-development-with-0
+
+
+
+Postfix selinux problems:
+
+The command below should fix:
+
+setsebool -P allow_postfix_local_write_mail_spool=1
+
+
+
+
+Drive to investigate:
+
+Seagate Barracuda XT 2 TB 7200RPM SATA 6 Gb/s 64MB Cache 3.5 Inch Internal Bare Drive ST32000641AS
+
+
+
+To format code in eclipse, use the following steps:
+
+    1. Select all text
+    2. ctl-shft-f
+         Mac cmd-shft-f
+
+
+
+
+
+
+
+Systems tools for performance:
+	strace
+	lsof
+
+
+This file:
+ http://chirico.googlecode.com/svn/trunk/Documentation/Notes
+
+Multi-part form encoding:
+http://www.faqs.org/rfcs/rfc1867.html
+
+Google Charting:
+http://code.google.com/apis/chart/
+
+
+
+Linux async io
+http://www.ibm.com/developerworks/linux/library/l-async/
+
+Disk io
+http://www.fccps.cz/download/adv/frr/hdd/hdd.html
+
+
+Practical Byzantine Fault Tolerance
+http://research.microsoft.com/en-us/um/people/mcastro/publications/osdi99.pdf
+
+
+Working with rownum:
+
+http://www.oracle.com/technology/oramag/oracle/06-sep/o56asktom.html
+
+
+
+
+ssh -o  ServerAliveInterval=30 cluster1
+
+
+
+
+<form enctype="multipart/form-data" action="uploader.php" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+Choose a file to upload: <input name="uploadedfile" type="file" /><br />
+<input type="submit" value="Upload File" />
+</form>
+

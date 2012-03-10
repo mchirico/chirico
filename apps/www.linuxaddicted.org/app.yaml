@@ -1,0 +1,31 @@
+application: linuxaddictedorg
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /static
+  static_dir: static
+
+- url: /test\.html
+  script: test.py
+
+- url: /ping\.html
+  script: test.py
+
+- url: /cron/.*
+  script: cron.py
+
+- url: /.*
+  script: index.py
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /mainmenu\.html
+  script: mainmenu.py
+

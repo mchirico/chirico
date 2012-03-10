@@ -1,0 +1,154 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.3.1
+#
+# Creates a tar.gz file of all files after copying them
+# into the $tarfile directory
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./mftp 1
+# will upload the file to sourceforge
+#
+#  Need a quick way to build the array?
+#
+#   find .  !  \(  -iregex './stock.*'  -o  -regex '.*CVS.*' -o -iname '*mftp' -o -regex '\.' -o -iregex '\.\/\..*'  -o -iregex '.*#.*' -o -iregex '.*gz.*' -o -iregex '.*~.*' -o -iregex './src' -o -iregex './man' \)  |awk '{printf "Array[%d]=\x27%s\x27\n",NR,$0 }'
+#
+tarfile="stock"
+if [ -d ${tarfile}  ]
+then
+  echo "Deleting directory ${tarfile}"
+  rm -r  ${tarfile}
+fi
+# These are the ones to COPY
+declare -a Array
+Array[1]='./TODO'
+Array[2]='./INSTALL'
+Array[3]='./src/stock.c'
+Array[4]='./configure.ac'
+Array[5]='./Makefile.in'
+Array[6]='./man/stock.1'
+Array[7]='./Makefile'
+Array[8]='./scripts'
+Array[9]='./scripts/industry_rank.pl'
+Array[10]='./scripts/Notes'
+Array[11]='./VERSION'
+Array[12]='./NEWS'
+Array[13]='./COPYING'
+Array[14]='./README'
+Array[15]='./AUTHORS'
+Array[16]='./Makefile.am'
+Array[17]='./mdo'
+Array[18]='./ChangeLog'
+Array[19]='./configure'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# Create working directory and populate with source files
+#
+mkdir -p $tarfile
+t=""
+dashOH=""
+for i in `seq ${#Array[@]}`
+do
+  t="${t} ${dashOH} -ipath '${Array[${i}]}'"
+  dashOH='-o'
+done
+r="find .   \( ${t} \) |cpio -pud ./${tarfile}"
+
+eval $r;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#  Standard Upload
+#
+NOARGS=1
+if [ -z $1 ]
+then
+    echo "  To upload file to sourceforge: `basename $0 ` 1"
+    echo "  Run ./mdo and copy configure and Makefile.in to cvs  "
+    exit
+else
+
+      if [[ $1 == 1 ]]
+       then
+
+
+# Machine upload.sourceforge.net login anonymous password m@aol.com
+# Make sure you add the -n -u
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+user anonymous m@aol.com
+cd incoming
+put ${1}
+bye
+FTPSTRING
+
+fi
+fi

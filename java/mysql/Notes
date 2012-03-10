@@ -1,0 +1,7 @@
+
+
+If you do an rm -rf *.class this won't work because you have
+the driver manager in this directory. This needs to be corrected.
+
+See the notes under oracle on where to install the files.
+

@@ -1,0 +1,25 @@
+
+Very important in stack
+
+...
+   Object result = elements[--size];
+   elements[size] = null;
+   return result;
+}
+
+
+
+"public static void main"  You must always
+have this. If you want to return a value to the
+system use System.exit(value);
+
+public class ExSys {
+       public static void main(String[] args) {
+       	     int retval=3;
+	     System.exit(retval);
+       }
+}
+
+
+
+To Code Beautify, use astyle.

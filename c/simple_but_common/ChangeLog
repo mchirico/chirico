@@ -1,0 +1,115 @@
+Mon May 19 21:30:36 EDT 2008
+	o added atexit
+
+Thu Nov 29 12:36:26 EST 2007
+	o added configure.as and Makefile.am
+
+Mon Nov 26 12:19:31 EST 2007
+	o added regex2.c
+
+Wed Aug 29 10:46:47 EDT 2007
+	o added regexp.c
+
+Thu Mar  9 13:40:30 EST 2006
+	o updated getopt.c with getopt_long
+
+Tue Jan 17 20:02:06 EST 2006
+	o fixed rand.c
+
+Sat Jan 14 12:44:20 EST 2006
+	o added rand.c
+
+Mon Dec  5 16:08:29 EST 2005
+	o added rtctime.c
+
+Sun Oct  2 16:55:53 EDT 2005
+	o added smtp.c
+
+Thu Jul 28 21:06:40 EDT 2005
+	o added btree.c
+
+Fri Jul  8 10:44:14 EDT 2005
+	o lots of updates to rawsockets.c
+
+Tue Jun 28 17:17:29 EDT 2005
+	o quick hack for rawsockets.c
+
+Tue Jun 28 09:40:55 EDT 2005
+	o changed name of pipe2.c to pipe_dup2.c
+
+Sat Jun 18 14:57:09 EDT 2005
+	o pam_example.c
+
+Sat Jun 18 12:15:48 EDT 2005
+	o rawsockets.c
+
+Thu May 19 21:10:05 EDT 2005
+	o .PHONY: clean
+
+Tue May 17 09:59:50 EDT 2005
+	o added pipe2
+
+Sun May 15 12:20:31 EDT 2005
+	o added pipe.c
+
+Sat May 14 06:41:43 EDT 2005
+	o added popen.c 
+
+Fri May 13 19:18:30 EDT 2005
+	o added system.c (dup2 and system)
+
+Thu May 12 10:34:57 EDT 2005
+	o dnotify.c added
+
+Wed May 11 07:46:59 EDT 2005
+	o changed rights on syslog.c (chmod 664)
+
+Mon Apr 25 09:19:31 EDT 2005
+	o server (change to daemon)
+
+Sun Apr 24 20:13:59 EDT 2005
+	o server, syslog
+
+Mon Feb 28 19:46:49 EST 2005
+	o getpwuid added
+
+Wed Dec 15 05:45:48 EST 2004
+	o enum.cc changed to start with zero
+
+Wed Dec 15 05:28:23 EST 2004
+	o simpleClass.cc it does not belong here
+	but I'm keeping it. Added link to C++ download
+
+Tue Dec 14 16:16:42 EST 2004
+	o fixed error under gcc 2.95.4 debian
+
+Mon Dec 13 21:47:32 EST 2004
+	o More cleaning up with opendir. Stil a lot more
+	work. But, now I can live with it.
+
+Mon Dec 13 16:55:13 EST 2004
+	o Hmmm forgot to close thefile in opendir -- fixed
+	
+Mon Dec 13 12:59:28 EST 2004
+	o Updated opendir to deal with "." or ".." or ".../../" 
+	combo
+
+Sun Dec 12 21:38:49 EST 2004
+	o Updated opendir.c It will recurse
+
+Sun Dec 12 15:41:29 EST 2004
+	o Added opendir.c
+
+Sat Dec 11 11:15:34 EST 2004
+	o Minor change to getopt.c
+
+Sat Dec  4 18:01:03 EST 2004
+	o Added sizediff.c
+
+Wed Jul 28 11:53:40 EDT 2004
+	o Added readrealloc.c
+	o Added realloc.c
+
+
+Tue Jul 27 10:55:23 EDT 2004
+	o Added getline

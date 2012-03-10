@@ -1,0 +1,37 @@
+application: souptonutsmc
+version: 8
+runtime: python
+api_version: 1
+
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /cron/.*
+  script: cron.py
+
+
+- url: /chirico/.*
+  script: chirico.py
+
+- url: /secure/.*
+  script: secure.py
+  login: required
+  secure: always
+
+- url: /test\.html
+  script: test.py
+
+- url: /ping\.html
+  script: test.py
+
+- url: /cstat/.*
+  script: cstat.py
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+
+- url: /.*
+  script: index.py

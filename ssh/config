@@ -1,0 +1,44 @@
+Host c1
+Hostname cluster1
+        User chirico
+        ControlMaster auto
+        ForwardX11Trusted yes
+
+
+
+Host big
+HostName 192.168.1.12
+        User chirico
+        LocalForward 15210 localhost:1521
+        LocalForward 1158 localhost:1158
+        LocalForward 5501 localhost:5501
+        LocalForward 5522 localhost:5522
+        LocalForward 5520 localhost:5520
+        LocalForward 58058 localhost:58058
+        ServerAliveInterval 3
+	ForwardX11Trusted yes
+
+
+
+Host mchirico.org
+HostName mchirico.org
+        User chirico
+        LocalForward 15210 localhost:1521
+        LocalForward 1158 localhost:1158
+        LocalForward 5501 localhost:5501
+        LocalForward 5522 localhost:5522
+        LocalForward 58058 localhost:58058
+        ServerAliveInterval 3
+	ForwardX11Trusted yes
+
+
+Host squeel.org
+HostName squeel.org
+        User chirico
+        LocalForward 15210 localhost:1521
+        LocalForward 1159 localhost:1158
+        LocalForward 5501 localhost:5501
+        LocalForward 5522 localhost:5522
+        LocalForward 58058 localhost:58058
+
+

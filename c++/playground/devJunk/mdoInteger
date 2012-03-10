@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ IntegerMain.cc Integer.cc -o IntegerMain && ./IntegerMain

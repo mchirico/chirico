@@ -1,0 +1,3 @@
+#!/bin/bash
+gcc prtids.c -o prtids -lpthread && ./prtids
+

@@ -1,0 +1,52 @@
+/*
+
+References:
+
+  http://java.sun.com/javase/6/docs/api/java/sql/ResultSet.html
+
+  http://java.sun.com/javase/6/docs/api/java/sql/ResultSetMetaData.html
+
+   This is the more generic version. Note that it figures out the max
+   columns in the table from rs.getMetaData(). This will work for any
+   size columns.
+
+
+ */
+
+import java.sql.* ;
+public class ConnOracleBigOE {
+    public static void main(String[] args) {
+        try {
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver(  ));
+
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@big:1521:orcl","oe","gogo99");
+            Statement stmt = conn.createStatement(  );
+            ResultSet rs = stmt.executeQuery(
+                               "select * from WAREHOUSES");
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            String s = "";
+
+
+            while (rs.next(  ))
+            {
+                for (int i=1; i < rsmd.getColumnCount(); ++i) {
+                    System.out.print(s+rs.getString(i));
+                    s=",";
+                }
+                s="";
+                System.out.println("");
+            }
+            rs.close(  );
+            stmt.close(  );
+            conn.close(  );
+
+        }
+        catch (SQLException e) {
+            System.out.println("Oops! Got a SQL error: " + e.getMessage(  ));
+            System.exit(1);
+        }
+
+    }
+
+}

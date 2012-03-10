@@ -1,0 +1,18 @@
+You'll need java: 
+
+  yum -y install java-1.6.0-openjdk-devel
+
+
+
+mkdir -p /home/chirico/jboss
+cd /home/chirico/jboss
+wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA-src.tar.gz?use_mirror=voxel
+
+
+tar -xzf jboss-5.1.0.GA-src.tar.gz 
+cd ./jboss-5.1.0.GA-src/build/
+sh build.sh
+
+
+http://192.168.1.10:8080/chirico/sayhello
+

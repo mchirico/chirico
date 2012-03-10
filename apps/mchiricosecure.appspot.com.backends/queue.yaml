@@ -1,0 +1,29 @@
+queue:
+- name: queue0
+  rate: 30/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+
+
+- name: queue2
+  rate: 30/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h
+
+- name: queued
+  rate: 10/s
+  bucket_size: 80
+  retry_parameters:
+    min_backoff_seconds: 10
+    max_backoff_seconds: 200
+    task_retry_limit: 7
+    task_age_limit: 1h

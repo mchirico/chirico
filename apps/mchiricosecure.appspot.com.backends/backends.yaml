@@ -1,0 +1,10 @@
+backends:
+- name: mega
+  start: mega.py
+  class: B1
+  instances: 2
+  options: dynamic
+
+
+
+

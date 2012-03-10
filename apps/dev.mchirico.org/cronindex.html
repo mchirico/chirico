@@ -1,0 +1,33 @@
+
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+
+<br>
+
+
+    {% for r in crons %}
+      {% if r.author %}
+        <b>{{ r.author.nickname }}</b> wrote:
+      {% else %}
+       cwxstat An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ r.content|escape }}</blockquote>
+      <blockquote>{{ r.hash|escape }}</blockquote>
+    {% endfor %}
+
+
+
+    <form action="/cron/fireAction" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+
+
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+  </body>
+</html>

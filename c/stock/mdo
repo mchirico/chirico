@@ -1,0 +1,8 @@
+#!/bin/bash
+rm -f ./Makefile.in ./configure ./config.status
+aclocal
+autoconf
+touch NEWS README AUTHORS ChangeLog
+automake --add-missing
+
+

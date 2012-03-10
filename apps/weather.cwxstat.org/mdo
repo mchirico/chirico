@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR=`pwd`
+cd /home/chirico/dev/chirico/GoogleAppSDK/google_appengine/
+./appcfg.py --email=mchirico@gmail.com  update $DIR
+#./appcfg.py --email=mchirico@gmail.com  rollback $DIR 
+
+
+

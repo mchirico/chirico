@@ -1,0 +1,142 @@
+<html>
+<head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<META NAME="KEYWORDS" CONTENT="Python Tutorial">
+<META NAME="DESCRIPTION" CONTENT="Python Scripts and Tips">
+<title>Python Tips</title>
+
+<style type="text/css">
+<!--
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: -pre-wrap;
+}
+pre, code {
+  font-size: 12px;
+  background-color: #eee;
+}
+
+-->
+</style>
+
+
+</head>
+<body>
+
+
+<table width="750" border="0" cellspacing="1" cellpadding="0">
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td><td>
+
+<h1>Python Tutorial</h1>
+
+<p>
+
+Mike Chirico (mchirico@users.sourceforge.net or mchirico@gmail.com)<br>
+Copyright (C) 2008 (GNU Free Documentation License) <br>
+Latest Update: <a href=http://souptonuts.sourceforge.net/Python_tutorial.html>
+http://souptonuts.sourceforge.net/Python_tutorial.html
+</a><br>
+Date: Sun Aug 24 11:06:40 EDT 2008
+<br>
+</p>
+
+
+
+
+<h3>I/O Commands in Python</h3>
+
+<p>
+The following command will create the file 'Stuff' and write to this file. Open the
+file with 'w+' option enables reading. The command f.seek(0,2) moves to the end of the
+file. 
+</p>
+
+<pre><code>
+"This example Creates and writes to a file"
+f=open('Stuff','w+')
+f.write('one\n')
+f.write('two\n')
+f.write('three\n')
+f.flush()
+f.seek(0)   
+a=f.readline().strip()  
+"At this point a = 'one'"
+f.seek(0,2)
+f.write('four\n')
+f.write('five\n')
+f.flush()
+f.seek(0)
+a=[t.strip() for t in f]
+</code></pre>
+
+
+
+
+<!-- *** BEGIN bio *** -->
+<hr>
+<p>
+
+<img
+alt="Chirico img"
+src="http://souptonuts.sourceforge.net/chirico/pgstats/pgtrack.php?python_tips"
+border=0>
+
+
+<em>
+
+Mike Chirico, a father of triplets (all girls) lives outside of
+Philadelphia, PA, USA. He has worked with Linux since 1996, has a Masters
+in Computer Science and Mathematics from Villanova University, and has
+worked in computer-related jobs from Wall Street to the University of
+Pennsylvania. His hero is Paul Erdos, a brilliant number theorist who was
+known for his open collaboration with others. 
+<p>
+
+
+<br> Mike's notes page is <a
+href="http://souptonuts.sourceforge.net/chirico/index.php">souptonuts</a>. For
+open source consulting needs, please send an email to 
+
+
+<a href="mailto:mchirico@cwxstat.com?subject=Open Source Consulting Needs">
+mchirico@cwxstat.com</a>. All consulting work must include a donation to 
+SourceForge.net.
+
+</em>
+
+
+
+<br>
+<!-- *** END bio *** -->
+
+
+
+
+<p>
+<br>
+<A href="http://sourceforge.net"><IMG height=62
+alt="SourceForge.net Logo"
+src="http://sourceforge.net/sflogo.php?group_id=79320&amp;type=5" width=210
+border=0></A>
+
+
+
+
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-3115310-2";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!--  Document Information:  python
+Location of document: /home/chirico/dev/chirico/Documentation/Articles/Python
+svn: http://code.google.com/p/chirico/source/browse/trunk/Documentation/Articles/Python/Python_tutorial.html
+
+ -->

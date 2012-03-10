@@ -1,0 +1,12 @@
+indexes:
+
+- kind: DB
+  properties:
+  - name: date
+    direction: desc
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+.\" Manpage for stock
+.\" Contact mchirico@users.sourceforge.com to correct errors or omissions.
+.TH CARDS(1) "Sat Apr  8 16:07:51 EDT 2006" "1.0" "cards man page"
+.SH NAME
+cards \- Analize Texas Hold'em Poker Hands
+.SH SYNOPSIS
+.B cards [number players]
+.SH DESCRIPTION
+The
+.B cards 
+command writes to standard output a random hand for 6 players
+unless the number of players are given as an option.
+
+
+.B cards
+.RS
+Player: 0 9c,6d <Jd,2s,7s,Qh,4c> Pocket [13]	2,6,7,9,J
+Player: 1 Ac,Kd <Jd,2s,7s,Qh,4c> Pocket [straight bhigh 150]	2,7,A,J,K
+Player: 2 Qs,5d <Jd,2s,7s,Qh,4c> Pocket [high 30]	2,5,7,J,Q
+Player: 3 Qd,3h <Jd,2s,7s,Qh,4c> Pocket [high 26]	2,3,7,J,Q
+Player: 4 Ah,Kc <Jd,2s,7s,Qh,4c> Pocket [straight bhigh 150]	2,7,A,J,K
+Player: 5 Jc,9d <Jd,2s,7s,Qh,4c> Pocket [high 36]	2,7,9,J,J
+.RE
+
+.B cards 9
+.RS
+Player: 0 6s,2h <9s,3s,9c,3c,4h> Pocket [6]	2,3,6,9,9
+Player: 1 7c,5c <9s,3s,9c,3c,4h> Pocket [flush 20]	3,5,7,9,9
+Player: 2 Qc,3d <9s,3s,9c,3c,4h> Pocket [high 26]	3,3,9,9,Q
+Player: 3 Kd,Jh <9s,3s,9c,3c,4h> Pocket [bhigh 66]	3,9,9,J,K
+Player: 4 Kh,Td <9s,3s,9c,3c,4h> Pocket [bhigh 63]	3,9,9,K,T
+Player: 5 As,Qd <9s,3s,9c,3c,4h> Pocket [bhigh 72]	3,9,9,A,Q
+Player: 6 9d,6c <9s,3s,9c,3c,4h> Pocket [13]	3,6,9,9,9
+Player: 7 Kc,Jd <9s,3s,9c,3c,4h> Pocket [bhigh 66]	3,9,9,J,K
+Player: 8 Ac,8s <9s,3s,9c,3c,4h> Pocket [high 40]	3,8,9,9,A
+.RE
+
+.SH AUTHOR
+Mike Chirico (mchirico@users.sourceforge.net)
+.RS
+http://souptonuts.sourceforge.net/chirico/index.php
+.RE
+.SH SOURCE
+ http://prdownloads.sourceforge.net/cpearls/cards.tar.gz?download
+.SH SVN
+The SVN can be found in the cpearls project under
+http://svn.sourceforge.net/viewcvs.cgi/cpearls/cards/
+.SH REFERENCES
+

@@ -1,0 +1,80 @@
+#!/bin/bash
+EMAIL=dev.mchirico@gmail.com
+find . -user ${USER}  -iname '*~' -exec rm -- {} \;
+find . -user ${USER}  -iname '*#*' -exec rm -- {} \;
+find . -user ${USER}  -iname '*.pyc' -exec rm -- {} \;
+DIR=`pwd`
+#
+
+update() {
+
+    if [ -f /usr/local/bin/appcfg.py ]
+    then
+	appcfg.py --email=${EMAIL}  update $DIR
+    else
+	if [ -d ~/dev/chirico/GoogleAppSDK/google_appengine/ ]
+	then
+	    cd ~/dev/chirico/GoogleAppSDK/google_appengine/
+	    ./appcfg.py --email=${EMAIL}  update $DIR
+	fi
+    fi
+}
+
+
+
+backendupdate() {
+    if [ -f /usr/local/bin/appcfg.py ]
+    then
+	appcfg.py --email=${EMAIL} backends ${DIR} update
+    else
+	if [ -d ~/dev/chirico/GoogleAppSDK/google_appengine/ ]
+	then
+	    cd ~/dev/chirico/GoogleAppSDK/google_appengine/
+	    ./appcfg.py --email=${EMAIL} backends ${DIR} update
+	fi
+    fi
+}
+
+help() {
+    echo "You need to provide an option"
+		   echo "-b (backends) "
+		   echo "-h (help) "
+		   echo "-u (update) "
+}
+
+
+
+# Default Message. Need this first
+if [ $# -eq 0 ] 
+then
+ help
+fi
+#
+#
+while getopts "bhu" Option
+do
+        case $Option in
+                b | c | d ) echo "Staring Backends ";
+		        backendupdate
+			;;
+                u ) echo "Staring Update ";
+		        update
+			;;
+                h ) 
+		  help
+		;;
+                * ) echo "Unknown option ";;
+        esac
+done
+shift $(($OPTIND - 1))
+
+
+
+
+
+
+
+
+
+
+

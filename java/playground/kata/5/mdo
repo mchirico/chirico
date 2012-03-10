@@ -1,0 +1,4 @@
+#!/bin/bash
+prog="ArrayWork"
+javac *.java && java $prog
+

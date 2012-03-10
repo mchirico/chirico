@@ -1,0 +1,14 @@
+#!/bin/bash
+clean 1
+
+
+JBOSS_CLASS_PATH=/home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/common/lib/servlet-api.jar
+MY_JAVA_SRC=src/com/chirico/*.java
+MY_WAR=chirico.war
+javac -classpath $JBOSS_CLASS_PATH -d chirico.war/WEB-INF/classes/ $MY_JAVA_SRC
+rm -rf /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/$MY_WAR
+cp -r $MY_WAR /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/.
+find /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy -wholename '*/.svn' -exec rm -rf {} \; 2>/dev/null
+
+
+

@@ -1,0 +1,15 @@
+Copyright (C) GPL 2006 Mike Chirico <mchirico@gmail.com>
+http://souptonuts.sourceforge.net/chirico/
+
+
+If you're doing development, you'll need Automake and Autoconf.
+Once you have these packages, run the following:
+
+  ./mdo
+
+The above command will build the necessary configure.ac and
+Makefile.am files.
+
+
+See INSTALL
+

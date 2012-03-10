@@ -1,0 +1,5 @@
+#!/bin/bash
+rm -f *.class
+rm -f datafile
+rm -f dataText
+javac *.java

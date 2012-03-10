@@ -1,0 +1,8 @@
+#!/bin/bash
+# You have to have the driver installed, or download
+# ojdbc14.jar plus all the libraries.
+#
+# So here is how I do it on my mak
+javac -cp .:/Users/mchirico/oracle/instantclient/instantclient_10_2/ojdbc14.jar *.java
+java -cp .:/Users/mchirico/oracle/instantclient/instantclient_10_2/ojdbc14.jar ConnOracleBig
+#javac *.java && java ConnOracle && java ConnOracleBig

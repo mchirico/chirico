@@ -1,0 +1,29 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.1.0
+#
+# Creates a tar.gz file of all files after copying them
+# into the $tarfile directory
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./myMakeTar 1
+# will upload the file to sourceforge
+#
+#
+# You'll need a ~.netrc with the following lines
+# machine upload.sourceforge.net user anonymous m@aol.com
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+user anonymous m@aol.com
+binary
+cd incoming
+put ${1}
+bye
+FTPSTRING
+
+
+

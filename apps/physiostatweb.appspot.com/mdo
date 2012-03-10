@@ -1,0 +1,7 @@
+#!/bin/bash
+DIR=`pwd`
+cd /home/chirico/dev/chirico/GoogleAppSDK/google_appengine/
+./appcfg.py --email=dev.mchirico@gmail.com  update $DIR
+
+
+

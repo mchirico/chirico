@@ -1,0 +1,231 @@
+
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["gauge"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addRows(3);
+        data.setValue(0, 0, 'Memory');
+        data.setValue(0, 1, 80);
+        data.setValue(1, 0, 'CPU');
+        data.setValue(1, 1, 55);
+        data.setValue(2, 0, 'Network');
+        data.setValue(2, 1, 68);
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        var options = {width: 400, height: 120, redFrom: 90, redTo: 100,
+            yellowFrom:75, yellowTo: 90, minorTicks: 5};
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["motionchart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addRows(14);
+        data.addColumn('string', 'Department');
+        data.addColumn('number', 'Year');
+        data.addColumn('number', 'Sales');
+        data.addColumn('number', 'Expenses');
+        data.setValue(0, 0, 'Dogs');
+        data.setValue(0, 1, 1995);
+        data.setValue(0, 2, 1000);
+        data.setValue(0, 3, 300);
+        data.setValue(1, 0, 'Cats');
+        data.setValue(1, 1, 1995);
+        data.setValue(1, 2, 950);
+        data.setValue(1, 3, 200);
+
+        data.setValue(2, 0, 'Dogs');
+        data.setValue(2, 1, 1996);
+        data.setValue(2, 2, 1200);
+        data.setValue(2, 3, 400);
+        data.setValue(3, 0, 'Cats');
+        data.setValue(3, 1, 1996);
+        data.setValue(3, 2, 900);
+        data.setValue(3, 3, 150);
+
+        data.setValue(4, 0, 'Dogs');
+        data.setValue(4, 1, 1997);
+        data.setValue(4, 2, 1250);
+        data.setValue(4, 3, 800);
+        data.setValue(5, 0, 'Cats');
+        data.setValue(5, 1, 1997);
+        data.setValue(5, 2, 200);
+        data.setValue(5, 3, 660);
+
+        data.setValue(6, 0, 'Dogs');
+        data.setValue(6, 1, 1998);
+        data.setValue(6, 2, 1350);
+        data.setValue(6, 3, 800);
+        data.setValue(7, 0, 'Cats');
+        data.setValue(7, 1, 1998);
+        data.setValue(7, 2, 600);
+        data.setValue(7, 3, 1260);
+
+        data.setValue(8, 0, 'Dogs');
+        data.setValue(8, 1, 1999);
+        data.setValue(8, 2, 1450);
+        data.setValue(8, 3, 860);
+        data.setValue(9, 0, 'Cats');
+        data.setValue(9, 1, 1999);
+        data.setValue(9, 2, 900);
+        data.setValue(9, 3, 1860);
+
+        data.setValue(8, 0, 'Dogs');
+        data.setValue(8, 1, 2000);
+        data.setValue(8, 2, 1480);
+        data.setValue(8, 3, 890);
+        data.setValue(9, 0, 'Cats');
+        data.setValue(9, 1, 2000);
+        data.setValue(9, 2, 920);
+        data.setValue(9, 3, 1760);
+
+        data.setValue(8, 0, 'Dogs');
+        data.setValue(8, 1, 2001);
+        data.setValue(8, 2, 1450);
+        data.setValue(8, 3, 860);
+        data.setValue(9, 0, 'Cats');
+        data.setValue(9, 1, 2001);
+        data.setValue(9, 2, 920);
+        data.setValue(9, 3, 1760);
+
+
+        data.setValue(8, 0, 'Dogs');
+        data.setValue(8, 1, 2002);
+        data.setValue(8, 2, 1350);
+        data.setValue(8, 3, 760);
+        data.setValue(9, 0, 'Cats');
+        data.setValue(9, 1, 2002);
+        data.setValue(9, 2, 520);
+        data.setValue(9, 3, 360);
+
+
+
+
+        var chart = new google.visualization.MotionChart(document.getElementById('chart_div'));
+        chart.draw(data, {width: 600, height:300});
+      }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+  <body>
+
+<div id="chart_div" style="width: 600px; height: 300px;"></div>
+
+
+
+<br><br><br><br><br><br><br><br>
+
+
+
+Scratch2 ..
+<br>
+
+
+
+    {% for i in results %}
+      {% if i.author %}
+        <b>{{ i.author.nickname }}</b> wrote:
+      {% else %}
+       cwxstat An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ i.content|escape }}</blockquote>
+    {% endfor %}
+
+
+
+    <form action="/sign" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+
+    <form action="/Action0" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Fire Action0"></div>
+    </form>
+
+    <form action="/test" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Test"></div>
+    </form>
+
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+
+
+<div id="chart_div"></div>
+
+
+<script src="http://spreadsheets.google.com/gpub?url=http%3A%2F%2Fk2alr2pc-a.gmodules.com%2Fig%2Fifr%3Fup__table_query_url%3Dhttp%253A%252F%252Fspreadsheets.google.com%252Ftq%253Fkey%253DpsaJpyIFKORwoF5764ASiSg%2526range%253DA16%25253AH25%2526gid%253D0%2526pub%253D1%26up_title%3D%26up_state%3D%26up__table_query_refresh_interval%3D0%26url%3Dhttp%253A%252F%252Fwww.google.com%252Fig%252Fmodules%252Fmotionchart.xml&height=320&width=450"></script>
+
+<br>
+<img src="http://chart.apis.google.com/chart?
+chs=250x100
+&amp;chd=t:60,40
+&amp;cht=p3
+&amp;chl=Hello|World"
+alt="Sample chart" />
+
+
+
+<br><br>
+
+<img src="http://chart.apis.google.com/chart?chs=100x20&amp;cht=ls&chco=0077CC&amp;chm=B,E6F2FA,0,0,0&amp;chls=1,0,0&amp;chd=t:27,25,25,25,25,27,100,31,25,36,25,25,39,25,31,25,25,25,26,26,25,25,28,25,25,100,28,27,31,25,27,27,29,25,27,26,26,25,26,26,35,33,34,25,26,25,36,25,26,37,33,33,37,37,39,25,25,25,25" alt="Sparkline" /></p>
+
+<br><br>
+
+
+
+
+<script>
+var fact = 1;
+for(i = 1; i < 18; ++i) {
+    fact = fact*i;
+    document.write(i + "! = " + fact + "<br>");
+}
+</script>
+
+<button onclick="alert('You clicked the button');">
+Click here
+</button>
+
+<br><br><br><br><br><br>
+<FORM ACTION="/handle"
+           ENCTYPE="multipart/form-data"
+           METHOD=POST>
+     What is your name? <INPUT TYPE=TEXT NAME=submitter>
+     What files are you sending? <INPUT TYPE=FILE NAME=pics>
+     </FORM>
+
+
+  </body>
+</html>

@@ -1,0 +1,4 @@
+#!/bin/bash
+# You have to have the driver installed, or download
+# ojdbc14.jar
+javac *.java && java ConnOracle && java ConnOracleBig

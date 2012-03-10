@@ -1,0 +1,26 @@
+
+QUICK INSTALL:
+
+    $ ./configure
+    $ make
+ 
+   Or, you can just do make
+    $ make
+
+
+  You need sqlite3 if you want to compile all the programs. However
+  this should still compile without sqlite3.
+
+     $ wget http://www.sqlite.org/sqlite-3.2.1.tar.gz
+     $ tar -xzf sqlite-3.2.1.tar.gz
+     $ cd sqlite-3.2.1
+     $ ./configure
+     $ make
+     $ su -
+     $ make install
+
+
+      
+
+
+

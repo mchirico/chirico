@@ -1,0 +1,19 @@
+adduser jboss
+su - jboss
+mkdir jbossPortal
+cd jbossPortal
+wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA-src.tar.gz?use_mirror=voxel
+cd ~
+mkdir dev
+cd dev
+svn checkout http://chirico.googlecode.com/svn/trunk/java/jboss jboss
+
+
+# Note you'll need to create ssl key
+# Ref: 
+# http://www.redhat.com/docs/manuals/jboss/jboss-eap-4.2/doc/Server_Configuration_Guide/Security_on_JBoss-Using_SSL_with_JBoss_using_JSSE.html
+#
+keytool -genkey -keystore squeel.keystore -storepass rmi+ssl -keypass rmi+ssl -keyalg RSA -alias example -validity 3650 -dname "cn=squeel,ou=admin book,dc=jboss,dc=org"
+#
+# link
+ln -s /work/jboss/jbossPortal jbossPortal

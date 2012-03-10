@@ -1,0 +1,3 @@
+#!/bin/bash
+export WL_HOME=/home/chirico/Oracle/Middleware/wlserver_10.3
+

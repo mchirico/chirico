@@ -1,0 +1,64 @@
+.\" Manpage for stock
+.\" Contact mchirico@users.sourceforge.com to correct errors or omissions.
+.TH PICAL(1) "Sun May 27 16:12:38 EDT 2007" "1.0" "pical man page"
+.SH NAME
+pical \- Personal Income Calculator
+.SH SYNOPSIS
+.B pical [-r HrlyRate] [-h HrsPerWeek] [-t Tax_rate] [-w Weeks_per_year]
+.SH DESCRIPTION
+The
+.B pical
+command takes as input the hourly rate, hours worked per week, the tax rate,
+and the number of weeks worked per year.
+
+
+
+
+.B pical -r 60 -h 49 -t .19 -w 45
+.nf
+
+week_margin 	     2510.22
+year_margin 	   112959.90
+week_gross  	     3210.00
+year_gross  	   144450.00
+
+Avg hrs day 	        9.80
+Fed tx      	    27445.50
+State tx    	     4044.60
+.fi
+
+The above example shows the weekly
+amount pay given a tax rate of 19%. Note,
+if you have a home morgage that you're
+still paying interest on, dependents etc., then, it is
+likely that your take rate will be well below 28%
+.RE
+See http://turbotax.intuit.com/tax_help/tax_calculators/tax_estimator.jhtml
+
+
+.SH OPTIONS
+.B -r 
+Pay Rate (60 per hour)
+
+.B -h
+Hours worked per week
+
+.B -w
+Weeks you plan on working for the year.
+
+
+.SH BUGS
+No known bugs at this time.
+.SH AUTHOR
+Mike Chirico (mchirico@gmail.com)
+.RS
+http://souptonuts.sourceforge.net/chirico/index.php
+.RE
+.SH SOURCE
+ http://code.google.com/p/chirico/downloads/list?can=2&q=pical&colspec=Filename+Summary+Uploaded+Size+DownloadCount
+.SH SVN (Subversion)
+The SVN can be found in the souptonuts project under
+http://chirico.googlecode.com/svn/trunk/c++/pical/
+.SH REFERENCES
+
+           http://turbotax.intuit.com/tax_help/tax_calculators/tax_estimator.jhtml

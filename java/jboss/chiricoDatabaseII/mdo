@@ -1,0 +1,28 @@
+#!/bin/bash
+clean 1
+
+
+JBOSS_CLASS_PATH=/home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/common/lib/servlet-api.jar:/home/chirico/jboss/jboss-5.1.0.GA-src/server/src/main/org/jboss/ejb
+MY_JAVA_SRC=src/com/chirico/*.java
+MY_WAR=chirico.war
+javac -classpath $JBOSS_CLASS_PATH -d chirico.war/WEB-INF/classes/ $MY_JAVA_SRC
+#Default
+rm -rf /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/deploy/$MY_WAR
+cp -r $MY_WAR /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/deploy/.
+find /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/deploy -wholename '*/.svn' -exec rm -rf {} \; 2>/dev/null
+#all
+rm -rf /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/$MY_WAR
+cp -r $MY_WAR /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/.
+find /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy -wholename '*/.svn' -exec rm -rf {} \; 2>/dev/null
+#standard
+rm -rf /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/standard/deploy/$MY_WAR
+cp -r $MY_WAR /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/standard/deploy/.
+find /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/standard/deploy -wholename '*/.svn' -exec rm -rf {} \; 2>/dev/null
+#web
+rm -rf /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/deploy/$MY_WAR
+cp -r $MY_WAR /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/deploy/.
+find /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/deploy -wholename '*/.svn' -exec rm -rf {} \; 2>/dev/null
+
+
+
+

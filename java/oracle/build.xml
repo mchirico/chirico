@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<project default="ConnOracle">
+    <target name="ConnOracle" depends="compile, compress">
+        <echo>
+            Building the .jar file.
+        </echo>
+    </target>
+  
+    <target name="compile">
+        <javac srcdir="."/>
+    </target>
+  
+  <target name="compress">
+        <jar jarfile="Oracle.jar" basedir="." includes="*.class" manifest="MANIFEST.MF" />
+  </target>
+
+  <target name="clean">
+        <delete file="Oracle.class"/>
+        <delete file="Oracle.jar"/>
+  </target>
+
+</project>

@@ -1,0 +1,3 @@
+#!/bin/bash
+clean 1
+javac *.java && java CountBytes junk.txt

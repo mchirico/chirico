@@ -1,0 +1,12 @@
+/*
+ * glogin: Google Login
+ * (C) 2008 by Mike Chirico mchirico@gmail.com
+ */
+
+#ifndef _VERSION_H
+#define _VERSION_H
+
+
+#define VERSION	"@VERSION@"
+
+#endif  /* _VERSION_H */

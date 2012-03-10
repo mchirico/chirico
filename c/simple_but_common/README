@@ -1,0 +1,51 @@
+server.c
+
+  TCP server on ports 10000 with output to the system logs. This runs
+  as a daemon, so to kill it you will have to find it with "ps auxf"
+  or look in /var/log/messages. Once the PID is found "kill -9 <PID>".
+
+  You can test input as follows:
+
+     $ telnet localhost 10000
+        <type some text>
+ 
+  The output it written to the logs and echoed at the telnet prompt.
+  
+
+realloc.c and readrealloc.c 
+  
+  Example usage of realloc with the later used to read a copy a file
+
+
+getopt.c
+
+  Simple use of getopt.
+
+      ./getopt -f file -e
+
+  It looks for the options -f <file> or -e.
+
+
+read.c
+
+  Simple example of reading lines of text and putting into 
+  the file data.
+
+      ./read 
+        <text>
+        <text>
+       ctl-D
+
+uid_open
+
+  Example of setting the effective UID on a file. The source
+  contains information on how to use the file with permissions.
+
+enum
+
+  Operations on enumerations
+
+
+separate_compilation/
+   
+  declare, define and separate compilation

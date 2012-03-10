@@ -1,0 +1,225 @@
+
+This is a good start for entering information.
+http://download.oracle.com/docs/cd/E17904_01/wls.htm
+http://download.oracle.com/docs/cd/E13222_01/wls/docs81/index.html
+
+
+Steps to getting Weblogic going.
+
+Step 1:
+
+Download the product.
+
+http://www.oracle.com/technetwork/indexes/downloads/index.html#middleware
+http://www.oracle.com/technetwork/middleware/weblogic/downloads/wls-main-097127.html
+
+The following was used:
+   wls1034_oepe111161_linux32.bin
+
+Step 2:
+
+ Extract the file:
+
+    ./wls1034_oepe111161_linux32.bin 
+
+
+
+
+Note, the files were installed in the following directory.
+
+Product Installation Directories:
+
+
+   1|WebLogic Server: [/home/chirico/Oracle/Middleware/wlserver_10.3]
+   2|Oracle Coherence: [/home/chirico/Oracle/Middleware/coherence_3.6]
+   3|Oracle Enterprise Pack for Eclipse: [/home/chirico/Oracle/Middleware/oepe_11gR1PS3]
+
+
+<---------------------------------------- Oracle Installer - WebLogic 10.3.4.0 --------------------------------------->
+
+The following Products and JDKs will be installed:
+--------------------------------------------------
+
+    WebLogic Platform 10.3.4.0
+    |_____WebLogic Server
+    |    |_____Core Application Server
+    |    |_____Administration Console
+    |    |_____Configuration Wizard and Upgrade Framework
+    |    |_____Web 2.0 HTTP Pub-Sub Server
+    |    |_____WebLogic SCA
+    |    |_____WebLogic JDBC Drivers
+    |    |_____Third Party JDBC Drivers
+    |    |_____WebLogic Server Clients
+    |    |_____WebLogic Web Server Plugins
+    |    |_____UDDI and Xquery Support
+    |    |_____Evaluation Database
+    |_____Oracle Coherence
+    |    |_____Coherence Product Files
+    |_____Oracle Enterprise Pack for Eclipse
+    |    |_____Common Files
+    |_____JDKs
+         |_____SUN SDK 1.6.0_21
+         |_____Oracle JRockit 1.6.0_22 SDK
+
+    *Estimated size of installation: 1,601.0 MB
+
+
+
+Step 3:
+
+   You need to create a WebLogic Domain
+
+       cd /home/chirico/Oracle/Middleware/wlserver_10.3/server/bin
+       ./setWLSEnv.sh
+       cd /home/chirico/Oracle/Middleware/wlserver_10.3/common/bin
+       . ./config.sh
+
+
+
+
+Application Template Selection:
+-------------------------------
+
+ 
+
+    Available Templates
+    |_____Basic WebLogic Server Domain - 10.3.4.0 [wlserver_10.3]x
+    |_____Basic WebLogic SIP Server Domain - 10.3.4.0 [wlserver_10.3] [2] 
+    |_____WebLogic Advanced Web Services for JAX-RPC Extension - 10.3.4.0 [wlserver_10.3] [3] 
+    |_____WebLogic Advanced Web Services for JAX-WS Extension - 10.3.4.0 [wlserver_10.3] [4] 
+
+
+
+<--------------------------------------- Fusion Middleware Configuration Wizard -------------------------------------->
+
+Select the target domain directory for this domain:
+---------------------------------------------------
+
+    "Target Location" = [Enter new value or use default "/home/chirico/Oracle/Middleware/user_projects/domains"]
+
+
+
+
+   |          Name           |                  Value                  |
+   _|_________________________|_________________________________________|
+   1|         *Name:          |                weblogic                 |
+   2|     *User password:     |                ********                 |
+   3| *Confirm user password: |                ********                 |
+   4|      Description:       | This user is the default administrator. |
+
+
+Note. Use something simple like admin123
+
+
+Domain Mode Configuration:
+--------------------------
+
+Enable Development or Production Mode for this domain. 
+
+ ->1|Development Mode
+
+   2|Production Mode
+
+
+
+
+Step 4:
+
+
+Now you're ready to start the server.
+
+       cd /home/chirico/Oracle/Middleware/user_projects/domains/base_domain
+       ./startWebLogic.sh
+
+
+       Next view the following page in firefox
+
+          http://localhost:7001/console
+
+
+
+
+Step 5:
+
+Start NodeManager
+
+
+    cd /home/chirico/Oracle/Middleware/wlserver_10.3/server/bin
+    ./setWLSEnv.sh
+    ./startNodeManager.sh
+
+
+
+
+
+
+Step 6:
+
+Examples
+
+    wget http://media.wiley.com/product_ancillary/06/04704843/DOWNLOAD/powls_examples_01252010.zip
+
+
+
+ Step A:
+
+create tablespace bigrez 
+datafile '/u01/app/oracle/oradata/orcl/bigrez01.dbf'
+size  400M REUSE
+AUTOEXTEND ON NEXT 500K MAXSIZE 800M;
+
+ALTER TABLESPACE "BIGREZ" 
+ADD 
+DATAFILE '/u01/app/oracle/oradata/orcl/bigrez02.dbf' 
+SIZE 1G REUSE 
+AUTOEXTEND ON NEXT 125K MAXSIZE 12G;
+
+
+
+create temporary tablespace temp_bigrez
+  tempfile '/u01/app/oracle/oradata/orcl/tmp_bigrez01.dbf'
+  size 32m 
+  autoextend on 
+  next 32m maxsize 2048m
+  extent management local;
+
+
+
+
+CREATE USER bigrez IDENTIFIED BY admin123
+DEFAULT TABLESPACE bigrez
+TEMPORARY TABLESPACE temp_bigrez;
+
+
+GRANT CONNECT, RESOURCE TO bigrez;
+
+
+GRANT UNLIMITED TABLESPACE TO bigrez;
+GRANT CREATE SESSION TO bigrez;
+GRANT CREATE TABLE TO bigrez;
+GRANT CREATE VIEW TO bigrez;
+GRANT CREATE SEQUENCE TO bigrez;
+GRANT CREATE ANY TRIGGER TO bigrez;
+GRANT CREATE PROCEDURE TO bigrez;
+GRANT CREATE SYNONYM TO bigrez;
+GRANT CREATE INDEXTYPE TO bigrez;
+GRANT CREATE TYPE TO bigrez;
+
+
+ALTER USER bigrez IDENTIFIED BY admin123 ACCOUNT UNLOCK;
+
+
+
+Weblogic
+find . -iname 'startWebLogic.sh'
+http://hostname:port/console 
+http://localhost:7001/console
+
+WebLogic/admin123
+
+cd /home/chirico/Oracle/Middleware/user_projects/domains/base_domain
+./startWebLogic.sh
+
+
+
+

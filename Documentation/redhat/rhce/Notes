@@ -1,0 +1,68 @@
+Course Outline
+
+Unit 1: Software Management
+Objective: Manage packages with yum, rpm, and RHN; build an RPM package and place it in a repository
+
+Unit 2: Network Management
+Objective: Configure and troubleshoot network settings; configure network bonding and IP aliases
+
+Unit 3: Storage Management
+Objective: Manage partitioning, filesystems, and swap space; configure encrypted partitions and iSCSI initiator
+
+Unit 4: Logical Volume Management (LVM)
+Objective: Manage physical volumes, volume groups, and logical volumes with their filesystems
+
+Unit 5: Account Management
+Objective: Provide password aging for accounts; use ACLs and SGID directories for collaborative directories
+
+Unit 6: Authentication Management
+Objective: Configure an LDAP and Kerberos client; configure autofs to support an authentication client; Configure sudo and SSD
+
+Unit 7: Installation, Kickstart, and Virtualization
+Objective: Install a system and manage kickstart and firstboot; use virtualization tools to manage virtual machines
+
+Unit 8: Boot Management
+Objective: Configure runlevels and sysctl; reset the root password; understand the boot process
+
+Unit 9 : Security Enhanced Linux (SELinux) Management
+Objective: Understand, troubleshoot, and manage SELinux
+
+Unit 10: Firewall Management
+Objective: Manage the firewall
+
+Unit 11: Network Time Protocol (NTP) Service
+Objective: Configure an NTP server and provide that service to clients
+
+Unit 12: System Logging Service
+Objective: Create disk, I/O, and memory usage reports; configure remote logging
+
+Unit 13: Web (HTTP/HTTPS) Service
+Objective: Manage a web server with virtual hosts, CGI scripts, and user-based file/directory access controls
+
+Unit 14: SMTP Service
+Objective: Null client; outbound smarthost relay; accept inbound connections
+
+Unit 15: Caching-only (DNS) Service
+Objective: Configure a caching nameserver and DNS forwarder
+
+Unit 16: File Sharing with NFS
+Objective: Manage and secure the NFS service using NFSv3 and NFSv4
+
+Unit 17: C File Sharing with CIFS
+Objective: Configure the CIFS to provide home directories, file sharing, and printer service; use a client to access the CIFS shares
+
+Unit 18: File Transfer Protocol (FTP) Service
+Objective: Provide anonymous-only download service; provide drop-box upload service
+
+Unit 19: Common UNIX Printing System (CUPS) Service
+Objective: Configure and manage local and remote printers
+
+Unit 20: Secure Shell (SSH) Service
+Objective: Configure and implement SSH keys
+
+Unit 21: Virtual Network Computing (VNC) Service
+Objective: Configure remote desktops and connect to them securely
+
+Unit 22: Comprehensive Review
+Objective: Review tasks previously taught in class
+

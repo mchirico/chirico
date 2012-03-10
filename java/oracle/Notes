@@ -1,0 +1,36 @@
+So far I need the oracle directory
+with all the files. This will have to be
+fixed.
+
+Here's how this problem is fixed:
+
+Install ojdbc14.jar in <java_home>\jre\lib\ext
+
+cp ojdbc14.jar /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/.
+
+
+
+SQL> create or replace procedure junk_add IS
+  2  begin
+  3    insert into junk (a,b) values (3,'one');
+  4  end;
+  5  /
+
+
+
+You can also use the following 11g driver:
+
+ http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/htdocs/jdbc_111060.html
+
+cp ojdbc6_g.jar /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/.
+
+
+Recommended reading:
+    http://java.sun.com/javase/6/docs/api/java/sql/ResultSet.html
+    http://java.sun.com/javase/6/docs/api/java/sql/ResultSetMetaData.html
+
+
+
+This will run the jar file:
+
+    java -jar Oracle.jar

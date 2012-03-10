@@ -1,0 +1,68 @@
+
+Quick take:
+
+ There is duplicate code in the library.
+ 
+ Should be a general cookie file, with the full
+ cookie including expiration.
+
+
+ There needs to be a general post. It should post to 
+ anysite, anywhere.
+
+
+ libs - start prototyping libs
+
+ gpost - just got a working skeleton with options. 
+
+
+There is a lot of cleanups. The first run is just
+a prof on concept.
+
+1. Static variables are not always the same length
+
+2. May need to put results in a SQLite database (needed) for multiple
+sites.
+
+3. Build libraries.
+
+Google Docs:
+ http://code.google.com/apis/accounts/docs/AuthForWebApps.html#AuthSubRevokeToken
+ http://code.google.com/apis/accounts/docs/AuthForWebApps.html#signingrequests
+
+
+
+Double check references:
+http://www.ietf.org/rfc/rfc2109.txt
+
+
+Cookie: $Version="1"; Customer="WILE_E_COYOTE";
+           $Path="/acme"
+
+
+ The syntax for the header is:
+
+   cookie          =       "Cookie:" cookie-version
+                           1*((";" | ",") cookie-value)
+   cookie-value    =       NAME "=" VALUE [";" path] [";" domain]
+   cookie-version  =       "$Version" "=" value
+   NAME            =       attr
+   VALUE           =       value
+   path            =       "$Path" "=" value
+   domain          =       "$Domain" "=" value
+
+   The value of the cookie-version attribute must be the value from the
+   Version attribute, if any, of the corresponding Set-Cookie response
+   header.  Otherwise the value for cookie-version is 0.  The value for
+   the path attribute must be the value from the Path attribute, if any,
+   of the corresponding Set-Cookie response header.  Otherwise the
+   attribute should be omitted from the Cookie request header.  The
+   value for the domain attribute must be the value from the Domain
+   attribute, if any, of the corresponding Set-Cookie response header.
+   Otherwise the attribute should be omitted from the Cookie request
+   header.
+
+
+
+View movie:
+  http://sites.google.com/site/io/creating-a-google-data-api-client

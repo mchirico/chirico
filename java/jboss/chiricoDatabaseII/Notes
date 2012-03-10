@@ -1,0 +1,82 @@
+export JBOSS_HOME=/home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA
+
+References:
+http://www.redhat.com/docs/en-US/JBoss_Enterprise_BRMS_Platform/5.0.1/html/JBoss_Rules_5_Reference_Guide/index.html
+(Below good start for jsp)
+http://java.sun.com/products/jsp/html/exceptions.fm.html
+
+
+
+
+mkdir -p /home/chirico/jboss
+cd /home/chirico/jboss
+wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA-src.tar.gz?use_mirror=voxel
+
+
+tar -xzf jboss-5.1.0.GA-src.tar.gz 
+cd ./jboss-5.1.0.GA-src/build/
+sh build.sh
+
+
+cd /home/chirico/jboss/jboss-5.1.0.GA-src/build/
+cp ./output/jboss-5.1.0.GA/docs/examples/jca/oracle-ds.xml ./output/jboss-5.1.0.GA/server/all/deploy/.
+cp /u01/app/oracle/product/11.1.0/db_1/sqldeveloper/jdbc/lib/ojdbc14.jar /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/lib/.
+
+
+http://192.168.1.10:8080/chirico/sayhello
+
+vi /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/all/deploy/oracle-ds.xml
+
+
+
+cat /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/default/conf/props/jmx-console-users.properties
+
+
+*********************
+SSL
+********************
+
+Step 1:
+
+You'll want to change the keystorePass. Here I've used my name chirico. Also
+change chap8.keystore name, or be prepared to rename. For this example, I
+renamed the keystore after I generated it.
+
+
+vi /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/deploy/jbossweb.sar/server.xml
+
+
+      <Connector protocol="HTTP/1.1" SSLEnabled="true" 
+           port="8443" address="${jboss.bind.address}"
+           scheme="https" secure="true" clientAuth="false" 
+           keystoreFile="${jboss.server.home.dir}/conf/chap8.keystore"
+           keystorePass="chirico" sslProtocol = "TLS" />
+
+
+
+Step 2:
+
+Generate the key.
+
+keytool -genkey -alias tomcat -keyalg RSA
+
+Use the password above "chirico" or pick whatever password you put in the above
+file.
+
+
+cd /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/conf
+cp ~/.keystore  /home/chirico/jboss/jboss-5.1.0.GA-src/build/output/jboss-5.1.0.GA/server/web/conf/chap8.keystore
+
+By default port 8443 is used.
+
+https://192.168.1.12:8443/chirico/sayhello
+
+
+
+******************************
+Working with topics
+
+cd /home/chirico/jboss/jboss-5.1.0.GA-src/messaging/src/etc/examples/topic
+ant
+
+You'll need to full deployment

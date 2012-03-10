@@ -1,0 +1,1390 @@
+
+
+Tip 1:
+
+To select only the first 5 rows from a table, use the following
+command:
+
+   SQL> select table_name from dictionary were rownum <=5;
+
+
+
+Tip 2:
+
+Listing all the tables in the current database.
+
+   SQL> select * from cat;
+
+
+
+Tip 3:
+
+Describe the fields in the table junk.
+
+   SQL> describe junk
+
+
+
+Tip 4:
+
+Unlock the HR account.
+
+   SQL> ALTER USER HR IDENTIFIED BY your_password ACCOUNT UNLOCK;
+
+
+
+Tip 5:
+
+Creating a SQL command and saving it to a file.
+
+   SQL> CLEAR BUFFER
+   buffer cleared
+   SQL> INPUT
+   1 select * from regions where region_id=&id
+   2 .
+   SQL> save t2
+   Created file t2.sql
+
+Now, to run the command saved above, execute the following
+code.
+
+   SQL> @t2
+   Enter a value for id: 
+
+
+
+Tip 6:
+
+Running commands on a webpage. Below the webpage
+http://www.mikechirico.com/sql.txt will produce the following command.
+
+     select * from jobs where min_salary>='&1'
+     /
+
+This can be run in Oracle as follows:
+
+    SQL> start http://www.mikechirico.com/sql.txt 3000
+
+
+
+Tip 7:
+
+Need a dummy table in Oracle? Use dual.
+
+    SQL> select power(2,8) x from dual;
+
+
+
+Tip 8:
+
+The first step is to create the sequence.
+
+    CREATE SEQUENCE customers_seq
+     START WITH     1000
+     INCREMENT BY   1
+     NOCACHE
+     NOCYCLE;
+
+Now, to generage the next sequence, use the following command:
+
+     SELECT customers_seq.nextval 
+         FROM DUAL;
+
+If you have multiple tables, where the same seq may need to be
+used, then, use the following command:
+
+      select customers_seq.currval from dual;
+
+
+
+Tip 9:
+
+Creating a timestamp for a table 
+
+	 create table timestamp_test(a timestamp,b varchar2(10));
+
+Now to create the trigger.
+
+    create or replace trigger ins_timestamp
+    before insert
+    on timestamp_test
+    for each row
+    begin
+     :new.a := sysdate;
+     end;
+     /
+
+Now to use it:
+
+    insert into timestamp_test (b) values ('Hello');
+
+
+
+Tip 10:
+
+Create a procedure that will operate on the following table
+
+
+  create table junk (a integer, b varchar(10));
+
+
+Now create the procedure:
+
+    create or replace procedure insjunk (x in number, y in varchar2)
+    as
+    begin
+      insert into junk (a,b) values (x,y);
+      end;
+    /
+
+
+To execute it:
+
+   execute insjunk(1,'c');
+
+
+
+Tip 11:
+
+http://www.orafaq.com/wiki/PL/SQL_FAQ#Can_one_COMMIT.2F_ROLLBACK_from_within_a_trigger.3F
+
+
+   Create an error log that will work when exceptions are thown.
+
+
+    begin execute immediate 'drop table log'; exception when others then null;
+     end;
+    /
+    CREATE TABLE log (timestamp DATE, operation VARCHAR2(2000));
+
+
+CREATE OR REPLACE TRIGGER tab1_trig
+      AFTER insert ON tab1
+    DECLARE
+      PRAGMA AUTONOMOUS_TRANSACTION;
+    BEGIN
+      INSERT INTO log VALUES (SYSDATE, 'Insert on TAB1');
+      COMMIT; -- only allowed in autonomous triggers
+    END;
+    /
+
+     
+
+    create or replace procedure insjunk (x in number, y in varchar2)
+    as
+    PRAGMA AUTONOMOUS_TRANSACTION;
+    begin
+      insert into junk (a,b) values (x,y);
+    commit;
+    exception
+      when others then rollback;
+    end;
+    /
+
+
+
+Tip 12:
+
+    [This is still not complete]
+    If you cannot run the grant command below, then, you need to run the following:
+
+      sql>@/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/rdbms/admin/utlfile.sql
+
+
+    You'll need to do the following as sys.
+
+    CREATE OR REPLACE DIRECTORY mydir AS '/home/chirico/oracle';
+
+    GRANT read, write ON DIRECTORY mydir TO chirico;
+
+    GRANT EXECUTE ON UTL_FILE TO chirico;
+
+
+
+Tip 13:
+
+    Need to execute host commands?
+
+       SQL> host date
+       Sun Feb  8 09:40:45 EST 2009
+
+
+
+Tip 14:
+
+     SQL>edit whoami
+
+
+     Type the following:
+
+rem -----------------------------------------------------------------------
+rem Filename:   whoami.sql
+rem Purpose:    Reports information about your current database context
+rem Author:     Frank Naude, Oracle FAQ
+rem -----------------------------------------------------------------------
+
+set termout off
+store set store rep
+set head off
+set pause off
+set termout on
+
+select 'User: '|| user || ' on database ' || global_name,
+       '  (term='||USERENV('TERMINAL')||
+       ', audsid='||USERENV('SESSIONID')||')' as MYCONTEXT
+from   global_name;
+
+@store
+set termout on
+
+       
+
+       SQL>@whoami
+
+
+
+Tip 15:
+
+     Need lots of scripts?
+
+           http://www.orafaq.com/wiki/Scripts
+
+
+
+Tip 16:
+
+    Need to copy a table?
+
+           create table junk2 as select * from junk;
+
+
+
+
+Tip 17:
+
+
+create tablespace chirico 
+datafile '/u01/app/oracle/oradata/orcl/chirico01.dbf'
+size  400M REUSE
+AUTOEXTEND ON NEXT 500K MAXSIZE 800M;
+
+ALTER TABLESPACE "CHIRICO" 
+ADD 
+DATAFILE '/u01/app/oracle/oradata/orcl/chirico02.dbf' 
+SIZE 1G REUSE 
+AUTOEXTEND ON NEXT 125K MAXSIZE 12G;
+
+
+
+create temporary tablespace temp_chirico
+  tempfile '/u01/app/oracle/oradata/orcl/tmp_chirico01.dbf'
+  size 32m 
+  autoextend on 
+  next 32m maxsize 2048m
+  extent management local;
+
+
+
+
+CREATE USER chirico IDENTIFIED BY mike
+DEFAULT TABLESPACE chirico
+TEMPORARY TABLESPACE temp_chirico;
+
+
+GRANT CONNECT, RESOURCE TO chirico;
+
+-- New password
+
+alter user usr1
+password expire;
+
+
+
+Tip 18:
+
+BEGIN
+  dbms_scheduler.create_job(job_name        => 'myjob',
+                            job_type        => 'executable',
+                            job_action      => '/app/oracle/x.sh',
+                            enabled         => TRUE,
+                            auto_drop       => TRUE);
+END;
+/
+
+exec dbms_scheduler.run_job('myjob');
+
+
+
+TIP 19:
+
+DECLARE
+  l_single_quote CHAR(1) := '''';
+  l_output VARCHAR2(20);
+BEGIN
+  SELECT 'test single quote'||l_single_quote
+  INTO l_output FROM dual;
+  DBMS_OUTPUT.PUT_LINE(l_single_quote);
+END;
+
+
+
+TIP 20:
+
+
+http://www.oracle.com/technology/software/index.html
+
+
+groupadd oinstall
+groupadd dba
+useradd -g oinstall -G dba oracle
+usermod -g oinstall -G dba oracle
+
+password bozo
+
+mkdir -p /u01/app/
+chown -R oracle:oinstall /u01/app/
+chmod -R 775 /u01/app/
+
+
+
+
+ /runInstaller -ignoreSysPrereqs
+
+
+
+
+TIP 21:
+
+  http://www.pythian.com/blogs/968/installing-oracle-11g-on-ubuntu-804-lts-hardy-heron
+
+
+
+Tip 22:
+
+   It appears that you can use the license for prototyping.
+        http://www.oracle.com/technology/software/index.html
+
+
+
+Tip 23:
+
+   Oracle documentation library:
+
+        http://www.oracle.com/pls/db111/homepage
+
+
+
+Tip 24:
+
+select tablespace_name, initial_extent,next_extent,
+   min_extents,    max_extents,    pct_increase,
+   extent_management,allocation_type
+from dba_tablespaces
+
+
+select * from dba_free_space;
+
+
+
+Tip 25:
+
+Environment settings:
+
+ORACLE_BASE=/u01/app/oracle
+
+
+
+Tip 26:
+
+SQL> desc employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEE_ID                               NOT NULL NUMBER(6)
+ FIRST_NAME                                         VARCHAR2(20)
+ LAST_NAME                                 NOT NULL VARCHAR2(25)
+ EMAIL                                     NOT NULL VARCHAR2(25)
+ PHONE_NUMBER                                       VARCHAR2(20)
+ HIRE_DATE                                 NOT NULL DATE
+ JOB_ID                                    NOT NULL VARCHAR2(10)
+ SALARY                                             NUMBER(8,2)
+ COMMISSION_PCT                                     NUMBER(2,2)
+ MANAGER_ID                                         NUMBER(6)
+ DEPARTMENT_ID                                      NUMBER(4)
+
+create or replace procedure get_emp_info (p_rc out sys_refcursor) as
+  begin
+    open p_rc for
+    select   employee_id,
+             last_name,
+             job_id
+    from     employees
+    order by last_name;
+  end;
+  / 
+
+
+
+Tip 27:
+
+Steps for instalation:
+
+groupadd oinstall
+groupadd dba
+useradd -g oinstall -G dba oracle
+mkdir -p /u01/app/
+chown -R oracle:oinstall /u01/app/
+chmod -R 775 /u01/app/
+
+
+
+Tip 28:
+
+cat /etc/ld.so.conf.d/oracle.conf
+/u01/app/oracle/product/11.1.0/db_1/lib
+
+Then, run ldconfig
+
+
+Also need to edit
+
+/u01/app/oracle/product/11.1.0/db_1/precomp/admin/pcscfg.cfg
+
+sys_include=(/u01/app/oracle/product/11.1.0/db_1/precomp/public,/usr/include,/usr/lib/gcc/x86_64-redhat-linux/4.3.2/include,/usr/lib/gcc-lib/x86_64-redhat-linux/3.2.3/include,/usr/lib64/gcc-lib/x86_64-suse-\
+linux/3.3.3/include,/usr/lib/gcc/x86_64-redhat-linux/4.1.1/include,/usr/lib64/gcc/x86_64-suse-linux/4.1.0/include)
+ltype=short
+
+
+
+Note- there were problems with stubs-32.h, It uses the gclib 32 bit version.
+
+ yum whatprovides "*/stubs-32.h"
+
+
+
+Tip 29:
+
+http://www.adp-gmbh.ch/ora/admin/creatingdbmanually.html
+
+
+/u01/app/oracle/oradata/dev2db/
+
+$sqlplus sys/passwrd  as sysdba
+SQL> shutdown
+
+
+
+STARTUP NOMOUNT
+
+
+CREATE DATABASE dev2db
+   USER SYS IDENTIFIED BY pz6r58
+   USER SYSTEM IDENTIFIED BY y1tz5p
+   LOGFILE GROUP 1 ('/u01/app/oracle/oradata/dev2db/redo01.log') SIZE 100M,
+           GROUP 2 ('/u01/app/oracle/oradata/dev2db/redo02.log') SIZE 100M,
+           GROUP 3 ('/u01/app/oracle/oradata/dev2db/redo03.log') SIZE 100M
+   MAXLOGFILES 5
+   MAXLOGMEMBERS 5
+   MAXLOGHISTORY 1
+   MAXDATAFILES 100
+   MAXINSTANCES 1
+   CHARACTER SET US7ASCII
+   NATIONAL CHARACTER SET AL16UTF16
+   DATAFILE '/u01/app/oracle/oradata/dev2db/system01.dbf' SIZE 325M REUSE
+   EXTENT MANAGEMENT LOCAL
+   SYSAUX DATAFILE '/u01/app/oracle/oradata/dev2db/sysaux01.dbf' SIZE 325M REUSE
+   DEFAULT TABLESPACE tbs_1
+   DEFAULT TEMPORARY TABLESPACE tempts1
+      TEMPFILE '/u01/app/oracle/oradata/dev2db//temp01.dbf' 
+      SIZE 20M REUSE
+   UNDO TABLESPACE undotbs 
+      DATAFILE '/u01/app/oracle/oradata/dev2db//undotbs01.dbf'
+      SIZE 200M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
+
+
+
+Tip 30:
+
+ First change the rights to the directory:
+
+ $ chown oracle.oinstall /u01/backup
+
+ sqlplus> connect sys/passwd as sysdba
+
+ sqlplus> create pfile='/u01/backup/backup_pfile' from spfile;
+
+Below is the file:
+
+[root@big ~]# cat /u01/backup/backup_pfile
+orcl.__db_cache_size=671088640
+orcl.__java_pool_size=16777216
+orcl.__large_pool_size=16777216
+orcl.__oracle_base='/u01/app/oracle'#ORACLE_BASE set from environment
+orcl.__pga_aggregate_target=369098752
+orcl.__sga_target=1107296256
+orcl.__shared_io_pool_size=0
+orcl.__shared_pool_size=385875968
+orcl.__streams_pool_size=0
+*.audit_file_dest='/u01/app/oracle/admin/orcl/adump'
+*.audit_trail='db'
+*.compatible='11.1.0.0.0'
+*.control_files='/u01/app/oracle/oradata/orcl/control01.ctl','/u01/app/oracle/oradata/orcl/control02.ctl','/u01/app/oracle/oradata/orcl/control03.ctl'
+*.db_block_size=8192
+*.db_domain=''
+*.db_name='orcl'
+*.db_recovery_file_dest='/u01/app/oracle/flash_recovery_area'
+*.db_recovery_file_dest_size=2147483648
+*.diagnostic_dest='/u01/app/oracle'
+*.dispatchers='(PROTOCOL=TCP) (SERVICE=orclXDB)'
+*.memory_target=1474297856
+*.open_cursors=300
+*.processes=150
+*.remote_login_passwordfile='EXCLUSIVE'
+*.undo_tablespace='UNDOTBS1'
+
+
+
+Tip 31:
+
+  Example of remote connection:
+
+     sqlplus system/passwd@cluster0.squeezel.com:1522/orcl
+
+
+
+Tip 32:
+
+select e.JOB_ID from employees e, jobs j where e.job_id=j.job_id;
+
+select email,first_name,last_name,job_title from employees e, jobs j where e.job_id=j.job_id and rownum < 3;
+
+
+create view v1
+as select email,first_name,last_name,job_title from employees e, jobs j where e.job_id=j.job_id;
+
+
+grant create view to chirico;
+
+
+
+Tip 33:
+
+$ exp chirico/mike file=junk.dmp tables=employees rows=yes indexes=no
+
+Also see the datapump utilities:
+http://www.orafaq.com/wiki/Datapump
+
+
+
+Tip 34:
+
+Common settings:
+
+# Need this for
+ SET SERVEROUTPUT ON
+
+ exec dbms_output.put_line('Yes, we got output');
+
+ SET LINESIZE 1000
+ set pagesize 0
+
+
+
+
+ SET NEWPAGE 0
+ SET SPACE 0
+ SET LINESIZE 80
+ SET PAGESIZE 0
+ SET ECHO OFF
+ SET FEEDBACK OFF
+ SET HEADING OFF
+
+
+
+Tip 35:
+
+
+Ref:
+http://www.oracle.com/technology/obe/11gr1_db/install/apexinst/apexinst.htm#o
+
+sqlplus sys/<password> as sysdba
+@/u01/app/oracle/product/11.1.0/db_1/apex/apxconf
+
+ALTER USER ANONYMOUS ACCOUNT UNLOCK;
+
+
+
+Tip 36
+
+
+drop table junk;
+create table junk(a number);
+
+
+create or replace package  P1 is
+  cursor c_i is
+    select count(*) from jobs;
+  v_out_nr NUMBER;
+end P1;
+/
+
+
+create or replace procedure c1
+is 
+begin
+  open P1.c_i;
+  fetch P1.c_i into P1.v_out_nr;
+  close P1.c_i;
+  insert into junk (a) values (P1.v_out_nr);
+end;
+/
+
+
+execute c1
+
+
+
+Tip 37 
+
+
+create or replace procedure c1
+is begin
+declare
+  cursor c_i is
+    select count(*) from jobs;
+  v_out_nr NUMBER;
+begin
+  open c_i;
+  fetch c_i into v_out_nr;
+  close c_i;
+  insert into junk (a) values (v_out_nr);
+end;
+end;
+
+
+execute c1
+
+
+
+Tip 37
+
+
+Need a GUI?
+http://www.oracle.com/technology/software/products/sql/index.html
+
+
+
+Tip 38
+
+  Samples:
+   http://www.oracle.com/technology/obe/obe9051jdev/common/files/b10771.pdf
+
+
+
+Tip 39
+
+  create or replace function pi return varchar2 as
+last_pi number := 0;
+delta number := 0.00001;
+pi number :=1;
+denom number := 3;
+oper number := -1;
+negone number := -1;
+two number := 2;
+
+begin
+  loop 
+     last_pi := pi;
+     pi := pi + oper * 1/denom;
+     exit when (abs(last_pi-pi) <= delta);
+     denom := denom +two;
+     oper := oper * negone;
+  end loop;
+   return pi*4;
+
+  
+end pi;
+
+
+
+Tip 40
+
+  Show free space in a given tablespace:
+
+     select max(bytes)/1024/1024 from dba_free_space where tablespace_name='TABLESPACE_NAME';
+
+
+
+Tip 41
+
+  Good reference: 
+
+         http://www.orafaq.com/wiki/SQL_FAQ
+         http://www.databasejournal.com/features/oracle/article.php/2109681/EXECUTE-IMMEDIATE-option-for-Dynamic-SQL-and-PLSQL.htm
+
+
+Tip 42
+
+
+  Check status of console through etms
+
+       emctl status dbconsole
+
+  Start/Stop
+ 
+       emctl start dbconsole
+       emctl stop dbconsole
+
+
+       emca -configure dbcontrol db
+
+https://localhost.localdomain:1158/em/console/logon/logon
+
+
+set oracle_sid=YourInstanceName
+emctl stop dbconsole
+emca -deconfig dbcontrol db
+emca -repos recreate
+emca -config dbcontrol db
+emca -reconfig ports -DBCONTROL_HTTP_PORT 80
+
+Or try the following:
+
+emctl stop dbconsole
+emca -repos drop
+emca -repos create
+emca -deconfig dbcontrol db
+emca -config dbcontrol db
+
+
+
+Tip 43
+
+   Configure the listner
+
+       netca
+
+
+
+Tip 44
+
+   Configure the database
+ 
+       dbca
+
+
+
+Tip 45
+
+    create table "junkr"
+    ( "A" varchar2(20 BYTE),
+      "MDATE" DATE DEFAULT SYSDATE 
+    );
+
+
+
+Tip 45
+
+   Working with Amazon cloud with EC2
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/11.1.0/db_1
+export ORACLE_OWNR=oracle
+export ORACLE_SID=orcl
+export PATH=$PATH:$ORACLE_HOME/bin
+
+sqlplus /nolog
+
+sql> connect sys/garbo23 as sysdba
+sql> startup
+
+alter system set local_listener='(address=(protocol=tcp)(host=localhost)(port=1521))';
+alter system register;
+
+
+
+Tip 46:
+
+drop table t;
+create table t (x int);
+
+
+create or replace procedure proc1
+as
+begin
+  for i in 1 .. 10000
+  loop
+    execute immediate
+         'insert into t values ( :x)' using i;
+   end loop;
+ end;
+/
+
+
+If you get errors with the above command, try
+the following
+
+sql> show errors procedure proc1
+
+
+
+
+
+
+Tip 47:
+
+Importing and exporting.
+
+  $ exp userid=chirico/mike tables=junk
+  $ imp userid=chirico/mike tables=junk
+
+
+
+Tip 48:
+
+Printing
+
+SQL> set serveroutput on
+SQL> begin
+  2  DBMS_OUTPUT.PUT_LINE('Hello World');
+  3  end;
+  4  /
+Hello World
+
+
+Tip 49:
+
+select * from (select * from junk order by a desc) where rownum < 2;
+
+Ref: 
+http://www.oracle.com/technology/oramag/oracle/06-sep/o56asktom.html
+
+
+
+
+Tip 50:
+
+How to find and kill blocking locks.
+
+The following will find block locks.
+
+
+
+select l1.sid,s1.serial#,s1.osuser, ' IS BLOCKING ', l2.sid,l1.ctime
+    from v$lock l1, v$lock l2, v$session s1, v$session s2
+    where l1.block =1 and l2.request > 0
+    and l1.id1=l2.id1 
+    and l1.sid=s1.sid and l2.sid=s2.sid
+
+
+
+
+select 
+c1.*,t.sql_text
+from (select
+   username,
+   blocking_session,
+   sid,
+   serial#,
+   wait_class,
+   seconds_in_wait
+from
+   v$session
+where
+   blocking_session is not NULL
+order by
+   blocking_session) c1, V$SQLTEXT T,
+V$SESSION S where
+S.SID = c1.sid AND S.SQL_ADDRESS=T.ADDRESS ORDER BY T.PIECE
+
+
+And here's an example kill session.
+
+
+alter system KILL SESSION 'sid,serial#'
+
+
+
+
+
+Tip 51:
+
+Reading the contents of spfile, or the system parameter file.
+
+   sql> select * from v$spparameter
+
+The default location is $ORACLE_HOME\database\ for the pfile. Note
+the pfile is a readable file. You'll need to create it first.
+
+su - oracle
+[oracle@big ~]$ sqlplus / as sysdba
+
+SQL> create pfile from spfile;
+
+Now you'll find the file in 
+
+/u01/app/oracle/product/11.1.0/db_1/dbs/initorcl.ora
+
+head /u01/app/oracle/product/11.1.0/db_1/dbs/initorcl.ora
+
+orcl.__db_cache_size=268435456
+orcl.__java_pool_size=16777216
+orcl.__large_pool_size=16777216
+orcl.__oracle_base='/u01/app/oracle'#ORACLE_BASE set from environment
+orcl.__pga_aggregate_target=234881024
+orcl.__sga_target=738197504
+orcl.__shared_io_pool_size=0
+orcl.__shared_pool_size=419430400
+orcl.__streams_pool_size=0
+*.audit_file_dest='/u01/app/oracle/admin/orcl/adump'
+
+
+
+Tip 52:
+
+Checking tnsnames.ora file. Use tnsping.
+
+        tnsping big
+
+
+
+
+Tip 53:
+
+Connecting without tnsnames.ora file. Note, you must use quotes. Below using
+port 15210. Normally you'd use 1521, unless you're ssh port forwarding.
+
+        sqlplus chirico/mike@"(DESCRIPTION=(ADDRESS=(PROTOCOL= TCP)(HOST = localhost.localdomain)(PORT = 15210))(CONNECT_DATA=(SERVER = DEDICATED) (SERVICE_NAME = orcl)))"
+
+
+
+
+
+Tip 54:
+
+Working with sum and count, rolling up results from a select.
+
+SQL>
+SQL> create table emp
+  2  ( empno      NUMBER(4)    constraint E_PK primary key
+  3  , ename      VARCHAR2(8)
+  4  , init       VARCHAR2(5)
+  5  , job        VARCHAR2(8)
+  6  , mgr        NUMBER(4)
+  7  , bdate      DATE
+  8  , sal        NUMBER(6,2)
+  9  , comm       NUMBER(6,2)
+ 10  , deptno     NUMBER(2)    default 10
+ 11  ) ;
+
+Table created.
+
+SQL> insert into emp values(1,'Tom','N',   'TRAINER', 13,date '1965-12-17',  800 , NULL,  20);
+
+1 row created.
+
+SQL> insert into emp values(2,'Jack','JAM', 'Tester',6,date '1961-02-20',  1600, 300,   30);
+
+1 row created.
+
+SQL> insert into emp values(3,'Wil','TF' ,  'Tester',6,date '1962-02-22',  1250, 500,   30);
+
+1 row created.
+
+SQL> insert into emp values(4,'Jane','JM',  'Designer', 9,date '1967-04-02',  2975, NULL,  20);
+
+1 row created.
+
+SQL> insert into emp values(5,'Mary','P',  'Tester',6,date '1956-09-28',  1250, 1400,  30);
+
+1 row created.
+
+SQL> insert into emp values(6,'Black','R',   'Designer', 9,date '1963-11-01',  2850, NULL,  30);
+
+1 row created.
+
+SQL> insert into emp values(7,'Chris','AB',  'Designer', 9,date '1965-06-09',  2450, NULL,  10);
+
+1 row created.
+
+SQL> insert into emp values(8,'Smart','SCJ', 'TRAINER', 4,date '1959-11-26',  3000, NULL,  20);
+
+1 row created.
+
+SQL> insert into emp values(9,'Peter','CC',   'Designer',NULL,date '1952-11-17',  5000, NULL,  10);
+
+1 row created.
+
+SQL> insert into emp values(10,'Take','JJ', 'Tester',6,date '1968-09-28',  1500, 0,     30);
+
+1 row created.
+
+SQL> insert into emp values(11,'Ana','AA',  'TRAINER', 8,date '1966-12-30',  1100, NULL,  20);
+
+1 row created.
+
+SQL> insert into emp values(12,'Jane','R',   'Manager',   6,date '1969-12-03',  800 , NULL,  30);
+
+1 row created.
+
+SQL> insert into emp values(13,'Fake','MG',   'TRAINER', 4,date '1959-02-13',  3000, NULL,  20);
+
+1 row created.
+
+SQL> insert into emp values(14,'Mike','TJA','Manager',   7,date '1962-01-23',  1300, NULL,  10);
+
+1 row created.
+
+SQL>
+SQL> set     pause off
+SQL> break   on deptno skip page -
+>         on job
+SQL>
+SQL> compute sum label total of sal on deptno
+SQL> compute count number    of comm on deptno
+SQL>
+SQL> select  deptno, job, empno, ename, sal, comm
+  2  from    emp
+  3  order   by deptno, job;
+
+DEPTNO JOB       EMPNO ENAME       SAL   COMM
+------ -------- ------ -------- ------ ------
+    10 Designer      7 Chris      2450  [N/A]
+                     9 Peter      5000  [N/A]
+       Manager      14 Mike       1300  [N/A]
+****** ********                 ------ ------
+count                                       0
+number                                      3
+total                             8750
+
+DEPTNO JOB       EMPNO ENAME       SAL   COMM
+------ -------- ------ -------- ------ ------
+    20 Designer      4 Jane       2975  [N/A]
+       TRAINER       8 Smart      3000  [N/A]
+                    11 Ana        1100  [N/A]
+                    13 Fake       3000  [N/A]
+                     1 Tom         800  [N/A]
+****** ********                 ------ ------
+count                                       0
+number                                      5
+total                            10875
+
+DEPTNO JOB       EMPNO ENAME       SAL   COMM
+------ -------- ------ -------- ------ ------
+    30 Designer      6 Black      2850  [N/A]
+       Manager      12 Jane        800  [N/A]
+       Tester       10 Take       1500      0
+                     2 Jack       1600    300
+                     3 Wil        1250    500
+                     5 Mary       1250   1400
+****** ********                 ------ ------
+count                                       4
+number                                      6
+total                             9250
+
+14 rows selected.
+
+SQL>
+SQL> compute
+COMPUTE sum LABEL 'sum' OF bytes ON pool
+COMPUTE sum LABEL 'total' OF sal ON deptno
+COMPUTE count LABEL 'count' number LABEL 'number' OF comm ON deptno
+SQL> clear   computes
+computes cleared
+SQL> clear   breaks
+breaks cleared
+SQL>
+SQL>
+SQL>
+SQL> drop table emp;
+
+Table dropped.
+
+SQL>
+SQL>
+
+
+
+Tip 55:
+
+Need to get the location of alert and log files?
+
+     select name, value from v$diag_info;
+
+
+
+
+Tip 56:
+
+How do you run and use rman?
+
+[oracle@big ~]$ echo $ORACLE_SID
+orcl
+[oracle@big ~]$ rman target /
+
+Recovery Manager: Release 11.1.0.6.0 - Production on Sun Dec 26 13:20:15 2010
+
+Copyright (c) 1982, 2007, Oracle.  All rights reserved.
+
+connected to target database: ORCL (DBID=1211712790)
+
+RMAN> show all;
+
+using target database control file instead of recovery catalog
+RMAN configuration parameters for database with db_unique_name ORCL are:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1; # default
+CONFIGURE BACKUP OPTIMIZATION OFF; # default
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE COMPRESSION ALGORITHM 'BZIP2'; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/u01/app/oracle/product/11.1.0/db_1/dbs/snapcf_orcl.f'; # default
+
+RMAN> 
+
+
+
+
+Tip 57:
+
+Working with blobs.
+
+First step create the table to hold the blob.
+
+CREATE TABLE pdm (
+dname VARCHAR2(30), 
+sname VARCHAR2(30), 
+fname VARCHAR2(30), 
+iblob BLOB); 
+
+Next create the procedure.
+
+CREATE OR REPLACE PROCEDURE load_file (
+pdname VARCHAR2,
+psname VARCHAR2,
+pfname VARCHAR2) IS
+
+src_file BFILE;
+dst_file BLOB;
+lgh_file BINARY_INTEGER;
+BEGIN
+src_file := bfilename('TEMP', pfname);
+
+-- insert a NULL record to lock
+INSERT INTO pdm
+(dname, sname, fname, iblob)
+VALUES
+(pdname, psname, pfname, EMPTY_BLOB())
+RETURNING iblob INTO dst_file;
+
+-- lock record
+SELECT iblob
+INTO dst_file
+FROM pdm
+WHERE dname = pdname
+AND sname = psname
+AND fname = pfname
+FOR UPDATE;
+
+-- open the file
+dbms_lob.fileopen(src_file, dbms_lob.file_readonly);
+
+-- determine length
+lgh_file := dbms_lob.getlength(src_file);
+
+-- read the file
+dbms_lob.loadfromfile(dst_file, src_file, lgh_file);
+
+-- update the blob field
+UPDATE pdm
+SET iblob = dst_file
+WHERE dname = pdname
+AND sname = psname
+AND fname = pfname;
+
+-- close file
+dbms_lob.fileclose(src_file);
+END load_file;
+/ 
+
+
+Next step execute the procedure.
+
+
+exec load_file('TEMP','This is Image','tritha7.png');
+
+
+SQL> !ls -l /oradata2/tritha7.png
+-rwxr-xr-x 1 oracle oinstall 21150 Jun 9 01:55 /oradata2/tritha7.png
+
+7)From Oracle Determine Blob size.
+1 declare
+2 a blob;
+3 begin
+4 select iblob into a from pdm;
+5 dbms_output.put_line(dbms_lob.getlength(a));
+6* end;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serverout on
+SQL> /
+21150
+
+
+
+
+Tip 58:
+
+How to find out what user you are connected as.
+
+SQL> SELECT USERNAME from v$session where audsid = sys_context('userenv','sessionid');
+
+USERNAME
+------------------------------
+SYSTEM
+
+
+
+Tip 59:
+
+create table junk (a varchar(10), lock_ts timestamp default current_timestamp);
+
+
+
+Tip 60:
+
+create global temporary table tjunk (a varchar(10), lock_ts timestamp default current_timestamp);
+
+This will create a temporary table, but you'll loose the data in it after a commit. But,
+you can always specify the following:
+
+
+  create global temporary table tjunk (a varchar(10), lock_ts timestamp
+  default current_timestamp) on commit preserve rows;
+
+
+You could also insert some rows:
+
+begin
+  for x in 0..400
+  loop
+      insert into tjunk (a) values (x);
+      commit;
+  end loop;
+end;
+
+
+
+Tip 61:
+
+Ref:
+http://infolab.stanford.edu/~ullman/fcdb/oracle/or-plsql.html#variables and types
+
+
+set serveroutput on
+declare
+
+  table_ varchar(50):= 'junk2';
+  stmt varchar(50) := 'drop table junk2';
+  stmt1 varchar(50) := 'create table junk2 (a integer, b varchar2(30))';
+  num_ integer := 0;
+  out1_ int :=0;
+  out2_ float :=0;
+  int1_ int := 5;
+begin
+  -- Default buffer is 20000
+  -- Will avoid ORA-20000: ORU-10027: buffer overflow, limit of 20000 bytes
+  DBMS_OUTPUT.ENABLE(1000000);
+   -- Drop and create table
+   execute immediate stmt; exception when others then null;
+   execute immediate stmt1;
+   -- Add N rows
+   for i in 1..3000
+   loop
+      execute immediate 'insert into junk2 (a) values (:1)'
+         using num_;
+      num_ := num_ +1;
+      dbms_output.put_line('test'||num_);
+      commit;
+   end loop;
+   commit;
+   execute immediate 'select count(1),avg(a) from '||table_|| ' where a > :1'
+      into out1_,out2_
+      using int1_;
+  dbms_output.put_line('out1_ (count): '|| out1_|| ' avg(a) '||out2_);
+end;
+
+
+
+
+
+Tip 62:
+
+   Turning off password expiration.
+
+         alter profile default limit password_life_time unlimited;
+
+
+
+Tip 63:
+
+   Finding out whether it's a single or parallel instance.
+
+
+       SQL> select parallel from v$instance;
+
+       PAR
+       ---
+       NO
+
+
+
+Tip 64:
+
+   Killing a particular session.
+
+   Step 1. 
+
+     Find the session you want to kill
+
+       select sid,serial#,last_call_et, username from v$session where username is not null
+
+
+           SID    SERIAL# LAST_CALL_ET USERNAME
+     --------- ---------- ------------ --------------------
+           125	  936		 4 CHIRICO <--- This guy session = 'SID,SERIAL#', or '125,936'
+           128	    5		 7 SYSMAN
+           130	   69		37 SYSMAN
+           132	    8		45 SYSMAN
+           133	   12		23 SYSMAN
+           134	   43		82 SYSMAN
+           135	   27		 2 SYSMAN
+           136	   31		82 SYSMAN
+           137	   12		 7 SYSMAN
+           140	  781		49 SYSTEM
+           141	  148		 6 SYSMAN
+           144	  140		 0 SYSTEM
+           145	   12		 2 DBSNMP
+           170	    7		35 DBSNMP
+
+
+   Step 2. 
+
+     Issue the alter command. You, you need the comma
+     between the SID and the SERIAL#. So if you wanted
+     to kill the command above, you would have to to the
+     following:
+
+       alter system kill session '65,23451';
+
+
+       
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+javac -d class chirico/strategy/*.java
+cd class
+echo "Main-Class: chirico.strategy.MyMain0" > manifest.txt
+rm -f packStrategy.jar 
+jar -cvmf manifest.txt packStrategy.jar chirico
+java -jar packStrategy.jar 
+

@@ -1,0 +1,91 @@
+.\" Manpage for smtpsnd
+.\" Contact mchirico@users.sourceforge.com to correct errors or omissions.
+.TH tlstutorial(1) "29 May 2006" "1.0" "tlstutorial As it relates to smtp and imap man page"
+.SH NAME
+ssl_tls \- Send mail using tls through smtp and getting mail using tls through imap
+.SH SYNOPSIS
+.B tlssmtp
+smtp interface
+
+.B tlsimap
+imap interface
+.SH DESCRIPTION
+
+.B tlssmtp
+writes to port 25, the smtp port, initiating the
+sending of email.
+
+
+.B tlsimap
+can retrieve email to be sent through port 143, the imap port.
+
+Security is important, so both commands support starttls.
+
+
+.B Notes
+.RS
+It's interesting to note options gained with POPFile http://popfile.sourceforge.net/. A
+a proxy program that filters email between the client and the server acting on behalf
+of the client. 
+
+In contrast, the programs here can operate with bash commands. The thought is that they
+could be used by an administrator.
+.RE
+
+A
+.SH THOUGHTS
+.B 1.
+If the program can be built as a series of libraries it might be
+more helpful solving complex issues that may deal with LDAP, XML
+and the like.
+
+.B 2
+
+
+.B 3
+
+.SH TODO
+
+.B 1
+Take a look at how Postfix and Fetchmail are handeling the TLS
+connections. Why is Fetchmail utilizing PEEK? Note how Postfix
+striped out the extra string statements.
+
+.B 2
+Threads could be utilized for a robust environment. There is also
+the idea of testing IMAP and smtp performance.
+
+.SH HANDY COMMANDS
+.B openssl version -a | grep OPENSSLDIR
+.RS
+This shows where the ssl files, including the certificates
+are installed. Memorize this command if you often work
+on several systems.
+.RE
+
+.SH WHY SECURITY?
+.B College Door Ajar For Online Criminals
+.RS
+http://www.latimes.com/technology/la-me-hacks30may30,0,645148,full.story?coll=la-home-headlines
+
+
+
+
+
+.SH BUGS
+No known bugs at this time.
+.SH AUTHOR
+Mike Chirico (mchirico@users.sourceforge.net)
+.RS
+http://souptonuts.sourceforge.net/chirico/index.php
+.RE
+.SH SOURCE
+ http://prdownloads.sourceforge.net/cpearls/stock.tar.gz?download
+.SH SVN (Subversion)
+The SVN can be found in the cpearls project under
+http://svn.sourceforge.net/viewcvs.cgi/cpearls/ssl_tls/
+
+.SH REFERENCES
+.RS
+http://www.ietf.org/rfc/rfc1939.txt
+

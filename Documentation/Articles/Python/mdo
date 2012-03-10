@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+import os,sys
+
+
+def scp(n):
+    s="scp %s sourceforge:."%n
+    r=os.popen(s).read().split()
+    s="ssh sourceforge -C 'chmod +r %s && mv %s souptonuts/htdocs/.'"% (n,n)
+    r=os.popen(s).read().split()
+    print r
+
+
+if __name__ == '__main__':
+    scp('Python_tutorial.html')
+

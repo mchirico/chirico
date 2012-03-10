@@ -1,0 +1,184 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.3.0
+#
+# Creates a tar.gz file of all files after copying them
+# into the $tarfile directory
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./mftp 1
+# will upload the file to sourceforge
+#
+#  Need a quick way to build the array?
+#
+#   find .  !  \(  -iregex '.*flexstate.tar.*' -o -iregex '.*flexstate.*'  -o  -regex '.*\.svn.*' -o -iname '*mftp*' -o -iname 'src' -o -regex '\.' -o -iregex '\.\/\..*'  -o -iregex '.*#.*' \)  |awk '{printf "Array[%d]=\x27%s\x27\n",NR,$0 }'
+#
+tarfile="flexstate"
+if [ -d ${tarfile}  ]
+then
+  echo "Deleting directory ${tarfile}"
+  rm -r  ${tarfile}
+fi
+# These are the ones to COPY
+declare -a Array
+Array[1]='./COPYING'
+Array[2]='./AUTHORS'
+Array[3]='./configure.in'
+Array[4]='./Makefile.am'
+Array[5]='./README'
+Array[6]='./mdo'
+Array[7]='./src/main.cc'
+Array[8]='./src/state.ll'
+Array[9]='./ChangeLog'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# Create working directory and populate with source files
+#
+mkdir -p $tarfile
+t=""
+dashOH=""
+for i in `seq ${#Array[@]}`
+do
+  t="${t} ${dashOH} -ipath '${Array[${i}]}'"
+  dashOH='-o'
+done
+r="find .   \( ${t} \) |cpio -pud ./${tarfile}"
+
+eval $r;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#  Standard Upload
+#
+NOARGS=1
+if [ -z $1 ]
+then
+    echo "  To upload file to sourceforge: `basename $0 ` 1"
+    echo "  Run ./mdo and copy configure and Makefile.in to cvs  "
+    exit
+else
+
+      if [[ $1 == 1 ]]
+       then
+
+
+# machine upload.sourceforge.net login anonymous password m@aol.com
+
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+user anonymous m@aol.com
+binary
+cd incoming
+put ${tarfile}.tar.gz
+bye
+FTPSTRING
+
+       else
+
+
+# machine upload.sourceforge.net login anonymous password m@aol.com
+    ftp -n -u <<  FTPSTRING
+open upload.sourceforge.net
+user anonymous m@aol.com
+binary
+cd incoming
+put ${1}
+bye
+FTPSTRING
+
+
+
+
+       fi
+
+
+fi
+
+
+
+
+
+

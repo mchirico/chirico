@@ -1,0 +1,78 @@
+
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+
+
+<br>
+<br>
+
+     <table  cellspacing="1">
+    {% for i in computers %}
+
+      <tr>
+       <td> {{ i.hostname|escape }} </td>
+       <td> {{ i.date|escape }}     </td>
+      </tr>
+
+    {% endfor %}
+      </table>
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="http://chart.apis.google.com/chart?
+chs=250x100
+&amp;chd=t:60,40
+&amp;cht=p3
+&amp;chl=Hello|World"
+alt="Sample chart" />
+
+<img src="http://chart.apis.google.com/chart?
+cht=lxy&amp;chs=200x125&amp;chd=t:
+0,10,20,30,40,50,60,70,90,100,90,75|
+0,10,20,84.2,40,50,60,70,80,95,100,20|
+10,30,40,45,52|
+100,90,40,20,10|
+-1|
+5,33,50,55,7&amp;chco=3072F3,ff0000,00aaaa&amp;chls=2,4,1&amp;chm=s,FF0000,0,-1,5
+|s,0000ff,1,-1,5|s,00aa00,2,-1,5" 
+alt="Line chart with unevenly spaced data points and lines in red, green and dashed blue" />
+
+
+
+
+
+
+
+
+    <form action="/sign" method="post">
+      computer:<br>
+      <input  name="computer"><br>
+      computerkey:<br>
+
+      <input  name="computerkey">
+      <br>
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+
+
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+
+
+
+
+  </body>
+</html>

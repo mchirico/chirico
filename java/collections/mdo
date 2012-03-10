@@ -1,0 +1,4 @@
+#!/bin/bash
+if javac *.java; then
+ java Iter
+fi

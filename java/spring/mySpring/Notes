@@ -1,0 +1,5 @@
+
+A few notes. You'll need to add the Spring libraries
+to the class path. Take a look at .classpath
+
+Make sure MySpring.xml is under src "NOT" com.cwxstat.dev

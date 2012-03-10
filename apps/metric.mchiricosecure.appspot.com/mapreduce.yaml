@@ -1,0 +1,21 @@
+# 
+#
+
+mapreduce:
+- name: Copy country to the VisitedPlace table
+  mapper:
+    input_reader: mapreduce.input_readers.DatastoreInputReader
+    handler: mapper.addCountryToVisitedPlace
+    params:
+    - name: entity_kind
+      default: models.VisitedPlace
+
+
+- name: Test Reduce
+  mapper:
+    input_reader: mapreduce.input_readers.DatastoreInputReader
+    handler: mapper.testReduce
+    params:
+    - name: entity_kind
+      default: models.Count
+

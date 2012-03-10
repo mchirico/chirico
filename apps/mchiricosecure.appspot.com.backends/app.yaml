@@ -1,0 +1,61 @@
+application: mchiricosecure
+version: 1
+runtime: python
+api_version: 1
+
+builtins:
+- datastore_admin: on
+
+inbound_services:
+- warmup
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
+# The static files (example code)
+- url: /static/.*
+  static_dir: static
+
+- url: /backend/counter/.*
+  script: counter.py
+  login: admin
+
+- url: /queued
+  script: mqueue.py
+  login: admin
+
+- url: /queue0
+  script: mqueue.py
+  login: admin
+
+
+
+- url: /queue2
+  script: mqueue.py
+  login: admin
+
+
+- url: /mega/.*
+  script: mega.py
+  login: admin
+
+
+- url: /welcome
+  script: demo_frontend.py
+  login: admin
+
+- url: /showsettings/.*
+  script: showsettings.py
+  secure: always
+
+- url: /.*
+  script: index.py
+  login: admin
+  secure: always
+
+skip_files:
+- mdo
+- (.*\.svn/.*)
+

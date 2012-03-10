@@ -1,0 +1,85 @@
+<html>
+    <style>
+        body,td { font-family:sans-serif; }
+    </style>
+  <body>
+  
+  <h3>Google App Engine: [A Better] Many-to-many JOIN</h3>
+
+  <h4>All books at library "{{ lib }}"</h4>
+  <table border="1">
+      {% for book in books_at_lib %}
+        <tr>    
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+        </tr>
+        {% endfor %}
+    </table>        
+
+
+  <h4>All libraries with book "{{ forbook }}"</h4>
+  <table border="1">
+      {% for lib in libs_by_book %}
+        <tr>    
+            <td>{{ lib.name }}</td>
+            <td>{{ lib.address }}</td>
+            <td>{{ lib.city }}</td>
+        </tr>
+        {% endfor %}
+    </table>       
+
+  <h4>All libraries with book "{{ forbook2 }}"</h4>
+  <table border="1">
+      {% for lib in libs_by_book2 %}
+        <tr>    
+            <td>{{ lib.name }}</td>
+            <td>{{ lib.address }}</td>
+            <td>{{ lib.city }}</td>
+        </tr>
+        {% endfor %}
+    </table>       
+
+
+
+  <h4>Books by library</h4>
+  <table border="1">
+    <tr>
+        <th>Library</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Title</th>
+        <th>Author</th>
+    </tr>
+    {% for lib in libs_books %}
+        {% for book in lib.books %}
+        <tr>
+            <td>{{ lib.name }}</td>
+            <td>{{ lib.address }}</td>
+            <td>{{ lib.city }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+        </tr>
+       {% endfor %}
+    {% endfor %}
+  </table>
+
+
+
+  <h4>Libraries by books</h4>
+  <table border="1">
+      {% for book in books_libs %}
+        {% for lib in book.libraries %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ lib.name }}</td>
+            <td>{{ lib.address }}</td>
+            <td>{{ lib.city }}</td>
+
+        </tr>
+        {% endfor %}
+    {% endfor %}
+  </table>
+  
+  </body>
+</html>
