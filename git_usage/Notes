@@ -233,6 +233,9 @@ Branching
    git branch -d test0
 
 
+ To delete a file
+   git rm junk
+
 
 
 
