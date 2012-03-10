@@ -241,6 +241,9 @@ Branching
    git rm junk
 
 
+ To create a new branch without the last commit
+   git checkout -b mybranch master~1
+
 
 
    
