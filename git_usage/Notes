@@ -198,8 +198,45 @@ dist/
 MANIFEST
 bin
 
+To list the tags
+
+  git tag
+
+To create a tag
+
+  git tag version0.0 -m 'version 0.0'
+  git push
 
 
+Branching
+
+ First list the branches
+
+   git branch
+     or if you want all the branches
+   git banch -a
+
+ Here's an example of creating a branch
+
+   git branch test0
+   git checkout test0
+   git commit -a -m 'Branch test0'
+
+ Now you can go back to the old one
+   
+   git checkout master
+
+ You can merge or delete
+   
+   git merge test0
+       or
+   git branch -d test0
+
+
+
+
+
+   
 
 Now to commit these run
 
