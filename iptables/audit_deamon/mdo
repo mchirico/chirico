@@ -1,0 +1,12 @@
+#!/bin/bash
+/etc/init.d/auditd stop
+sleep 1
+cp audisp-logins /sbin/audisp-logins
+cp audisp-logins.conf  /etc/audisp/plugins.d/.
+chcon -u system_u /sbin/audisp-logins
+chcon -t audisp_exec_t /sbin/audisp-logins
+sleep 1
+/etc/init.d/auditd restart
+
+
+

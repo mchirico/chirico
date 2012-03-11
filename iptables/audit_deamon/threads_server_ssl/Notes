@@ -1,0 +1,28 @@
+
+You'll need to do something with the certs file.
+   /etc/banssh/
+
+-- I'll need to get these correct. This is a start
+
+   chmod 600 /etc/banssh/*key.pem
+
+
+#This is now in the file Nopass.sh
+openssl rsa -in clientkey.pem -out clientkey.pem.ins
+cat clientcert.pem clientkey.pem.ins rootcert.pem > client.pem
+
+openssl rsa -in serverkey.pem -out serverkey.pem.ins
+cat servercert.pem serverkey.pem.ins serverCAcert.pem rootcert.pem > server.pem
+
+
+
+
+
+gcc -g -Wall -pthread -o client client.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o server server.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o client1 client1.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o server1 server1.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o client2 client2.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o server2 server2.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o client3 client3.o common.o reentrant.o -lssl -lcrypto
+gcc -g -Wall -pthread -o server3 server3.o common.o reentrant.o -lssl -lcrypto

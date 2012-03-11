@@ -1,0 +1,93 @@
+
+STEP 0:
+
+ Make sure redis.conf has "daemonize" changed to "yes"
+
+
+
+STEP 1:
+
+Create the following file:
+  
+  /Library/LaunchDaemons/io.redis.redis-server.plist
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>io.redis.redis-server</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/redis-server</string>
+		<string>/etc/redis.conf</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
+
+
+
+
+STEP 2:
+
+ Check the validity of this file.
+
+   plutil -lint /Library/LaunchDaemons/io.redis.redis-server.plist
+     
+
+STEP 3:
+
+  launchctl load the file with the following command.
+
+     sudo launchctl load /Library/LaunchDaemons/io.redis.redis-server.plist
+
+
+STEP 4:
+
+   Now start it.
+
+     sudo launchctl start io.redis.redis-server
+
+
+
+STEP 5:
+
+   Check the status
+
+      sudo launchctl list io.redis.redis-server
+
+   You should get something like the following:
+
+      {
+	"Label" = "io.redis.redis-server";
+	"LimitLoadToSessionType" = "System";
+	"OnDemand" = true;
+	"LastExitStatus" = 0;
+	"PID" = 4847;
+	"TimeOut" = 30;
+	"ProgramArguments" = (
+			   "/usr/local/bin/redis-server";
+				"/etc/redis.conf";
+				);
+       };
+
+  
+
+
+STEP 6:
+
+   You can shutdown the server with the following command.
+
+      sudo launchctl stop io.redis.redis-server
+
+   And if you want, build the following aliases
+
+      alias redisstart='sudo launchctl start io.redis.redis-server'
+      alias redisstop='sudo launchctl stop io.redis.redis-server'
+
+
+Reference:
+   http://naleid.com/blog/2011/03/05/running-redis-as-a-user-daemon-on-osx-with-launchd/

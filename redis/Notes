@@ -1,0 +1,32 @@
+Good reference for python:
+  http://degizmo.com/2010/03/22/getting-started-redis-and-python/
+
+
+f=open("out")
+m=f.readlines()
+f.close()
+m=[float(i.strip()) for i in m]
+
+
+
+last=0
+oldnew=[]
+count=0
+h={}
+max=0
+t=0
+for i in m:
+   if t == 0:
+      t=i
+      last=i
+   else:
+      delta = i -t
+      t=i
+      h[i]= delta
+      if 200 < delta:
+          count = count + 1
+	  oldnew.append([last,i])
+      last=i
+
+
+

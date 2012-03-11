@@ -246,6 +246,7 @@ Branching
 
  To close a repository
    git clone git@github.com:mchirico/chirico.git
+   git close git@github.com:mchirico/chirico.wiki.git
 
 
 

@@ -1,0 +1,37 @@
+
+
+./redis-cli -h 192.168.1.12 -p 6379
+./redis-cli -i 4 # Select DB 4
+
+
+redis-cli -h 192.168.1.12 sadd myset "203"
+
+
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k1 "a"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k1 "b"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k1 "c"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k2 "c"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k2 "z"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sadd k2 "y"
+(integer) 1
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 sinter k2 k1
+1) "c"
+
+
+redis-cli -h 192.168.1.12 sdiffstore k3 k2 k1
+
+
+~/dev/chirico/redis$ redis-cli -h 192.168.1.12 smembers k3 
+1) "y"
+2) "z"
+
+This is a very good tutorial:
+
+   http://redis.io/topics/data-types-intro
+
+

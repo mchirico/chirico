@@ -1,0 +1,29 @@
+#!/bin/bash
+export VERSION=redis-2.2.14
+cd ${VERSION}
+make install
+cd ..
+cp redis /etc/init.d/.
+cp redis.conf /etc/.
+cd /usr/sbin
+ln -sf /usr/local/bin/redis-benchmark redis-benchmark  
+ln -sf /usr/local/bin/redis-check-aof redis-check-aof  
+ln -sf /usr/local/bin/redis-check-dump redis-check-dump  
+ln -sf /usr/local/bin/redis-cli redis-cli 
+ln -sf /usr/local/bin/redis-server redis-server
+/sbin/chkconfig --level 3 redis on
+/sbin/chkconfig --list redis 
+
+/usr/sbin/adduser redis
+mkdir -p /var/lib/redis
+mkdir -p /var/log/redis/
+touch /var/log/redis/redis.log
+chown -R redis.redis /var/lib/redis
+chown -R redis.redis /var/log/redis
+
+
+/etc/init.d/redis restart
+
+
+echo -e "Last step is to adjust iptables"
+

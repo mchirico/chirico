@@ -1,0 +1,726 @@
+
+
+Switch Ports Model              SW Version            SW Image                 
+------ ----- -----              ----------            ----------               
+*    1 26    WS-C2960-24TC-S    12.2(44)SE6           C2960-LANLITEK9-M        
+
+
+Tip 1:
+
+The following steps will set ssh access for the switch
+
+configure terminal
+username admin privilege 15 password 0 P4ssword
+line vty 0 15
+login local
+end
+show running-config
+copy running-config startup-config
+
+By the way, you can use the command
+
+"copy run start" instead of "copy running-config startup-config"
+
+
+
+
+Tip 2:
+
+Disable http server
+
+config term
+no ip http server
+no ip http secure-server
+end
+show running-config
+copy running-config startup-config
+
+
+
+
+Tip 3:
+
+enable
+
+Next go into the directory of choice, or see what's on flash
+
+dir
+cd c3620-ik9s-mz.122-0.17.T
+
+copy flash:c3620-ik9s-mz.122-0.17.T scp://tiger@10.1.1.2/
+
+
+Or here's another copy taking the contents directly from
+memory.
+
+cd
+cd system:
+copy running-config scp://tiger@10.1.1.2/
+
+
+
+
+
+Tip 4:
+
+Disable snmp
+
+config term
+no snmp-server
+end
+show running-config
+copy running-config startup-config
+
+
+
+
+Tip 5:
+
+config terminal
+ntp server 169.229.70.183 
+ntp server 69.50.219.51 
+ntp server 63.240.161.99 
+ntp server 132.163.4.102
+ntp server 193.67.79.202
+ntp server 152.1.58.124
+ntp server 128.118.46.3
+ntp server 129.6.15.29
+ntp server 64.236.96.53
+ntp server 208.184.49.9
+
+ntp server 128.118.25.3
+ntp server 192.31.216.5
+ntp server 128.4.1.5
+ntp server 128.2.250.95
+ntp server 192.35.82.50
+
+ntp server 206.246.122.250
+ntp server 64.113.32.5
+ntp server 64.236.96.53
+ntp server 64.90.182.55
+ntp server 24.56.178.140
+
+
+
+clock timezone EST -05
+clock summer-time EDT recurring
+end
+show running-config
+copy running-config startup-config
+
+show ntp status
+show ntp associations
+
+Note, make sure you have the hostname of the router configured. This may cause
+problems.
+
+
+
+Tip 6:
+
+Banner
+
+
+config terminal
+banner login $
+********************************************************************************
+                 PRIVATE EQUIPMENT OWNED BY CWXSTAT INC
+********************************************************************************
+      WARNING!!! WARNING!!! WARNING!!! WARNING!!! WARNING!!! WARNING!!!
+
+   This system is solely for the use of authorized users for official purposes.
+   You have no expectation of privacy in its use and to ensure that the system
+   is functioning properly, individuals using this computer system are subject
+   to having all of their activities monitored and recorded by system
+   personnel.  Use of this system evidences an express consent to such
+   monitoring and agreement that if such monitoring reveals evidence of
+   possible abuse or criminal activity, system personnel may provide the
+   results of such monitoring to appropriate officials.
+
+      WARNING!!! WARNING!!! WARNING!!! WARNING!!! WARNING!!! WARNING!!!
+********************************************************************************
+
+********************************************************************************
+                 PRIVATE EQUIPMENT OWNED BY CWXSTAT INC
+********************************************************************************
+$
+
+end
+copy running-config startup-config
+
+
+
+
+
+Tip 7:
+
+Getting the environment status. This will give you fan, temperature and power.
+
+show env all
+
+
+
+
+Tip 8:
+
+Logging.
+
+config t
+service sequence-numbers
+service timestamsp log datetime msec localtime show-timezone
+end
+s run
+copy run startup-config
+
+
+
+
+
+Tip 9:
+      To reboot the switch. You may want to save the running config, then,
+      reload.
+
+
+      #copy run startup-config
+      #reload
+
+
+
+
+Tip 10:
+     Cable dianostics
+
+     switch00#test cable-diagnostics tdr interface fa0/11
+     test cable-diagnostics tdr interface fa0/11
+     Link state may be affected during TDR test
+     TDR test started on interface Fa0/11
+     A TDR test can take a few seconds to run on an interface
+     Use 'show cable-diagnostics tdr' to read the TDR results.
+
+
+     switch00#show cable-diagnostics tdr interface fa0/11
+     show cable-diagnostics tdr interface fa0/11
+     TDR test last run on: May 31 06:42:40
+
+     Interface Speed Local pair Pair length        Remote pair Pair status
+     --------- ----- ---------- ------------------ ----------- --------------------
+     Fa0/11    100M  Pair A     4    +/- 15 meters Pair A      Normal              
+                     Pair B     4    +/- 15 meters Pair B      Normal              
+                     Pair C     N/A                Pair C      Not Supported       
+                     Pair D     N/A                Pair D      Not Supported       
+						         
+
+
+
+Tip 11:
+    Getting detail on an interface
+
+
+    First a quick look
+
+         #show interfaces status
+
+    switch00#sh controllers ethernet-controller fa0/11
+    sh controllers ethernet-controller fa0/11
+
+     Transmit FastEthernet0/11                Receive
+      7494073 Bytes                            95050 Bytes                    
+        14594 Unicast frames                     158 Unicast frames           
+        84413 Multicast frames                   145 Multicast frames         
+          417 Broadcast frames                   765 Broadcast frames         
+            0 Too old frames                   19773 Unicast bytes            
+            0 Deferred frames                  26317 Multicast bytes          
+            0 MTU exceeded frames              48960 Broadcast bytes          
+            0 1 collision frames                   0 Alignment errors         
+            0 2 collision frames                   0 FCS errors               
+            0 3 collision frames                   0 Oversize frames          
+            0 4 collision frames                   0 Undersize frames         
+            0 5 collision frames                   0 Collision fragments      
+            0 6 collision frames       
+            0 7 collision frames                 815 Minimum size frames      
+            0 8 collision frames                 142 65 to 127 byte frames    
+            0 9 collision frames                  72 128 to 255 byte frames   
+            0 10 collision frames                 32 256 to 511 byte frames   
+            0 11 collision frames                  7 512 to 1023 byte frames  
+            0 12 collision frames                  0 1024 to 1518 byte frames 
+            0 13 collision frames                  0 Overrun frames           
+            0 14 collision frames                  0 Pause frames             
+
+
+   Also consider
+
+   switch00# sh controllers ethernet-controller fa0/11 phy
+   switch00# sh controllers utilization
+
+
+
+Tip 12:
+
+Suppose you want to find why the computer tape.squeezel.org
+is not accessible.
+
+    sh mac-addr
+
+switch00#sh mac-addr | e ^ All
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0000.24c9.a864    DYNAMIC     Fa0/15
+   1    0000.24c9.af8c    DYNAMIC     Fa0/2
+   1    000b.dbc3.3924    DYNAMIC     Fa0/2
+   1    000c.2918.eb38    DYNAMIC     Fa0/17
+   1    0011.118a.be3f    DYNAMIC     Fa0/2
+   1    0012.175c.a7c9    DYNAMIC     Fa0/1
+   1    0012.175c.a8be    DYNAMIC     Fa0/17
+   1    0012.175c.c560    DYNAMIC     Fa0/7
+   1    0013.7280.62f0    DYNAMIC     Fa0/18
+   1    0014.2257.331a    DYNAMIC     Fa0/13
+   1    001d.7e31.0692    DYNAMIC     Fa0/2
+   1    0023.7d88.3393    DYNAMIC     Fa0/22
+   1    0025.b342.ec12    DYNAMIC     Fa0/2
+   1    0050.bfd3.16af    DYNAMIC     Fa0/24
+   1    0050.da60.5bad    DYNAMIC     Fa0/3
+   1    c84c.7572.6f40    STATIC      Gi0/1 
+   1    c84c.7572.6f41    DYNAMIC     Gi0/2
+  10    0012.175c.a79d    DYNAMIC     Fa0/11
+Total Mac Addresses for this criterion: 38
+
+
+
+Note above you didn't see Fa0/3. What's going on? Try the
+following:
+
+
+switch00#sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Fa0/1                        connected    1          a-full  a-100 10/100BaseTX
+Fa0/2                        connected    1          a-full  a-100 10/100BaseTX
+Fa0/3                        disabled     1            auto   auto 10/100BaseTX  <---- Take a look here
+Fa0/4                        notconnect   1            auto   auto 10/100BaseTX
+Fa0/5                        notconnect   1            auto   auto 10/100BaseTX
+Fa0/6                        notconnect   1            auto   auto 10/100BaseTX
+Fa0/7                        connected    1          a-full  a-100 10/100BaseTX
+Fa0/8                        notconnect   1            auto   auto 10/100BaseTX
+Fa0/9                        notconnect   1            auto   auto 10/100BaseTX
+Fa0/10                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/11                       connected    10         a-full  a-100 10/100BaseTX
+Fa0/12                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/13                       connected    1          a-full  a-100 10/100BaseTX
+Fa0/14                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/15                       connected    1          a-full  a-100 10/100BaseTX
+Fa0/16                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/17                       connected    1          a-full  a-100 10/100BaseTX
+Fa0/18                       connected    1          a-full  a-100 10/100BaseTX
+Fa0/19                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/20                       notconnect   1            auto   auto 10/100BaseTX
+Fa0/21                       connected    1          a-full  a-100 10/100BaseTX
+
+Bring up the interface
+
+#conf t
+#int fa0/3
+#no shut
+#end
+
+Check the status 
+
+#sh int status
+
+switch00#sh ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.1.108           9   0012.175c.a7c9  ARPA   Vlan1
+Internet  10.20.20.1              -   081f.f380.acc1  ARPA   Vlan11
+Internet  192.168.1.81            0   0011.118a.be3f  ARPA   Vlan1
+Internet  192.168.1.11            6   0012.175c.a8be  ARPA   Vlan1
+Internet  192.168.1.12          208   0012.175c.a7c9  ARPA   Vlan1
+Internet  192.168.1.1             3   001d.7e31.0692  ARPA   Vlan1
+Internet  192.168.1.160           -   081f.f380.acc0  ARPA   Vlan1
+Internet  192.168.1.155           0   0050.da60.5bad  ARPA   Vlan1  <--- note here
+
+Now see if you can ssh
+switch00#ssh -l mchirico 192.168.1.155
+
+
+
+
+Tip 13:
+
+If you want detailed stats try the folowing:
+
+#show controllers 
+
+------------------ show controllers ------------------
+
+
+
+     Transmit FastEthernet0/1                 Receive
+   1060050575 Bytes                       1826307524 Bytes                    
+      7870812 Unicast frames                 8212317 Unicast frames           
+      6763555 Multicast frames                   173 Multicast frames         
+      1730433 Broadcast frames                   240 Broadcast frames         
+            0 Too old frames              1826256617 Unicast bytes            
+            0 Deferred frames                  34137 Multicast bytes          
+            0 MTU exceeded frames              16770 Broadcast bytes          
+            0 1 collision frames                   0 Alignment errors         
+            0 2 collision frames                   0 FCS errors               
+            0 3 collision frames                   0 Oversize frames          
+            0 4 collision frames                   0 Undersize frames         
+            0 5 collision frames                   0 Collision fragments      
+            0 6 collision frames       
+            0 7 collision frames              889530 Minimum size frames      
+            0 8 collision frames              473151 65 to 127 byte frames    
+            0 9 collision frames               19920 128 to 255 byte frames   
+            0 10 collision frames              21049 256 to 511 byte frames   
+            0 11 collision frames              14806 512 to 1023 byte frames  
+            0 12 collision frames            6794274 1024 to 1518 byte frames 
+            0 13 collision frames                  0 Overrun frames           
+            0 14 collision frames                  0 Pause frames             
+            0 15 collision frames      
+            0 Excessive collisions                 0 Symbol error frames      
+            0 Late collisions                      0 Invalid frames, too large
+            0 VLAN discard frames                  0 Valid frames, too large  
+            0 Excess defer frames                  0 Invalid frames, too small
+      6253238 64 byte frames                       0 Valid frames, too small  
+      4705325 127 byte frames          
+      2345288 255 byte frames                      0 Too old frames           
+       264852 511 byte frames                      0 Valid oversize frames    
+       238680 1023 byte frames                     0 System FCS error frames  
+      2557417 1518 byte frames                     0 RxPortFifoFull drop frame
+            0 Too large frames         
+
+
+
+
+
+
+
+Tip 14:
+
+How to show more detailed mac information.
+
+switch00#show platform mac-address-table hash-table
+hmac:         01BDA52C           hash_q.flink: 01794970    hash_q.blink:  01794970
+key:          0113               age_q.flink:  01BDA0FC    age_q.blink:   0179C744
+mac_addr:     0013.7280.62f0     vlan_id:      0001        hmvid:         0001
+vlan_handle:  00004928           mat_instance: 01D1FA9C    mat_vlan_addr: 01D25EE4
+bg_handle:    -0000001           bg_instance:  00000000    mat_bg_addr:   00000000   
+di:           F012               gpn:          012         sdi:           00000187
+mad_sd_hanlde:01ADAD7C           owned_sw_num: 0001        flags:         01
+
+
+
+
+
+
+
+
+
+Tip X:
+
+(Note here you can assign VLANs, but you're going to have
+trouble routing without a layer 3 switch).
+
+
+Assigning VLANS.
+
+  Step 1. 
+
+        Create vlan
+
+            #conf t
+            #vlan 11
+            #name cluster0
+            #exit
+            #exit
+
+        Findout what is on each port. This will give you the mac-address per port.
+
+            #show mac-address-table
+
+                1    0012.175c.c560    DYNAMIC     Fa0/7
+
+        Next you need IP addresses with associated macs
+
+            #show arp | i .10
+
+	    	  Internet  192.168.1.106           5   0025.b342.ec12  ARPA   Vlan1
+		  Internet  192.168.1.101          43   0021.00dd.6922  ARPA   Vlan1
+		  Internet  192.168.1.10           10   0012.175c.c560  ARPA   Vlan1
+
+
+
+        Now assign the vlan to the port
+
+            #config t
+            #int Fa0/7
+            #switchport access vlan 11
+            #exit
+            #exit
+
+            #show vlan
+
+
+	    #config t
+            #int Fa0/7
+            #switchport mode trunk
+	    
+
+	    #conf t
+	    #int vlan 11
+	    #ip address 10.20.20.1 255.255.255.0
+	    #ip default-gateway 
+            #no shut
+
+	    #sho int ip 
+	    #sh ip int brief
+	    
+	    #conf t
+	    #vlan 11
+	    
+This I need to try
+	    #int vlan 11
+	    #ip address
+            Multiple SVI support (This is the problem 2960 doesn't support routing).
+                 SVI= Switch Virtual Interface
+
+
+
+
+
+
+Other items:
+
+show mac-addr
+show arp
+
+show interface capabilities
+show interface accounting
+show ip int brief
+show access-lists hardware counters
+s process CPU
+s tcp statistics
+  http://www.cisco.com/en/US/docs/ios/12_1/iproute/command/reference/1rdip.html#wp1020634
+
+s port-security
+
+
+
+This example shows how to enable port security on a port and to set the maximum number of secure addresses to 50. The violation mode is the default, no static secure MAC addresses are configured, and sticky learning is enabled.
+
+Switch(config)# interface gigabitethernet0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport port-security
+Switch(config-if)# switchport port-security maximum 50
+Switch(config-if)# switchport port-security mac-address sticky
+
+This example shows how to configure a static secure MAC address on VLAN 3 on a port:
+
+Switch(config)# interface gigabitethernet0/2
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport port-security
+Switch(config-if)# switchport port-security mac-address 0000.02000.0004 vlan 3
+
+This example shows how to enable sticky port security on a port, to manually configure MAC addresses for data VLAN and voice VLAN, and to set the total maximum number of secure addresses to 20 (10 for data VLAN and 10 for voice VLAN).
+
+Switch(config)# interface FastEthernet0/1
+Switch(config-if)# switchport access vlan 21
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport voice vlan 22
+Switch(config-if)# switchport port-security
+Switch(config-if)# switchport port-security maximum 20
+Switch(config-if)# switchport port-security violation restrict
+Switch(config-if)# switchport port-security mac-address sticky
+Switch(config-if)# switchport port-security mac-address sticky 0000.0000.0002
+Switch(config-if)# switchport port-security mac-address 0000.0000.0003
+Switch(config-if)# switchport port-security mac-address sticky 0000.0000.0001 vlan voice
+Switch(config-if)# switchport port-security mac-address 0000.0000.0004 vlan voice
+Switch(config-if)# switchport port-security maximum 10 vlan access
+Switch(config-if)# switchport port-security maximum 10 vlan voice
+
+Reference:
+
+
+Port Trunking
+http://www.cisco.com/en/US/products/ps9967/products_qanda_item09186a0080a363f8.shtml
+
+EIGRP Enhanced Interior Gateway Routing Protocol
+http://www.cisco.com/en/US/tech/tk365/technologies_white_paper09186a0080094cb7.shtml
+
+http://www.cisco.com/en/US/docs/switches/lan/catalyst2960/software/release/12.2_25_see/configuration/guide/swtrafc.html#wp1038546
+
+
+Below is an excellent command, which shows everything:
+
+    show tech-support
+
+show process cpu history
+
+    5422222122223341224332221135212222123422152332233232332131323223229298
+    1094011931152415068022906750886630808460955951913663375867660884909787
+100                                                                   * * 
+ 90                                                                   * **
+ 80                                                                   * **
+ 70                                                                   * **
+ 60                                          *                        * **
+ 50 *                 *        *             *                        * **
+ 40 **            *   *       **        **   * **     *  *  * *       * **
+ 30 ***        ****  **** *   *** **    ***  **** ***** *** * ******* ****
+ 20 **********************************************************************
+ 10 ********************************************************************##
+   0....5....1....1....2....2....3....3....4....4....5....5....6....6....7.
+             0    5    0    5    0    5    0    5    0    5    0    5    0 
+                   CPU% per hour (last 72 hours)
+                  * = maximum CPU%   # = average CPU%
+
+
+
+
+sho arp | i .12
+
+
+To see both ip addresses add mac addresses type the
+following:
+
+sho ip arp
+
+or
+
+sho arp
+
+You'll want to run 
+
+show mac-addr
+
+sho controllers cpu-interface
+sho controllers 
+
+sh running interface f0/1
+
+
+
+Need MIBS?
+http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml
+
+
+
+VLANS:
+
+  VTP (Vlan Trunking Protocol)
+        Cisco's own way (Get VLAN info across all switches)
+	3 VTP Modes
+	    - Server
+	    - Client
+	    - Transparent
+
+
+   Inter-VLAN communication (Communication between vlans)
+           - subinterfaces 
+
+
+
+Questions:
+ Trunk link is shared. Doesn't this compromise, or slow the connection
+ to have everything go through one wire?
+
+
+
+Interesting product:
+2901 Security Bundle with sec Lic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router:
+
+
+config t
+hostname <example>
+
+
+
+username <myuser> privilege 15 secret 0
+
+
+
+router00# 
+router00# 
+router00# 
+router00#config termina 
+Enter configuration commands, one per line. End with CNTL/Z. 
+router00(config)#service password-encryption
+router00(config)#^Z 
+router00# 
+
+
+
+
+
+
+
+
+
+
+enable
+configure t
+ip route 10.20.20.0 255.255.255.0 GigabitEthernet0/0
+
+
+
+The following is a good reference on access list
+http://www.cisco.com/en/US/products/sw/secursw/ps1018/products_tech_note09186a00800a5b9a.shtml#sourcedefine
+
+Or, grab the document:
+
+http://www.cisco.com/application/pdf/paws/23602/confaccesslists.pdf
+
+Cisco ios firewall
+
+http://www.cisco.com/en/US/prod/collateral/iosswrel/ps6537/ps6586/ps6634/prod_white_paper0900aecd805c4ea8.html
+
+sho ip route
+sho inventory
+show environment table
+show process cpu history
+
+
+
+
+
+See the following on access-list
+http://www.cisco.com/en/US/products/sw/secursw/ps1018/products_tech_note09186a00800a5b9a.shtml
+
+http://articles.techrepublic.com.com/5100-10878_11-6078554.html
+
+
+There will be two flavors of universal images supported on Generation
+Two of the Integrated Services Routers: 1. Universal images with the
+"universalk9" designation in the image name: This universal image
+offers all the Cisco IOS features including strong payload
+cryptography features such as IPSec VPN, SSL VPN, and Secure Unified
+Communications.  
+
+2. Universal images with the universalk9_npe"
+designation in the image name: The strong enforcement of encryption
+capabilities provided by Cisco Software Activation satisfies
+requirements for the export of encryption capabilities. However, some
+countries have import requirements that require that the platform does
+not support any strong crypto functionality such as payload
+cryptography. To satisfy the import requirements of those countries,
+the `npe' universal image does not support any strong payload
+encryption. This image supports security features like Zone-Based
+Firewall, Intrusion Prevention through SECNPE-K9 license.

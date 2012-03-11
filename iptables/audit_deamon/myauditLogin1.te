@@ -1,0 +1,11 @@
+
+module myauditLogin1 1.0;
+
+require {
+	type audisp_t;
+	type port_t;
+	class tcp_socket name_connect;
+}
+
+#============= audisp_t ==============
+allow audisp_t port_t:tcp_socket name_connect;

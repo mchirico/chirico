@@ -1,0 +1,14 @@
+  ** WORKING ***
+
+  You are reading data in ./tmpfile 
+
+  If you want to read more data, you'll need to add that 
+  data to ./tmpfile.
+
+    echo "data" >> ./tmpfile
+
+  ** END **
+
+
+
+

@@ -1,0 +1,11 @@
+
+module myauditbot1 1.0;
+
+require {
+	type inaddr_any_node_t;
+	type audisp_t;
+	class tcp_socket node_bind;
+}
+
+#============= audisp_t ==============
+allow audisp_t inaddr_any_node_t:tcp_socket node_bind;

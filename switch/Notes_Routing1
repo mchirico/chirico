@@ -1,0 +1,345 @@
+
+Tip 1:
+
+  Configuring dns for your router:
+
+router00(config)#ip name-server 192.168.1.71
+
+
+Tip 2:
+
+   If you perform a show running config, you may see the passwords
+   un-encrypted. To encrypt the passwords do the following:
+
+router00:388#config t
+router00(config)#service password-encryption
+
+
+
+
+switch00#sh mac-addr | e ^ All
+sh mac-addr | e ^ All
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0000.24c9.a864    DYNAMIC     Fa0/15 <-- soekris00
+   1    000b.dbc3.3924    DYNAMIC     Fa0/2
+   1    000c.2918.eb38    DYNAMIC     Fa0/17
+   1    0011.118a.be3f    DYNAMIC     Fa0/2
+   1    0012.175c.a7c9    DYNAMIC     Fa0/1
+   1    0012.175c.a8be    DYNAMIC     Fa0/17  <--- cluster1 eth0  10.20.20.11
+   1    0012.175c.c560    DYNAMIC     Fa0/7
+   1    0013.7280.62f0    DYNAMIC     Fa0/18
+   1    0014.2257.331a    DYNAMIC     Fa0/13  <--- cluster1 eth1  10.20.20.12
+   1    001d.7e31.0692    DYNAMIC     Fa0/2
+   1    0023.7d88.3393    DYNAMIC     Fa0/22
+   1    0024.2b21.91ac    DYNAMIC     Fa0/2
+   1    0050.bfd3.16af    DYNAMIC     Fa0/24
+   1    0050.da60.5bad    DYNAMIC     Fa0/3
+   1    c84c.7572.6f40    STATIC      Gi0/1   <------ > GigabitEthernet0/0 (Router) 192.168.1.161
+   1    c84c.7572.6f41    DYNAMIC     Gi0/2   <-------> G0/1 (Router) 10.20.20.1/24
+Total Mac Addresses for this criterion: 36
+switch00#
+
+
+router00#sho interface            
+GigabitEthernet0/0 is up, line protocol is up     
+  Hardware is CN Gigabit Ethernet, address is c84c.7572.6f40 (bia c84c.7572.6f40) 
+  Description: $ETH-LAN$$ETH-SW-LAUNCH$$INTF-INFO-GE 0/0$         
+  Internet address is 192.168.1.161/24            
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,               
+     reliability 255/255, txload 1/255, rxload 1/255              
+  Encapsulation ARPA, loopback not set            
+  Keepalive set (10 sec)          
+  Full-duplex, 1000Mb/s, media type is RJ45       
+  output flow-control is unsupported, input flow-control is unsupported           
+  ARP type: ARPA, ARP Timeout 04:00:00            
+  Last input 00:00:01, output 00:00:06, output hang never         
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0           
+  Queueing strategy: fifo         
+  Output queue: 0/40 (size/max)   
+  5 minute input rate 1000 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec  
+     52008 packets input, 5653262 bytes, 0 no buffer              
+     Received 14329 broadcasts, 0 runts, 0 giants, 0 throttles    
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored         
+     0 watchdog, 1026 multicast, 0 pause input    
+     0 input packets with dribble condition detected              
+     44984 packets output, 4456751 bytes, 0 underruns             
+     0 output errors, 0 collisions, 0 interface resets            
+     0 unknown protocol drops     
+     0 babbles, 0 late collision, 0 deferred  
+
+
+router00#config t
+Enter configuration commands, one per line.  End with CNTL/Z. 
+router00(config)#int g0/1 
+router00(config-if)#ip address 10.20.20.1 255.255.255.0 
+router00(config-if)#end
+router00# 
+
+
+
+
+
+
+
+
+router00#config t
+Enter configuration commands, one per line.  End with CNTL/Z. 
+router00(config)#router rip  
+router00(config-router)#network 10.20.20.0  
+router00(config-router)#network 192.168.1.0 
+router00(config-router)#end
+
+
+
+Want to get rid of that annoying wait when you mistype a command?
+
+config t
+no ip domain-lookup
+
+Want to get rid of annoying messages while you're typeing a command?
+
+config t
+line console 0
+logging synchronous
+
+
+Stacking: (Cards in 2901)
+http://www.cisco.com/en/US/docs/ios/12_3t/12_3t8/feature/guide/esw_cfg.html#wp1049119
+
+
+
+Looking at Inter-VLAN routing
+
+
+
+
+
+switch00#sh mac-addr | e ^ All
+sh mac-addr | e ^ All
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0000.24c9.a864    DYNAMIC     Fa0/15  <-- soekris00 (big) 10.20.30.120 gateway 10.20.30.1
+   1    0000.24c9.aeea    DYNAMIC     Fa0/23  <--- soekris30 (cluster0) 10.20.40.17 gateway 10.20.40.1
+   1    0000.24c9.af8c    DYNAMIC     Fa0/2
+   1    000b.dbc3.3924    DYNAMIC     Fa0/2
+   1    000c.2918.eb38    DYNAMIC     Fa0/17 <--- cluster1 eth0  
+   1    0011.118a.be3f    DYNAMIC     Fa0/2
+   1    0012.175c.a7c9    DYNAMIC     Fa0/1
+   1    0012.175c.a8be    DYNAMIC     Fa0/17
+   1    0012.175c.c560    DYNAMIC     Fa0/7
+   1    0013.7280.62f0    DYNAMIC     Fa0/18
+   1    0014.2257.336f    DYNAMIC     Fa0/21
+   1    001d.7e31.0692    DYNAMIC     Fa0/2
+   1    0021.00dd.6922    DYNAMIC     Fa0/2
+   1    0023.7d88.3393    DYNAMIC     Fa0/22
+   1    0024.2b21.91ac    DYNAMIC     Fa0/2
+   1    0050.bfd3.16af    DYNAMIC     Fa0/24
+   1    001e.1383.b6ae    DYNAMIC     Fa0/4  <---- (Router00 FastEthernet0/3/0 ) 10.20.40.1
+   1    0050.da60.5bad    DYNAMIC     Fa0/3
+   1    c84c.7572.6f40    STATIC      Gi0/1 
+ -  11    c84c.7572.6f41    DYNAMIC     Gi0/2  (Router00 Gi0.2)
+Total Mac Addresses for this criterion: 39
+switch00#
+switch00#
+
+
+router00# config t
+router00(config)#int g0/1.1
+router00(config-subif)#encapsulation dot1q 1 native
+router00(config-subif)#ip address 10.20.30.1 255.255.255.0
+router00(config-subif)#exit
+
+router00# config t
+router00(config)#router eigrp 10
+
+router00(config-router)#network 10.20.30.0
+router00(config-router)#end
+
+
+
+switch00#config t
+switch00(config)#no ip domain-lookup
+switch00(config)#vlan 30
+switch00(config-vlan)#name Soekris00
+switch00(config-vlan)#exit
+
+
+
+
+switch00(config)#int fa0/15
+switch00(config-if)#switchport mode access 
+switch00(config-if)#switchport access vlan 30
+switch00(config-if)#exit
+
+
+switch00(config)#int Gi0/2  
+switch00(config-if)#switchport mode access 
+switch00(config-if)#switchport access vlan 30
+switch00(config-if)#exit
+
+
+
+switch00#config t
+switch00(config)#no ip domain-lookup
+switch00(config)#vlan 40
+switch00(config-vlan)#name Soekris30
+switch00(config-vlan)#exit
+
+
+switch00(config)#int fa0/23
+switch00(config-if)#switchport mode access 
+switch00(config-if)#switchport access vlan 40
+switch00(config-if)#exit
+
+  This will be for the router
+switch00(config)#int fa0/4
+switch00(config-if)#switchport mode access 
+switch00(config-if)#switchport access vlan 40
+switch00(config-if)#exit
+
+
+
+switch00(config)#int vlan 30
+switch00(config-if)#ip address 10.20.30.2 255.255.255.0
+switch00(config-if)#no shutdown
+switch00(config-if)#exit
+
+switch00(config)#int vlan 30
+switch00(config-if)#ip default-gateway 10.20.30.1
+switch00(config)#end
+switch00#copy run start
+
+
+switch00(config)#int vlan 40
+switch00(config-if)#ip address 10.20.40.2 255.255.255.0
+switch00(config-if)#no shutdown
+switch00(config-if)#exit
+
+switch00(config)#int vlan 40
+switch00(config-if)#ip default-gateway 10.20.40.1
+switch00(config)#end
+switch00#copy run start
+
+router00#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+router00(config)#int F0/3/0
+router00(config-if)#ip address 10.20.40.1 255.255.255.0
+% IP addresses may not be configured on L2 links FastEthernet0/3/0.
+
+router00(config-if)#int vlan 40
+router00(config-if)#ip address 10.20.40.1 255.255.255.0
+router00(config-if)#ip default-gateway 10.20.30.1
+router00(config)#end
+router00#
+
+
+
+router00#more system:/vfiles/tmasinfo
+router00#show int | include protocol
+
+router00#show ip rip database
+10.0.0.0/8    auto-summary
+10.20.2.5/32    directly connected, Loopback2
+10.20.50.0/24    directly connected, GigabitEthernet0/1.1
+192.168.1.0/24    auto-summary
+192.168.1.0/24    directly connected, GigabitEthernet0/0
+router00#
+
+
+show version
+
+
+
+
+
+router00#show int
+
+GigabitEthernet0/1 is up, line protocol is up 
+  Hardware is CN Gigabit Ethernet, address is c84c.7572.6f41 (bia c84c.7572.6f41)
+  Internet address is 10.20.30.1/24
+
+
+FastEthernet0/3/0 is up, line protocol is up 
+  Hardware is Fast Ethernet, address is 001e.1383.b6ae (bia 001e.1383.b6ae)
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+
+
+
+router00#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+router00(config)#ip route 0.0.0.0 0.0.0.0 g0/0
+router00(config)#end
+router00#
+
+
+
+
+router00(config)#int f0/3/0
+router00(config-if)#vlan 40
+router00(config-vlan)#name Soekris00
+router00(config-vlan)#exit
+router00(config)#exit
+
+
+
+
+
+
+
+
+
+switch00#sho arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.20.30.1             98   c84c.7572.6f41  ARPA   Vlan30
+Internet  10.20.30.2              -   081f.f380.acc2  ARPA   Vlan30
+Internet  10.20.20.2              -   081f.f380.acc1  ARPA   Vlan11
+Internet  10.20.40.17            10   0000.24c9.aeea  ARPA   Vlan40
+Internet  192.168.1.68            1   000c.2918.eb38  ARPA   Vlan1
+Internet  10.20.40.2              -   081f.f380.acc4  ARPA   Vlan40
+Internet  10.20.40.1             12   c84c.7572.6f43  ARPA   Vlan40
+Internet  192.168.1.81            0   0011.118a.be3f  ARPA   Vlan1
+Internet  192.168.1.11            0   0012.175c.a8be  ARPA   Vlan1
+Internet  192.168.1.10            1   0012.175c.c560  ARPA   Vlan1
+Internet  192.168.1.12           39   0013.7280.62f0  ARPA   Vlan1
+Internet  192.168.1.1             1   001d.7e31.0692  ARPA   Vlan1
+Internet  10.20.30.120           72   0000.24c9.a864  ARPA   Vlan30
+Internet  192.168.1.161          86   c84c.7572.6f40  ARPA   Vlan1
+Internet  192.168.1.160           -   081f.f380.acc0  ARPA   Vlan1
+Internet  192.168.1.155           4   0050.da60.5bad  ARPA   Vlan1
+
+
+router00#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.20.30.1              -   c84c.7572.6f41  ARPA   GigabitEthernet0/1
+Internet  10.20.30.2            100   081f.f380.acc2  ARPA   GigabitEthernet0/1
+Internet  10.20.30.120            0   0000.24c9.a864  ARPA   GigabitEthernet0/1
+Internet  10.20.40.1              -   c84c.7572.6f43  ARPA   Vlan40
+Internet  10.20.40.2             13   081f.f380.acc4  ARPA   Vlan40
+Internet  10.20.40.17             0   0000.24c9.aeea  ARPA   Vlan40
+Internet  192.168.1.1             2   001d.7e31.0692  ARPA   GigabitEthernet0/0
+Internet  192.168.1.10            2   0012.175c.c560  ARPA   GigabitEthernet0/0
+Internet  192.168.1.11            1   0012.175c.a8be  ARPA   GigabitEthernet0/0
+Internet  192.168.1.12           40   0013.7280.62f0  ARPA   GigabitEthernet0/0
+Internet  192.168.1.71            0   000b.dbc3.3924  ARPA   GigabitEthernet0/0
+Internet  192.168.1.81            0   0011.118a.be3f  ARPA   GigabitEthernet0/0
+Internet  192.168.1.161           -   c84c.7572.6f40  ARPA   GigabitEthernet0/0
+
+
+
+
+router00(config)#int g0/1
+router00(config-if)#ip nat inside
+router00(config-if)#int g0/0
+router00(config-if)#ip nat outside
+router00(config-if)#exit
+router00(config)#

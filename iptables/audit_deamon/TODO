@@ -1,0 +1,19 @@
+
+This whole thing is just a quick proof-of-concept in an effort to
+flush out feasibility and _what_ is needed.
+
+- There needs to be a rate limiter. Cannot be too many calls to
+action, however, we may want to log everything.
+
+- start-up config file. This could have a whitelist of users.
+
+- need a direct interface to IPTABLES.
+
+Does it really make sense to build something? Perhaps prelude
+has it all, or maybe it has too much.
+
+  http://svn.prelude-ids.org/
+
+  svn checkout http://svn.prelude-ids.org/modulename/trunk
+
+

@@ -1,0 +1,11 @@
+
+module myauditbot0 1.0;
+
+require {
+	type audisp_t;
+	type soundd_port_t;
+	class tcp_socket name_bind;
+}
+
+#============= audisp_t ==============
+allow audisp_t soundd_port_t:tcp_socket name_bind;

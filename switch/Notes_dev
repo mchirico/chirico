@@ -1,0 +1,110 @@
+
+
+This is my problem: I cannot figure out why soekris30
+cannot connect to anything.
+
+soekris30
+10.20.40.17
+HWaddr 00:00:24:C9:AE:EA  
+
+switch00#sh arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.20.30.1            212   c84c.7572.6f41  ARPA   Vlan30
+Internet  10.20.30.2              -   081f.f380.acc2  ARPA   Vlan30
+Internet  10.20.20.2              -   081f.f380.acc1  ARPA   Vlan11
+Internet  192.168.1.112           0   1093.e906.3e62  ARPA   Vlan1
+Internet  10.20.40.17           181   0000.24c9.aeea  ARPA   Vlan40 <---- Here soekris30 (Hangs off cluster0)
+Internet  192.168.1.71            1   000b.dbc3.3924  ARPA   Vlan1
+Internet  10.20.40.2              -   081f.f380.acc4  ARPA   Vlan40
+Internet  10.20.40.1            171   c84c.7572.6f43  ARPA   Vlan40
+Internet  192.168.1.81          186   0011.118a.be3f  ARPA   Vlan1
+Internet  192.168.1.11            1   0012.175c.a8be  ARPA   Vlan1
+Internet  192.168.1.10            1   0012.175c.c560  ARPA   Vlan1
+Internet  192.168.1.12          180   0013.7280.62f0  ARPA   Vlan1
+Internet  192.168.1.1             0   c0c1.c010.b8a3  ARPA   Vlan1
+Internet  10.20.30.120           65   0000.24c9.a864  ARPA   Vlan30
+Internet  192.168.1.161         216   c84c.7572.6f40  ARPA   Vlan1
+Internet  192.168.1.160           -   081f.f380.acc0  ARPA   Vlan1
+Internet  192.168.1.155           6   0050.da60.5bad  ARPA   Vlan1
+
+
+
+[root@soekris30 bridge]# ifconfig
+br0 Link encap:Ethernet  HWaddr 00:00:24:C9:AE:EA  
+ inet addr:10.20.40.17  Bcast:10.255.255.255  Mask:255.0.0.0
+ inet6 addr: fe80::200:24ff:fec9:aeea/64 Scope:Link
+ UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+ RX packets:680 errors:0 dropped:0 overruns:0 frame:0 
+ TX packets:2277 errors:0 dropped:0 overruns:0 carrier:0 
+ collisions:0 txqueuelen:0 
+ RX bytes:113064 (110.4 KiB)  TX bytes:192044 (187.5 KiB)
+ 
+
+Questions:
+
+What is VTP status? (VLAN Trunking Protocol).
+
+
+So what do we know about this Vlan?
+
+switch00#show inter Vlan40
+Vlan40 is up, line protocol is up 
+  Hardware is EtherSVI, address is 081f.f380.acc4 (bia 081f.f380.acc4)
+  Internet address is 10.20.40.2/24
+  MTU 1500 bytes, BW 1000000 Kbit, DLY 10 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 03:10:46, output 03:10:46, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     3211 packets input, 204129 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     2935 packets output, 193078 bytes, 0 underruns
+     0 output errors, 0 interface resets
+     0 output buffer failures, 0 output buffers swapped out
+
+
+switch00#sho ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  192.168.1.160   YES NVRAM  up                    up      
+Vlan11                 10.20.20.2      YES manual up                    down    
+Vlan20                 unassigned      YES unset  down                  down    
+Vlan30                 10.20.30.2      YES manual up                    up      
+Vlan40                 10.20.40.2      YES manual up                    up <--- This thing is up.     
+FastEthernet0/1        unassigned      YES unset  up                    up      
+FastEthernet0/2        unassigned      YES unset  up                    up      
+FastEthernet0/3        unassigned      YES unset  up                    up      
+FastEthernet0/4        unassigned      YES unset  up                    up      
+
+
+I'd better get used to the following command, since it's driving me
+nuts not having it. This only works on routers.
+
+no ip domain-lookup
+
+
+
+router00:388#show ip nat translation
+Pro Inside global         Inside local          Outside local         Outside global
+--- 192.168.1.120         10.20.30.120          ---                   ---
+--- 192.168.1.17          10.20.40.17           ---                   ---
+router00:388#
+
+
+~$ ping 192.168.1.17 
+PING 192.168.1.17 (192.168.1.17): 56 data bytes
+64 bytes from 10.20.40.17: icmp_seq=0 ttl=63 time=10.614 ms
+64 bytes from 10.20.40.17: icmp_seq=1 ttl=63 time=1.615 ms
+64 bytes from 10.20.40.17: icmp_seq=2 ttl=63 time=2.518 ms
+^C
+
+
+I can ping. I just cannot ssh.

@@ -1,0 +1,6 @@
+#!/bin/bash
+POLICY_FILE=myauditLogin2
+audit2allow -M $POLICY_FILE -l -i /var/log/audit/audit.log
+#audit2allow -M $POLICY_FILE -l -i /var/log/messages
+#audit2allow -M $POLICY_FILE -l -i -d
+semodule -i $POLICY_FILE.pp

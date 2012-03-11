@@ -1,0 +1,4 @@
+#!/bin/bash
+indent -kr -i8 *.c
+indent -kr -i8 *.h
+clean 1

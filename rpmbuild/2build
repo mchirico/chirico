@@ -1,0 +1,10 @@
+#!/bin/bash
+make clean
+./mdo
+./configure
+version=`cat VERSION`
+rm -f openadsi-${version}.tar.gz 
+make dist
+cp openadsi-${version}.tar.gz ${HOME}/rpmbuild/SOURCES/.
+rpmbuild -ba openadsi.spec
+

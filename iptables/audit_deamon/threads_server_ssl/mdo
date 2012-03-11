@@ -1,0 +1,15 @@
+#!/bin/bash
+mkdir -p /var/log/banssh
+pkill audisp-bot
+sleep 1
+/etc/init.d/auditd stop
+sleep 1
+cp audisp-bot /sbin/audisp-bot
+cp audisp-bot.conf  /etc/audisp/plugins.d/.
+chcon -u system_u /sbin/audisp-bot
+chcon -t audisp_exec_t /sbin/audisp-bot
+sleep 1
+/etc/init.d/auditd restart
+
+
+

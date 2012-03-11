@@ -1,0 +1,10 @@
+
+module myauditbot2 1.0;
+
+require {
+	type audisp_t;
+	class tcp_socket listen;
+}
+
+#============= audisp_t ==============
+allow audisp_t self:tcp_socket listen;

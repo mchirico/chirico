@@ -1,0 +1,164 @@
+***********************************************************************
+***********************************************************************
+
+Plan - take a look at SELinux, openssl. Put pieces together and look
+at high loads
+
+
+Talk a look at
+   audit-1.7.10/tools/aulast
+
+***********************************************************************
+***********************************************************************
+
+
+indent -kr -i8 *.c
+
+
+Below are some of the SELinux rules that I had to load.
+
+module myauditLogin0 1.0;
+
+require {
+        type audisp_t;
+        type audisp_exec_t;
+        class file execute_no_trans;
+}
+
+#============= audisp_t ==============
+allow audisp_t audisp_exec_t:file execute_no_trans;
+
+
+
+module myauditLogin2 1.0;
+
+require {
+        type audisp_t;
+        class process signal;
+}
+
+#============= audisp_t ==============
+allow audisp_t self:process signal;
+
+
+There should be a way to combine the above file. Then, execute 
+the following commands:
+
+checkmodule -M -m -o auditstuff3.mod auditstuffstuff3.te
+semodule_package -o  auditstuff3.pp -m auditstuff3.mod
+emodule -i auditstuff3.pp
+
+
+
+
+
+
+
+rpm -ql iptables-devel
+man ipq_read
+
+
+I had to change the SELinux tags on audisp-logins
+
+
+[root@big audit_deamon]# secon -f /sbin/audisp-logins 
+user: system_u
+role: object_r
+type: audisp_exec_t
+sensitivity: s0
+clearance: s0
+mls-range: s0
+
+
+Links:
+http://people.redhat.com/sgrubb/audit/
+
+
+
+
+http://www.linux-noob.com/forums/index.php?showtopic=1829
+
+An example is probably the simplest way to illustrate how it
+works. The following two rules will limit incoming connections to port
+22 to no more than 3 attemps in a minute - an more than that will be
+dropped:
+
+iptables -I INPUT -p tcp --dport 22 -i eth0 -m state --state NEW -m
+recent \ --set
+
+iptables -I INPUT -p tcp --dport 22 -i eth0 -m state --state NEW -m
+recent \ --update --seconds 60 --hitcount 4 -j DROP
+
+The --state flag takes a comma seperated list of connection states as
+an argument, by using "--state NEW" as we did we make sure that only
+new connections are managed by the module.
+
+The --set parameter in the first line will make sure that the IP
+address of the host which initiated the connection will be added to
+the "recent list", where it can be tested and used again in the future
+i.e. in our second rule.
+
+The second rule is where the magic actually happens. The --update flag
+tests whether the IP address is in the list of recent connections, in
+our case each new connection on port 22 will be in the list because we
+used the --set flag to add it in the preceeding rule.
+
+Once that's done the --seconds flag is used to make sure that the IP
+address is only going to match if the last connection was within the
+timeframe given. The --hitcount flag works in a similar way - matching
+only if the given count of connection attempts is greater than or
+equal to the number given.
+
+
+
+
+Software that performs similiar functions:
+
+ http://en.wikipedia.org/wiki/DenyHosts
+ fail2ban
+
+
+
+SELinux references:
+http://fedoraproject.org/wiki/SELinux
+
+
+setsebool -P allow_httpd_anon_write=1
+
+       or
+
+       setsebool -P allow_httpd_sys_script_anon_write=1
+
+
+
+Listing of SELinux commands:
+
+newrole
+setsebool
+fixfiles
+restorecon
+restorecond
+setfiles
+chcon
+chcat
+
+(Pg 48)
+http://people.redhat.com/dwalsh/SELinux/Presentations/ManageRHEL5.pdf
+
+
+Need to relabel the system:
+  touch ./.autorelabel
+  shutdown -r now
+
+
+Interesting exercise to try:
+     - Create /home/chirico/resolv.conf
+     - mv /home/chirico/resolv.conf /etc
+     - ls -lZ /etc/resolv.conf
+     - restorecon /etc/resolv.conf
+
+
+
+What is this?
+libselinux-ruby
+memcached-selinux

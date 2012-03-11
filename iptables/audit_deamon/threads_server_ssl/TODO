@@ -1,0 +1,13 @@
+
+
+bansshd - daemon
+
+
+The server will hang, or block sometimes when the client security code
+fails. You'll need to look into why such things are happening.
+
+
+
+Take a close look at mutex locking. From what I can tell
+everything is working, but, it may be more efficient with
+less locks.

@@ -1,0 +1,15 @@
+#!/bin/bash
+pkill banssh
+cp banssh /sbin/banssh
+chcon -u system_u /sbin/banssh
+#chcon -t audisp_exec_t /sbin/banssh
+cp init/bansshd /etc/init.d/bansshd
+chcon -u system_u /etc/init.d/bansshd
+cp AttacksAudit.py /sbin/AttacksAudit.py 
+chcon -u system_u /sbin/AttacksAudit.py 
+/etc/init.d/bansshd restart
+
+
+
+
+

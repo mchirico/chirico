@@ -1,0 +1,118 @@
+
+Soekris30
+
+[root@soekris30 network-scripts]# ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:00:24:CA:3E:EC  
+          inet addr:10.20.40.17  Bcast:10.20.40.255  Mask:255.255.252.0
+          inet6 addr: fe80::200:24ff:feca:3eec/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:330 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1354 errors:0 dropped:0 overruns:0 carrier:0
+
+Note HWaddr 00:00:24:CA:3E:EC  
+[root@soekris30 network-scripts]# ping 10.20.40.2              
+PING 10.20.40.2 (10.20.40.2) 56(84) bytes of data.
+64 bytes from 10.20.40.2: icmp_seq=1 ttl=255 time=8.47 ms      
+
+Yes, it's possible to pint 10.20.40.2 (Switch00)
+
+switch00#sho ip inter brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  192.168.1.160   YES NVRAM  up                    up      
+Vlan11                 10.20.20.2      YES NVRAM  up                    down    
+Vlan20                 unassigned      YES NVRAM  down                  down    
+Vlan30                 10.20.30.2      YES NVRAM  up                    up      
+Vlan40                 10.20.40.2      YES NVRAM  up                    up      <--- Here
+FastEthernet0/1        unassigned      YES unset  up                    up      
+
+
+router00:388#sho ip nat trans
+Pro Inside global      Inside local       Outside local      Outside global
+udp 192.168.1.120:123  10.20.30.120:123   50.28.8.223:123    50.28.8.223:123
+udp 192.168.1.120:123  10.20.30.120:123   97.107.134.213:123 97.107.134.213:123
+udp 192.168.1.120:39717 10.20.30.120:39717 192.168.1.71:53   192.168.1.71:53
+udp 192.168.1.120:43434 10.20.30.120:43434 192.168.1.71:53   192.168.1.71:53
+udp 192.168.1.120:51393 10.20.30.120:51393 192.168.1.71:53   192.168.1.71:53
+udp 192.168.1.120:53545 10.20.30.120:53545 192.168.1.71:53   192.168.1.71:53
+--- 192.168.1.120      10.20.30.120       ---                ---
+--- 192.168.1.17       10.20.40.17        ---                ---
+
+Note, that I can ping
+
+[chirico@big ~]$ ping 192.168.1.17
+PING 192.168.1.17 (192.168.1.17) 56(84) bytes of data.
+64 bytes from 10.20.40.17: icmp_seq=1 ttl=63 time=0.510 ms
+
+However, I cannot ssh.
+
+Okay, maybe it's something with the access list.
+
+
+router00:388#sho interface
+
+Vlan40 is up, line protocol is up 
+  Hardware is EtherSVI, address is c84c.7572.6f43 (bia c84c.7572.6f43)
+  Internet address is 10.20.40.1/24
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported 
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:25, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     311875 packets input, 28032597 bytes, 0 no buffer
+     Received 629 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     9077 packets output, 695532 bytes, 0 underruns
+     0 output errors, 1 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+
+
+router00:388#show access-list
+Standard IP access list 1
+    10 permit 10.20.30.0, wildcard bits 0.0.0.255 (320986 matches)
+Standard IP access list 2
+    10 permit 10.20.40.0, wildcard bits 0.0.0.255 (310604 matches)
+
+
+It's got to be a routing issue. From 
+
+
+
+router00:388#show int F0/3/0
+show int F0/3/0
+FastEthernet0/3/0 is up, line protocol is up
+  Hardware is Fast Ethernet, address is 001e.1383.b6ae (bia 001e.1383.b6ae)
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:05, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     888904 packets input, 93249911 bytes, 0 no buffer
+     Received 648 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 input packets with dribble condition detected
+     2569316 packets output, 192635228 bytes, 0 underruns
+     0 output errors, 0 collisions, 2 interface resets
+     1 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+ 
+router00#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+router00(config)#int F0/3/0
+router00(config-if)#ip address 10.20.40.1 255.255.255.0
+% IP addresses may not be configured on L2 links FastEthernet0/3/0.

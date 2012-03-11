@@ -1,0 +1,11 @@
+
+module myauditLogin0 1.0;
+
+require {
+	type audisp_t;
+	type audisp_exec_t;
+	class file execute_no_trans;
+}
+
+#============= audisp_t ==============
+allow audisp_t audisp_exec_t:file execute_no_trans;
