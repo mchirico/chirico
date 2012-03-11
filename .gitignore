@@ -1,0 +1,12 @@
+*.pyc
+*.swp
+*.log
+.~
+*.db
+*.bak
+.svn/
+boto.egg-info
+build/
+dist/
+MANIFEST
+bin
