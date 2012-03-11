@@ -5,9 +5,11 @@ which I wanted to make available should someone else find useful.
 
 ## Linux Tips
 
- https://github.com/mchirico/chirico/wiki/Linux-Tips
+ <a href="https://github.com/mchirico/chirico/wiki/Linux-Tips">Linux Tips</a>
+
 
 ##
+
 
 
 
