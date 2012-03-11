@@ -1,0 +1,5 @@
+#!/bin/bash
+# example of a return 
+# Note the $ in front of the quote
+# echo $'\n' is one return
+echo $'\n\n\n Sample Return: echo $\'\\n \'   \n\n\n'

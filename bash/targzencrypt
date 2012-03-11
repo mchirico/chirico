@@ -1,0 +1,19 @@
+#!/bin/bash
+#	Copyright (C) 2003 (GPL) Mike Chirico mmc mchirico@brainsquash.org
+#	
+#	The following script will tar gz and encrypt a directory
+#	usage: ./targzencrypt dir2 secretpassword
+#        or
+#	usage: ./targzencrypt /home/user/stuffdir secretpassword  
+#         which will create /home/user/stuffdir.gz.tar.des3
+#
+#       See targzdecrypt to undo it.
+Number_of_expected_args=2 
+if [ $# -ne $Number_of_expected_args ]
+  then
+    echo "Usage: `basename $0` [incorrect number of arguments used] "
+    echo "      try: `basename $0` <directory to tar gz encrypt> <password> "
+    exit 1
+  fi
+tar -zcf - $1|openssl des3 -salt -out $1.tar.gz.des3 -k $2
+

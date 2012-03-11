@@ -1,0 +1,6 @@
+#!/bin/bash
+echo 'This will full directory path:'
+mfile=`pwd`
+echo $mfile
+echo 'Only the current directory:'
+echo ${mfile##*/}

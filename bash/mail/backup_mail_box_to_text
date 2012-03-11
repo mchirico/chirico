@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Create a suitable filename
+#
+MAILBOXDB="/home/cyrus/backup/mailboxes.db.`date +%H`.txt"
+
+/home/cyrus/bin/ctl_mboxlist -d >${MAILBOXDB}

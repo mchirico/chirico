@@ -1,0 +1,8 @@
+#!/bin/bash
+scp -r  mchirico@sf.sourceforge.net:/home/groups/d/de/delcom/htdocs  /home/chirico/backup/delcom-htdocs
+scp -r  mchirico@sf.sourceforge.net:/home/groups/s/so/souptonuts/htdocs  /home/chirico/backup/souptonuts-htdocs
+scp -r  mchirico@sf.sourceforge.net:/home/groups/b/br/brainsquash/htdocs  /home/chirico/backup/brainsquash-htdocs
+scp -r  mchirico@sf.sourceforge.net:/home/groups/p/po/powerpointflip/htdocs  /home/chirico/backup/powerpointflip-htdocs
+scp -r  mchirico@sf.sourceforge.net:/home/groups/w/we/webstock/htdocs  /home/chirico/backup/webstock-htdocs
+
+

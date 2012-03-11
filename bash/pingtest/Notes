@@ -1,0 +1,65 @@
+
+import os,time,sys,re
+p=re.compile('\[([0-9]{10})\.')
+
+
+def getEpoch(N):
+    if isinstance(N,list):
+       if isinstance(N[0],str):
+       	  m=p.search(N[0])
+	  if m:
+	     return m.group(1)
+    return False
+
+
+f=open("data")
+m=f.readlines()
+f.close()
+m=[int(getEpoch(i.split())) for i in m]
+m=[ i for i in m if i != 0]
+
+delta=[]
+for i in range(0,len(m),2):
+    delta.append(m[i+1]-m[i])
+top = [ i for i in delta if i >= 500]
+mtimes = [ [m[j-1],m[j],m[j+1]] for j in [delta.index(i) for i in top]]
+a=[]
+for i in mtimes:
+    for j in i:
+    	s= """date -d "1970-01-01 %s sec\"""" % (j)
+	p=os.popen(s)
+	a.append(p.readlines()[0].strip())
+	p.close()	
+a2=list(set(a))
+a2.sort()
+for i in a2:
+   print i
+
+
+
+
+
+
+
+
+last=0
+oldnew=[]
+count=0
+h={}
+max=0
+t=0
+for i in m:
+   if t == 0:
+      t=i
+      last=i
+   else:
+      delta = i -t
+      t=i
+      h[i]= delta
+      if 200 < delta:
+          count = count + 1
+	  oldnew.append([last,i])
+      last=i
+
+
+

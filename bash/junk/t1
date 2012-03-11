@@ -1,0 +1,16 @@
+#!/bin/bash
+r="1234567890"
+
+if [ ${r:2:8} == "34567890" ] 
+then
+	echo "yes"
+	echo ${r:2:8}
+fi
+r=`pwd`
+echo $r
+echo ${r##/*/}
+
+echo `basename $r`
+if [ `basename $r` == ${r##/*/} ]; then
+    echo " \`basename \$r\` is the same as \${r##/*/} "
+fi

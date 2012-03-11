@@ -1,0 +1,26 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.0.1
+#
+# clean: removes all residual files, files with '#' or '~' in them
+#   These are usually left over emacs files
+#
+#   Note, you must specify an argument to delete the files
+#   $./clean 1
+#
+#   Otherwise, you will just get a listing of files
+#
+
+Number_of_expected_args=1 
+if [ $# -ne $Number_of_expected_args ]
+  then
+    echo "Usage: `basename $0` 1 to delete ~ and # files. Otherwise, you just get a listing "
+    echo "Searching ...."
+    echo  
+    find . -user ${USER} -iname '*~'  
+    find . -user ${USER} -iname '*#*' 
+
+    exit 1
+  fi
+find . -user ${USER}  -iname '*~' -exec rm -- {} \;
+find . -user ${USER}  -iname '*#*' -exec rm -- {} \;

@@ -1,0 +1,853 @@
+        Copyright (C) 2003  Mike Chirico mmc mchirico@users.sourceforge.net 
+        Copyright and Porting: see COPYING
+
+
+
+
+        MOST COMMON:
+
+                How do you "rm" or "mv" a file with a "-" in it?
+ 
+                       mv -- --difficultfile  easy
+                       rm -- --difficultfile
+
+                The "--" turns off all options.
+
+                Listing of all man 2 headings:
+
+                $apropos "(2"
+                        ...
+                setrlimit [getrlimit] (2)  - get/set resource limits and usage
+                setsid               (2)  - creates a session and sets the process group ID
+                setsockopt [getsockopt] (2)  - get and set options on sockets
+                settimeofday [gettimeofday] (2)  - get / set time
+                setuid               (2)  - set user identity
+                        ...
+                write                (2)  - write to a file descriptor
+                writev [readv]       (2)  - read or write a vector
+
+
+
+
+
+                Make directory hierarchy /one/two/three where /one or /one/two may or
+                may not exist
+        
+                mkdir -p ./one/two/three 
+                        or
+                mkdirhier ./one/two/three
+                
+                $ (date;uname -a) > out #prepend date to uname
+                $ w|colrm 20 40  #removes characters 20 through 40
+                $ nl README  #number line the file to stdout
+                
+                $ expand file > notabs #converts tabs to spaces 
+
+                $ 2>&1 #redirect stderr to stdout used in cronjobs
+
+                command 2>&1 | command2 #redirect stderr to command 2
+
+                $ ls -l|cut -c40-   # show columns 40 to the end
+                $ ls -l|less        # use less instead of more
+                                    # since this allow backword movement
+
+                $type -all c        # tells you whether command c is an Alias, Keyword, Function, Built-in, or Script
+        
+                $ m="test"
+                $ printf "m = %s" $m    # like C printf function-- don't use commas
+
+                $ seq 5                 # Will list a seq of 5 numbers
+                $ seq -s, 3             # 1,2,3
+
+                $ a=1
+                $ let a=a+1             #this is less complex
+        
+                for a in `seq 80`        #note, if you need 0 padding seq -w 80
+                do 
+                        echo -n $a
+                done                    
+
+                for (( i=1; i <= 20; i++))
+                do
+                        echo -n "$i "
+                done
+
+                for i in `find . -iname '*.c' `
+                do
+                        echo -n "$i "
+                done
+
+                Looping in a file:
+
+                  $cat test
+                  one
+                  two
+                  three
+                  four
+                  five
+
+                  $ while read filename; do echo  "- $filename "; done < test |nl -w1
+                  1       - one
+                  2       - two
+                  3       - three
+                  4       - four
+                  5       - five
+                  
+                  
+   
+                echo "Working with Array in for"
+                echo " Note the $Array[$i-1]"
+
+                declare -a Array
+                Array[0]="zero"
+                Array[1]="one"
+                Array[2]="two"
+                for i in `seq ${#Array[@]}`
+                do
+                  echo $Array[$i-1]
+                done
+
+
+
+
+
+                mfile=`pwd`  
+                        This will assign the current directory to mfile
+                echo $mfile
+                        /home/chirico/dev/souptonuts/src/bash
+                echo ${mfile##*/}
+                        bash  Note, this removes /home/chirico/dev/souptonuts/src/
+                echo ${mfile##/*/}
+                        This does the same thing
+        
+                echo $$;
+                        Returns the current process ID.
+
+                echo $?
+                        This returns the results of the last shell command.
+                        For instance, if you did a                      
+                                ls nope
+                        then
+                                ehco $?
+                        If the file or directory "nope" existed, then, you'd get a zero. Otherwise,
+                        you'd get a 1.
+
+                        This can be used with the test command
+                                test 4 -gt 2
+                                echo $?
+                        Note use -eq, -gt and NOT = which is for strings
+                                test "one" = "one"
+                                echo $?
+
+                
+                m="my stuff here"
+                echo -e ${m// /'\n'}
+                        my
+                        stuff
+                        here
+        
+
+                #
+                #       See myMakeTar and find_prune 
+                #
+                a='*'
+                echo "$a"
+                        Just *
+                b="ls $a"
+                echo "$b"
+                        ls *, not evaluated
+                echo $b
+                        ls file1 file2 file3
+                eval $b
+                        Same as: ls * from the command prompt
+                eval "$b"
+                        Same as: ls *
+
+
+                IFS=$'\n'
+                        This will change the input file separator
+
+                var0=$(($var0+1)) 
+                var0=`expr $var0 + 1`
+                let var0=$var0+1
+                        This will add 1 to var0
+        
+                ls -d  * 
+                        List current contents [directories and files]
+                        but does not tree out
+
+                find . -type d -maxdepth 1
+                        Lists only directories
+
+                find / -iname '*stuff' 2>/dev/null
+                        No error messages, just found files
+
+                find . -path '*CVS' -prune -o -print
+                        Find everything except CVS directories 
+
+                find . \( -iregex '.*/CVS'  -o -iregex '.*/junk' \)  -prune -o -print
+                        Find everything except /CVS or /junk
+
+                find . \( -iname '*.c'  -o -iname '*.h' \) -print
+                        Find all *.c and *.h files
+
+                find  /work/cpearls/src/development/ipc/ \( -path '*CVS' \) -prune -o -print |cpio -pudv /work/junk/ipc
+                        This will copy all the files from a spot on the CVS listing excluding the CVS directories
+
+                find . -type f -maxdepth 1 -printf "%A@ %p\n" -name '*.log'|sort |awk 'NR > 6 {print $0}'
+                        Find a list of files, sorted, but only the last 6
+
+                Assume directories ../PAST and ../47 exists 
+                
+                find ../PAST/ | cpio -o --format=tar > test.tar
+                find ../PAST/ | cpio -o -H tar > test2.tar
+                
+                Without the ">"
+                
+                find ../PAST/ | cpio -o --format=tar -F test.tar
+                find ../PAST/ | cpio -o -H tar -F test2.tar
+                
+                Using append
+                
+                find ../PAST/ | cpio -o --format=tar -F test.tar
+                find ../47/ | cpio -o --format=tar --append -F test.tar
+                
+                To list the contents
+
+                cpio -it < test.tar
+                cpio -it -F test.tar
+
+                To extract
+
+                cpio -i -F test.tar
+                
+              
+               [[ ]] With single "[" the following would fail
+
+                  if [[ 5 < 9 ]]
+                  then
+                        echo "Yes 5 < 9 "
+                  fi
+
+
+
+
+           
+
+
+                                
+                #!/bin/bash
+                # mmc Mike Chirico mchirico@users.sourceforge.net
+                #  
+                #
+                #   Find total number of bytes used for *.c files
+                #   for user chirico.  And print the number of files
+                #*********************************************************
+                sum=0
+                count=0
+                for i in  `find . -iname '*.c' -user chirico -printf "%s\n"`
+                do
+                        let sum=sum+$i
+                        let count=count+1
+                done
+                echo "total bytes $sum Number of files $count"
+
+
+
+
+                
+                #!/bin/bash
+                #
+                #  Only keep the most recent NUMLOGS log files
+                #  that haven't changed status the last n*24 hours
+                #
+                #  The find command finds all '*.log' files  
+                #      "-ctime +n" for files change status > n*24
+                #      "-maxdepth 1" only search the current directory
+                #      "-type f" standard files
+                #      "-printf "%A@" returns seconds since Jan 1, 1970
+                #
+                #  Sort does just that ... sort
+                #
+                #  awk gets count > NUMLOGS and prints
+                #     the name plus the path
+                
+                # User defined variables
+                LOGFILE='*.c'
+                NUMLOGS=2
+                CTIME='+3'  # n*24 hours
+                #
+                #
+                for i in `find . -ctime "${CTIME}" -type f -maxdepth 1 -name "${LOGFILE}"  -printf "%A@ %p\n" 2>/dev/null|sort |awk 'NR > '"${NUMLOGS}"' {print $2}'`
+                do
+                        echo $i;
+                        # Change echo to rm $i once you're convinced it works
+                done
+                
+
+                                
+                
+               #!/bin/bash
+               #  This program will kill all processes from a 
+               #  user.  The user name is read from the command line.
+               #  It demonstrates using a bash variable from awk
+               #
+               #  Usage: kill9user <user>
+               #
+               kill -9 `ps aux|awk -v var=$1 '$1==var { print $2 }'`
+               
+
+
+                How to set-user-ID bit.  This will allow the program to run
+                with root privileges.
+
+                        su
+                        chown root ./a.out
+                        chmod u+s  ./a.out
+                        ls -l
+                        -rwsrwxr-x    1 root     chirico     13158 Jan 27 11:55 a.out
+               
+                               
+               
+
+                ls -d */.
+                        Lists only directories but puts a /. at the end
+                        of each.
+
+                ps -e -o pid,ppid,command
+                        List pid and parent pid of each command.
+
+                #below checking the number of arguments
+                Number_of_expected_args=3
+                if [ $# -ne $Number_of_expected_args ]
+                then
+                  echo "Usage: `basename $0` [incorrect number of arguments used] "
+                  echo "      try: `basename $0` with $Number_of_expected_args arguments ]"
+                  exit 1
+                fi
+
+                tar zcvf - .| ssh user1@130.91.97.45 "cat > /home/user1/junk2/user1backup.tgz"
+                        Backup currently dir contents to remote server 130.91.97.45, /home/user1/junk2/user1backup.tgz
+
+                tar zcvf - . |ssh chirico@130.91.97.45 "cat > /dev/st0 "
+                        Backup to tape  
+                        or, if you don't want all the files listed while it's running
+                        take out the v
+                tar zcf - . |ssh chirico@130.91.97.45 "cat > /dev/st0 "
+
+                tar zcvf - . |ssh chirico@130.91.97.45 "cat > /dev/nst0 "
+                        Backup to next spot on tape
+
+        The following tape commands go together
+        tar -tzvf /dev/st0 
+                This will tell you what's on the tape.. you just rewound it 
+        mt -f /dev/nst0 fsf 
+                Tape is positioned on the first block of the next file
+        tar -tzvf /dev/st0 
+                This will tell you what's on the next block and it's rewound
+        tar zcvf - . |ssh chirico@130.91.97.45 "cat > /dev/nst0 "
+                wrote to tape
+        mt -f /dev/nst0 fsf 
+                next position
+        cd somedirectory
+                cd to a different directory
+        tar zcvf - . |ssh chirico@130.91.97.45 "cat > /dev/nst0 "
+                This writes to the second location
+
+
+        
+        Encrypting data to tape using tar and openssl
+        
+        writing the contents of "tapetest" to tape:
+        
+        $tar zcvf - tapetest|openssl des3 -salt  -k secretpassword | dd \
+        of=/dev/st0 bs=10240
+        
+        Reading the data back:
+        
+          $dd if=/dev/st0 bs=10240|openssl des3 -d -k secretpassword|tar xzf -
+        
+        Summary.  tar zcvf  gathers all the files in tapetest and pipes it through
+        openssl using the des3 encryption.  The password used here is "secret."
+        Without the  -k option, it will prompt.  The dd command "of" means out
+        file writes the data it get from stdin the the tape device /dev/st0. I
+        think dd has to be used here, since there is no way to "tar create"
+        the data coming from the other end of the pipe.
+        
+        Next, dd if=/dev/st0 reads in the data.  It's piped through openssl and
+        decrypted "note -d" using the same password "secretpassword", then,
+        it's run through tar. This final tar will accept input from stdin or
+        the other end of the pipe.
+
+
+
+
+
+
+        Creating a virtual file system and mounting it with a loopback device.
+        
+                a. Construct a 10MB file
+                        dd if=/dev/zero of=/tmp/disk-image count=20480
+                By default dd uses block of 512 so the size will be 20480*512
+                
+                b. Make an ext2 (or ext3 is you want) file system
+                        mke2fs -q /tmp/disk-image
+                Hit yes for confirmation.  It only asks this because it's a file
+
+        
+                c. Create a directory "virtual-fs" and mount (you have to do this as root)
+                        mkdir /virtual-fs
+                        mount -o loop=/dev/loop0 /tmp/disk-image /virtual-fs
+                Now it operates just like a disk.
+
+                e. When done, umount it.
+                        umount /virtual-fs
+                All the contents can be copied as one file as well.
+
+
+
+        IPCS (Shared Memory Segments, Semaphore Arrays, Message Queues)
+                $ipcs  This will give a listing
+                $ipcrm [ [-q msqid] [-m shmid] [-s semid]
+                          [-Q msgkey] [-M shmkey] [-S semkey] ... ]
+
+                ref:http://souptonuts.sourceforge.net/code/semaphore_check_for_race.cc.html
+
+        PERFORMANCE:
+                iostat, vmstat, mpstat
+
+        Normally, these don't print the time.  Use the following Perl helper routine:
+
+        cat printsystime.pl
+                #!/usr/bin/perl
+                #
+                #  vmstat 5|printsystime.pl
+                #
+                while (<>) { print localtime(  ) . ":  $_"; }
+
+        Here's an example
+
+                $iostat 5
+
+                $iostat 5|./printsystime.pl
+
+
+
+        
+
+        Examples: Where can one get more examples?
+        Look under /usr/share/docs/bash-version/
+                /usr/share/doc/bash-2.05b/
+                        FAQ 
+
+
+        What are some bash variables? 
+        variables: BASH, BASH_VERSION, BASH_VERSINFO, UID, EUID, REPLY,
+                   TIMEFORMAT, PPID, PWD, OLDPWD, SHLVL, RANDOM, SECONDS,
+                   LINENO, HISTCMD, HOSTTYPE, OSTYPE, MACHTYPE, HOSTNAME,
+                   ENV, PS3, PS4, DIRSTACK, PIPESTATUS, HISTSIZE, HISTFILE,
+                   HISTFILESIZE, HISTCONTROL, HISTIGNORE, GLOBIGNORE, GROUPS,
+                   PROMPT_COMMAND, FCEDIT, FIGNORE, IGNOREEOF, INPUTRC,
+                   SHELLOPTS, OPTERR, HOSTFILE, TMOUT, FUNCNAME, histchars,
+                   auto_resume
+        echo $SECONDS #number of seconds current shell has been logged in.
+        echo $OLDPWD  #old directory
+        echo $RANDOM  #random number
+        echo $PPID    #Parent process ID
+
+
+
+        Working command line input:
+
+         #!/bin/bash
+         #      This is an example of getopts (it's plural, yes there was a getopt)
+         #      All options must have a - or +  before the letter: getopts -a -e stuff
+         #      "e:" means the option e must take an argument
+         #
+         while getopts ":abcde:fg" Option
+         do
+                case $Option in
+                        a ) echo "Option a";;
+                        b | c | d ) echo "Option b | c | d ";;
+                        e ) echo "Option e with  option \"$OPTARG\" ";;
+                        # e must have an additional argument
+                        f ) echo "Option f";;
+                        g ) echo "Option g";;
+                        * ) echo "Unknown option ";;
+                esac
+         done
+         shift $(($OPTIND - 1))
+         
+         exit 0
+
+
+
+
+
+          
+        myMakeTar: 
+
+        Creates a tar.gz from files copied into
+        the $tarfile directory. Currently is set to 
+            bashscripts.x.x.x.
+        1. This will not include the myMakeTar file in the tar 
+        2. Will not copy any backups, files with "~"
+        3. Will not copy bashscripts.x* directorys (${#tarfile} or lenght of
+        ${tarfile} -5 ... can customize this.
+        3. If you setup ~.netrc as follows:
+              machine upload.sourceforge.net login anonymous password m@aol.com
+          Then, run ./myMakeTar 1 it will auto upload the file to sourceforge    
+
+
+        listmount:
+
+        List of mounted file systems
+
+                cat /proc/mounts
+
+        MAC addresses and IP addresses of "local systems" ...more than just
+        the target computer.
+
+                cat /proc/net/arp
+
+
+        kernelver:
+
+        List the kernel version, hostname and more
+                
+                cat /proc/version
+
+
+        clean:
+
+        This get rid of all the files with '~' or '#' in them.
+                clean    #this will just list the files
+                clean 1  #this will delete all the files
+
+
+        targzencrypt:
+
+        This will tar, gz, then encrypt the file
+                usage: ./targzencrypt /home/user/stuffdir secretpassword  
+                #         which will create /home/user/stuffdir.gz.tar.des3     
+
+        targzdecrypt:
+
+                usage: ./targzdecrypt file.tar.gz.des2 secretpassword
+
+
+        Recommended reading:
+
+        /proc/sys/{kernel, vm} - http://www.opennet.ru/base/dev/procdoc.txt.html
+        /proc file system - http://www.redhat.com/docs/manuals/linux/RHL-7.3-Manual/ref-guide/ch-proc.html
+        /proc file system - http://www.samag.com/documents/s=1190/sam9806d/9806d.htm
+
+Meminfo summary
+
+        Mem:  Displays the current state of physical RAM in the system, including a full breakdown 
+        of total, used, free, shared, buffered, and cached memory utilization in bytes. 
+
+        Swap:  Displays the total, used, and free amounts of swap space, in bytes. 
+
+        MemTotal: Total amount of physical RAM, in kilobytes. 
+
+        MemFree: The amount of physical RAM, in kilobytes, left unused by the system. 
+
+        MemShared: Unused with 2.4 and higher kernels but left 
+        in for compatibility with earlier kernel versions. 
+
+        Buffers: The amount of physical RAM, in kilobytes, used for file buffers. 
+
+        Cached: The amount of physical RAM, in kilobytes, used as cache memory. 
+
+        Active: The total amount of buffer or page cache memory, in kilobytes, that is in active use. 
+
+        Inact_dirty: The total amount of buffer or cache pages, in kilobytes, that might be free and available. 
+
+        Inact_clean: The total amount of buffer or cache pages in kilobytes that are definitely free and available. 
+
+        Inact_target: The net amount of allocations per second, in kilobytes, averaged over one minute. 
+
+        HighTotal and HighFree: The total and free amount of memory, respectively, that 
+        is not directly mapped into kernel space. The HighTotal value can vary based on 
+        the type of kernel used. 
+
+        LowTotal and LowFree . The total and free amount of memory, respectively, that is directly mapped into kernel space. The LowTotal value can vary based on the type of kernel used. 
+
+        SwapTotal . The total amount of swap available, in kilobytes. 
+
+        SwapFree . The total amount of swap free, in kilobytes. 
+
+
+
+
+
+
+
+        find1:
+        
+        Find all files matching '*.c' with malloc on the local drive ... ignore errors
+        find /home/chirico -xdev -iname '*.c' -type f -print0 2>/dev/null | xargs -0 -e grep -n -e '*malloc*' 
+
+
+        find2:
+
+        Which immediate subdirectories, matching regexp [a-zA-Z]*[0-9], do not contain jpegs?
+
+#!/bin/bash
+# Bash script to find directories that do not have jpegs in them
+for i in `ls -d [a-zA-Z]*[0-9]*`
+do
+  num=`find ./$i -iname '*.jpg'|wc|awk '{print $1}'`
+  if [ $num -eq 0 ]
+  then
+     echo "there are no jpegs in this directory: $i"
+  fi
+ 
+done
+
+        
+
+        whoisbooting: Booting from GRUB or LILO? from Lee E. Brotzman leb@gmss.com
+#!/bin/bash
+# Booting from GRUB or LILO..how can you tell?
+# Lee E. Brotzman leb@gmss.com
+if dd if=/dev/hda obs=512 count=1 2>/dev/null|grep -q GRUB
+then echo GRUB
+else echo LILO
+fi
+
+
+
+
+        Working with bc:
+                reference: http://www.gnu.org/manual/bc-1.06/html_mono/bc.html
+
+        bc bcfile1
+        
+        The above statement will load bc with the program in bcfile1
+        leaving the user at the prompt.
+
+        cat bcfile1
+                define f (x) {
+                        if (x <= 1) return (1);
+                        return (f(x-1) * x);
+                }
+                print "f(x) defined: f(4) = 4! \n\n"
+
+
+        bc bcfile1
+        bc 1.06
+        Copyright 1991-1994, 1997, 1998, 2000 Free Software Foundation, Inc.
+        This is free software with ABSOLUTELY NO WARRANTY.
+        For details type `warranty'. 
+        f(x) defined: f(4) = 4! 
+
+        f(23)
+        25852016738884976640000
+
+
+
+        diff/patch: updating files
+                diff_patch_sample updates test1.c to test2.c
+        #  This will update test1.c to look like test2.c
+        #       Yes! order matters
+        diff -c test1.c test2.c > test1_to_test2.patch
+        patch < test1_to_test2.patch
+
+
+
+
+
+        Want an on-line copy of all the man pages?
+
+           http://www.rt.com/man/
+
+
+
+
+
+        TCPDUMP: to be completed
+        **********************************
+        /usr/sbin/tcpdump -i eth1 -nN -vvv -xX -s 1500 port not 22
+
+
+        Named pipes: FIFOs
+
+        mkfifo testfifopipe
+        echo "data to testfifopipe" > testfifopipe &
+        cat testfifopipe
+        rm testfifopipe
+          
+
+
+
+        Tabs to spaces
+
+                expand README
+
+        Spaces to tabs
+
+                unexpand README
+
+
+        Directory listing
+
+                vdir
+                ls
+                stat file --this will list all information on a file
+
+
+
+        Remove files:
+
+                shred -u file 
+
+        
+*****************************************
+        Encrypting Files
+
+        see: targzdecrypt  targzencrypt
+*****************************************
+To Encrypt:
+        openssl des3 -salt -in file.txt -out file.des3 
+To Decrypt
+        openssl des3 -d -salt -in file.des3 -out file.txt -k mypassword
+
+Need to encrypt what you type? Enter the following, then start typing but  ^D to end.
+ 
+        openssl des3 -salt -out stuff.txt
+ 
+Need to tar/zip and encrypt a whole directory without a temp file?
+ 
+        tar -zcf - mydirectory|openssl des3 -salt -out mydirectory.tar.gz.des3 -k mypassword
+ 
+Need to decrypt the file above it?
+ 
+        openssl des3 -d -salt -in mydirectory.tar.gz.des3 -k mypassword|tar -xz
+
+
+Other options:
+
+        Just base64 encode a binary file:
+                openssl base64 -in file.bin -out file.b64
+        Decode the same file
+                openssl base64 -d -in file.b64 -out file.bin 
+        Encrypt a file using triple DES in CBC mode using a prompted password:
+                openssl des3 -salt -in file.txt -out file.des3 
+        Decrypt a file using a supplied password:
+                openssl des3 -d -salt -in file.des3 -out file.txt -k mypassword
+        Encrypt a file then base64 encode it (so it can be sent via mail for example) using Blowfish in CBC mode:
+                openssl bf -a -salt -in file.txt -out file.bf
+        Base64 decode a file then decrypt it:
+                openssl bf -d -salt -a -in file.bf -out file.txt
+        Decrypt some data using a supplied 40 bit RC4 key:
+                openssl rc4-40 -in file.rc4 -out file.txt -K 0102030405
+                
+*****************************************
+          ssh hacks
+****************************************
+        Backup files on current server, in current directory to remote server
+        [130.91.87.45], using user account [user1] to the [/home/user1/junk2] directory
+        to a .tgz file of user1backup.tgz
+
+        tar zcvf - .| ssh user1@130.91.97.45 "cat > /home/user1/junk2/user1backup.tgz"
+
+
+        
+
+
+
+
+        Find and Replace: mreplace
+                This will work even if the files have spaces in them
+
+                ...
+                #needed to handle tabs and spaces
+                IFS=$'\n'
+                find . -name  '*' -type f  |grep -v 'CVS'|grep -v 'mreplace'| grep -v $fileToListAllreplacements | while read  i
+                do
+                ...
+
+
+
+        Dos to Unix:
+                This will take care of the ^Z (ASCII 26 or octal 32) at the end.
+                tr -d '\r\032' < dosfile > unixfile
+
+        Append-only: chattr, root only
+                To make a file append only
+                        # touch appendlog
+                        # chattr +a appendlog
+                Note, ls -l doesn't show the file as append only; however, lsattr does
+                        # lsattr appendlog
+                        
+                
+****************************************
+*          Networking: Changing IP      *
+****************************************
+Using NETWORK or GATEWAY.  The NETWORK setting
+should be set to *.*.*.0, even though, the specific
+IP address of the GATEWAY may be *.*.*.1  Apparently,
+NETWORK will find the specific gateway.  JUST BE CAREFUL,
+if you move a computer, DON'T specifically put in 
+NETWORK=130.91.180.1 ...this won't work needs to be
+NETWORK=130.91.180.0  Again, note the difference between
+.0 and .1
+
+DEVICE=eth1
+BOOTPROTO=static
+BROADCAST=130.91.99.255
+IPADDR=130.91.183.12
+NETMASK=255.255.252.0
+GATEWAY=130.91.180.1
+ONBOOT=yes
+
+DEVICE=eth1
+BOOTPROTO=static
+BROADCAST=130.91.99.255
+IPADDR=130.91.183.12
+NETMASK=255.255.252.0
+NETWORK=130.91.96.0
+ONBOOT=yes
+
+
+
+
+
+Find the longest s word in the dictionary
+        $look s|wc -L
+Print 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+

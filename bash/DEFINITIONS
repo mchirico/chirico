@@ -1,0 +1,23 @@
+getrlimit - like  setrlimit, get and set resource limits respectively.
+
+umount2 - like umount but with 2 parameters
+
+unlink - unlink a file
+
+uselib - select shared library
+	int uselib(const char *library);
+
+ustat - returns information about a mounted file system.
+	#include <sys/types.h>
+       	#include <unistd.h>    /* libc[45] */
+       	#include <ustat.h>     /* glibc2 */
+
+       int ustat(dev_t dev, struct ustat *ubuf);
+
+
+utime - changes access and modification times of the inode specified 
+	int utime(const char *filename, struct utimebuf *buf);
+
+wait4 - I think this will actually free resources by a zombie
+
+writev, readv - read or write a vector, or more than one file descriptor or file pointer.  

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Booting from GRUB or LILO..how can you tell?
+# Lee E. Brotzman leb@gmss.com
+if dd if=/dev/hda obs=512 count=1 2>/dev/null|grep -q GRUB
+then echo GRUB
+else echo LILO
+fi

@@ -1,0 +1,16 @@
+#!/bin/bash
+#  Simple bash script to kill all other emacs session
+#  active on a particular directory
+#
+DIR=~/dev/23prime/article/article0
+FILE=Notes
+m=$(fuser -cfu ${DIR})
+m=($m)
+for (( i=2; i<${#m[@]}; i++ ));
+do
+  kill ${m[$i]}
+done
+cd ${DIR}
+clean 1
+emacs -nw ${DIR}/${FILE}
+

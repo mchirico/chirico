@@ -1,0 +1,12 @@
+#!/bin/bash
+#  http://souptonuts.sourceforge.net/chirico/index.php
+#  CopyRight GPL mchirico@users.sourceforge.net
+#  
+#  The following will encrypt a directory and its
+#  contents to tape
+#
+#  ./tapebackup <directory>
+#
+#  Reference taperestore
+#
+tar zcvf - $1|openssl des3 -salt -k secretpassword|dd of=/dev/nst0 bs=10240

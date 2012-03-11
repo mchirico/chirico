@@ -1,0 +1,298 @@
+PATH=/bin:/usr/bin:/usr/local/bin
+MAILDIR=/var/spool/mail
+DEFAULT=/var/spool/mail/chirico
+LOGFILE=/home/chirico/MailBAG
+MYHOME=/home/chirico
+#  Must have folder MailTRASH 
+TRASH=/home/chirico/MailTRASH
+
+# Will get everything from this mail
+:0 
+* ^From:.*sporkey@comcast.net
+        $DEFAULT
+
+
+# Will get everything from this mail
+:0 
+* ^From:.*jalz_mom@yahoo.com
+        $DEFAULT
+
+# Will get everything from this mail
+:0 
+* ^From:.*clairexfoley@yahoo.com
+        $DEFAULT
+
+
+:0
+* ^From:.*@ostg.com
+        $DEFAULT
+
+
+
+
+
+
+# Spamassassin
+:0fw
+* <300000
+|/usr/local/bin/spamassassin
+
+
+:0                              # sink all spam
+* ^Subject:.*SPAM*
+
+
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Just For You*
+$TRASH
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Salon Newsletter*
+$TRASH
+
+:0                              # sink all junk mail
+* ^Subject:.*Please her everytime*
+$TRASH
+
+:0                              # sink all junk mail
+* ^Subject:.*WeatherNet5 Daily*
+$TRASH
+
+:0                              # sink all junk mail
+* ^Subject:.*The new revolution*
+$TRASH
+
+:0                              # sink all junk mail
+* ^Subject:.*want to make her happy*
+$TRASH
+
+
+
+:0                              # sink all junk mail
+* ^From:.*@yahoo*
+$TRASH
+
+:0                              # sink all junk mail
+* ^From:.*@nettemps*
+$TRASH
+
+:0                              # sink all junk mail
+* ^From:.*@bcaa.bc.ca*
+$TRASH
+
+:0                              # sink all junk mail
+* ^From:.*@tiscali.fr*
+$TRASH
+
+
+
+:0                              # sink all junk mail
+* ^From:.*@topcoder.com*
+$TRASH
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Confirmation of Submission*
+$TRASH
+
+:0                              # sink all junk mail
+* ^Subject:.*Returned due to virus*
+$TRASH
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Windows XP*
+/home/chirico/JunkMail
+
+
+
+:0
+* ^To:.*mchil.*
+$TRASH
+
+:0
+* ^To:.*mchim.*
+$TRASH
+
+
+
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Money*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^Subject:.*Loan*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^Subject:.*buy*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^To:.*mchief@comcast.net*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^To:.*mchill@comcast.net*
+/home/chirico/JunkMail
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Credit.*
+/home/chirico/JunkMail
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Bad.*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^Subject:.*mortage.*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^Subject:.*purchase.*
+/home/chirico/JunkMail
+
+:0                              # sink all junk mail
+* ^Subject:.*free.*
+/home/chirico/JunkMail
+
+
+:0                              # sink all junk mail
+* ^Subject:.*money.*
+/home/chirico/JunkMail
+
+
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Taste.*
+/home/chirico/JunkMail
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Exciting.*
+/home/chirico/JunkMail
+
+
+
+
+
+:0                              # sink all junk mail
+* ^From:.*@Site.CareerBuilder.com*
+$TRASH
+
+
+:0                              # sink all junk mail
+* ^From:.*@osr-network.com*
+$TRASH
+
+:0                              # sink all junk mail
+* ^From:.*@prq0.com*
+$TRASH
+
+
+
+:0
+* ^From:.*@kewpee.*
+$TRASH
+
+:0
+* ^From:.*@christian.com*
+$TRASH
+
+:0
+* ^From:.*Monster Networking*
+$TRASH
+
+
+
+:0
+* ^From:.*@netscape.com*
+$TRASH
+
+:0
+* ^From:.*@icq.com*
+$TRASH
+
+
+
+:0
+* ^From:.*auto_agent*
+$TRASH
+
+
+:0
+* ^From:.*dotnet.yorksolutions*
+$TRASH
+
+
+
+
+:0                              # sink all junk mail
+* ^Subject:.*Horoscop*
+$TRASH
+
+:0                              # sink all junk mail
+* ^To:.*mchinn@comcast.net*
+$TRASH
+
+:0                              # sink all junk mail2
+* ^Subject:.*NewsNet*
+$TRASH
+
+:0                              # sink all junk mail2
+* ^Subject:.*Test Spam*
+$TRASH
+
+
+:0                              # sink all junk mail3
+* ^Subject:.*Warning: could not send*
+$TRASH
+
+:0                              # sink all junk mail3
+* ^Subject:.*Medicines Online*
+$TRASH
+
+
+:0
+* ^Subject: .*(\?\?|!!|\$\$|viagra|make.*money|out.*debt)
+/home/chirico/suspectMail
+
+
+
+
+:0                              # sink all junk mail3
+* ^Subject:.*Dice JobAlert*
+$TRASH
+
+#Catch potential spam by examining the email route
+:0:
+* 1^0 ? formail -x"Received:" | egrep -i "157\.161\.140\.2"
+* 1^0 ? formail -x"Received:" | egrep -i "199\.217\.231\.46"
+* 1^0 ? formail -x"Received:" | egrep -i "212\.106\.213\.36"
+* 1^0 ? formail -x"Received:" | egrep -i "216\.154\.1\.82"
+/home/chirico/suspectMail
+
+
+
+:0 HB
+* ^Content-Type.*image.*gif.*name.*\.gif
+* ^Content-Disposition.*attachment.*filename.*\.gif"
+{
+	 :0
+	 /home/chirico/AttachTRASH
+
+}
+

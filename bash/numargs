@@ -1,0 +1,8 @@
+#!/bin/bash
+Number_of_expected_args=3
+if [ $# -ne $Number_of_expected_args ]
+then
+  echo "Usage: `basename $0` [incorrect number of arguments used] "
+  echo "      try: `basename $0` with $Number_of_expected_args arguments ]"
+  exit 1
+fi

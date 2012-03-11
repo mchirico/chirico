@@ -1,0 +1,55 @@
+References:
+
+Linux General:
+http://www-106.ibm.com/developerworks/linux/
+http://www.linuxjournal.com/
+http://www.linux-mag.com/
+http://www.linuxhq.com/
+
+Programming:
+http://www.advancedlinuxprogramming.com/
+http://www.linux-mag.com/depts/compile.html
+http://cpearls.sourceforge.net/
+
+
+GNU Manuals Online:
+http://www.gnu.org/manual/
+http://www.gnu.org/manual/coreutils-4.5.4/html_mono/coreutils.html
+
+proc file system:
+http://www.redhat.com/docs/manuals/linux/RHL-9-Manual/ref-guide/ch-proc.html
+
+sed:
+	http://sed.sourceforge.net/
+	http://sed.sourceforge.net/grabbag/tutorials/oneliners.txt
+	http://www-106.ibm.com/developerworks/linux/library/l-sed1.html
+	http://www-106.ibm.com/developerworks/linux/library/l-sed2.html
+
+
+ext3:
+[Cannot recover files on ext3 file system]
+http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html 
+[Recover files]
+http://www.tldp.org/HOWTO/mini/Ext2fs-Undeletion.html
+
+
+bash:
+http://www.tldp.org/LDP/abs/html/
+http://www.magnux.org/doc/howto/en/Adv-Bash-Scr-HOWTO/index.php
+
+
+boot process:
+http://www.yolinux.com/TUTORIALS/LinuxTutorialInitProcess.html
+
+Microsoft:
+http://msdn.microsoft.com/library/default.asp?url=/nhp/default.asp?contentid=28000550
+[Excel older]
+http://www.microsoft.com/officedev/articles/Opg/004/004.htm
+[Building an RTD compenent in VB.NET for Excel]
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnexcl2k2/html/odc_xlrtdvbnet.asp
+
+
+VB:
+http://www.xml.com/pub/rg/_NET_Tutorials
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnvssamp/html/vb_VBSamplesTop.asp
+

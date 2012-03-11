@@ -1,0 +1,15 @@
+#!/bin/bash
+# mmc Mike Chirico mchirico@users.sourceforge.net
+#  
+#
+#   Find total number of bytes used for *.c files
+#   for user chirico.  And print the number of files
+#*********************************************************
+sum=0
+count=0
+for i in  `find . -iname '*.c' -user chirico -printf "%s\n"`
+do
+	let sum=sum+$i
+	let count=count+1
+done
+echo "total bytes $sum Number of files $count"

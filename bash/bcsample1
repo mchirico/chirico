@@ -1,0 +1,5 @@
+#!/bin/bash
+#	Created: mmc mchirico@users.sourceforge.net
+#	bc an arbitrary precision calculator language
+#       http://www.gnu.org/manual/bc-1.06/html_mono/bc.html
+bc bcfile1

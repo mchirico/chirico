@@ -1,0 +1,10 @@
+#!/bin/bash
+#  This program will kill all processes from a 
+#  user.  The user name is read from the command line.
+#
+#  This program also demonstrates reading a bash variable
+#  into an awk script.
+#
+#  Usage: kill9user <user>
+#
+kill -9 `ps aux|awk -v var=$1 '$1==var { print $2 }'`

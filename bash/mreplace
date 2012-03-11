@@ -1,0 +1,60 @@
+#!/bin/bash
+#  Copyright (C) 2003  Mike Chirico mmc mchirico@users.sourceforge.net GPL
+#	Sample bash program to replace contents in files
+#
+
+#  Set to false replacements are made
+#NoReplace_just_look=false
+# Default true, no replacements, just list files
+Tmpfile=`date "+%F%H%M%S.%N".$$`
+NoReplace_just_look=true
+#
+findstr='mchirico@comcast.net'
+replacestr='mchirico@users.sourceforge.net'
+fileToListAllreplacements=~/replacelog
+
+
+#
+# find that ignores directory names; but, searches sub directories
+# ignore CVS directories and this filename mreplace
+
+# 
+if [ -f $fileToListAllreplacements ]
+then
+    echo "************" >> $fileToListAllreplacements
+    echo `date` >> $fileToListAllreplacements
+
+fi
+count=0
+#needed to handle tabs and spaces
+IFS=$'\n'
+# nothing in a CVS directory, or a file with ~ or #
+for i in `find . \( -iregex '.*/CVS'  -o -iregex '.*~' -o  -iregex '.*#' -o -name 'mreplace' \)  -prune -o \( -perm 664 -print \)`
+
+# Don't use this: read commands in the shell create a new environment.  Yes, it will work to find the files
+# but the count will be off because it will not be passed to the new environment. Also, be careful with a continue statement as well
+#find . -name  '*' -type f  |grep -v 'CVS'|grep -v 'mreplace'| grep -v $fileToListAllreplacements | grep -v '~' | grep -v '#' | while read  i
+#
+
+do
+
+  if  grep -q  $findstr ${i}; then
+# uncomment to list what is relaced and the filename
+#      grep -l $findstr ${i}|xargs -l1  awk '{print substr($0,0,30)}'  >> $fileToListAllreplacements
+      echo ${i} >> $fileToListAllreplacements
+      if [ $NoReplace_just_look == true ]
+       then
+	  echo ${i}
+       else
+	  sed -e "s/$findstr/$replacestr/g" ${i} > ${i}.${Tmpfile} && mv ${i}.${Tmpfile} ${i}
+       fi
+      let count=$count+1
+
+  fi
+done
+if [ $NoReplace_just_look == true ]
+then
+    echo "$count files found"
+else
+    echo "$count replacements made"
+fi

@@ -1,0 +1,13 @@
+#!/bin/bash
+#  The following will echo  sym links in current directory
+#  for all *.fpx files in subdirectories
+#  ./myloclns > mcmd  
+#
+for i in `find .   -iname '*.fpx' `
+do
+  echo "ln -s $i ${i##*/}"
+
+done
+
+
+

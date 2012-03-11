@@ -1,0 +1,9 @@
+#!/bin/bash
+r=-data-01234567890
+echo "r=-data-01234567890"
+echo "echo \${r##-*-} prints:"
+echo ${r##-*-}
+echo "echo \${r##-*012} prints:"
+echo ${r##-*012}
+r=`pwd`
+echo ${r##/*/}

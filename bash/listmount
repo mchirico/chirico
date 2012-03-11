@@ -1,0 +1,5 @@
+#!/bin/bash
+#	Created: mmc mchirico@users.sourceforge.net
+#	listmount: List of mounted file systems
+cat /proc/mounts
+

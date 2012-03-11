@@ -1,0 +1,37 @@
+#!/bin/bash
+#	Copyright (C) 2003 (GPL) Mike Chirico mmc 
+#       http://sourceforge.net/projects/souptonuts/
+#
+#       4 ways of doing a for loop
+#       Note, forth method loops through an array.
+#
+for i in 1 2 3 4 5 6 7
+do
+	echo -n "$i "
+done
+
+echo
+ 
+for ((i=1; i <= 20; i++))
+do
+	echo -n "$i "
+done
+
+echo
+
+for i in `seq 20`
+do
+	echo -n "$i "
+done
+
+echo "Working with Array:"
+
+declare -a Array
+Array[1]="zero"  #start with 1 or see README
+Array[2]="one"
+Array[3]="two"
+for i in `seq ${#Array[@]}`
+do
+  echo ${Array[$i]}
+done
+

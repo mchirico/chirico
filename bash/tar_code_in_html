@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+#   Uploads a copy of all the html documents
+#
+tarfile="code_inhtml.0.0.2p.tar.gz"
+currdir=`pwd`
+cd /usr/local/apache2/htdocs/chirico/
+tar -czf "${currdir}/${tarfile}" code
+cd ${currdir}
+#
+#  Standard Upload
+#
+NOARGS=1
+if [ -z $1 ]
+then
+    echo "  To upload file to sourceforge: `basename $0 ` 1"
+    exit
+else
+# You'll need a ~.netrc with the following lines
+# machine upload.sourceforge.net login anonymous password m@aol.com
+    ftp <<  FTPSTRING
+open upload.sourceforge.net
+cd incoming
+put ${tarfile}
+bye
+FTPSTRING
+
+
+fi

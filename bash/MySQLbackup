@@ -1,0 +1,28 @@
+#!/bin/bash
+# MySQL backup of the chirico database
+username=chirico
+password=secret
+database=users
+sshusername=bob
+servername=130.98.97.184
+mdir=/home/chirico/dev/MySQL/backups
+mdirRemote=/home/chirico/dev/MySQL/backup
+mfile=mysql-chirico_`date +"%m-%d-%Y"`.sql
+mdirAfile=$mdir/$mfile
+
+# 
+# This is for everything
+#/usr/local/bin/mysqldump -A -u $username  --password=$password > $s
+/usr/local/bin/mysqldump $database  -u $username  --password=$password > $mdirAfile
+scp $mdirAfile $sshusername@$servername:$mdirRemote/.
+#
+#  If a sufficient number of old records, start deleting the old stuff
+#
+new=`find $mdir -iname 'mysql-chirico_*' -atime -20 |wc -l` 
+old=`find $mdir -iname 'mysql-chirico_*' -atime +20 |wc -l` 
+#
+if [[ $new -gt 18 &&  $old -gt 10 ]] 
+    then
+	find $mdir -iname 'mysql-chirico_*' -atime +20 -exec rm {} \;
+    fi
+fi

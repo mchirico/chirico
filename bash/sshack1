@@ -1,0 +1,12 @@
+#!/bin/bash
+# This program tar zips everything in current directory 
+# to a remove server, securely using ssh.
+# 
+# Usage ./sshack1 [username] [server] [directory on remove server]
+if [  $# = 3 ]
+then
+    tar zcf - . | ssh $1\@$2 "cat > $3/backup.tgz"
+else
+    echo "usage: ./sshack1 [username] [server]  [filepath]"
+    echo "example: ./sshack1 chirico 130.91.87.24 /home/chirico/junk2"
+fi

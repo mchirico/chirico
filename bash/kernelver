@@ -1,0 +1,12 @@
+#!/bin/bash
+#	Created: mmc mchirico@users.sourceforge.net
+#	kernelver: list the kernel version
+echo 'kernel osrelease: ' `cat /proc/sys/kernel/osrelease`
+echo 'kernel osversion: ' `cat /proc/sys/kernel/version`
+echo 'hostname: ' `cat /proc/sys/kernel/hostname`
+echo 'domainname: ' `cat /proc/sys/kernel/domainname`
+echo 'below: first 3 colums CPU utilization, 4th number fo running'
+echo ' proc/total num and last col is last ID used'
+echo 'loadavg: ' `cat /proc/loadavg`
+echo 'memory info:' `cat /proc/meminfo`
+

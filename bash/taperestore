@@ -1,0 +1,13 @@
+#!/bin/bash
+#  http://souptonuts.sourceforge.net/chirico/index.php
+#  CopyRight GPL 2003 mchirico@users.sourceforge.net
+#  
+#  The following will dencrypt data on  tape
+#  and restore the contents. Substitute
+#  "secretpassword" for a unique password, or
+#  take out the -k to be prompted.
+#
+#  ./taperestore 
+#
+#  Reference tapebackup
+dd if=/dev/st0 bs=10240|openssl des3 -d -k secretpassword|tar xzf -

@@ -1,0 +1,4 @@
+#!/bin/bash
+#	Created: mmc mchirico@users.sourceforge.net
+#	find1: find all files on local drive, ignoring errors, that have *malloc* in them.
+find . -xdev -iname '*.c' -type f -print0 2>/dev/null | xargs -0 -e grep -n -e '*malloc*' 

@@ -1,0 +1,16 @@
+#!/bin/bash
+#	Copyright (C) 2003 (GPL) Mike Chirico mmc mchirico@brainsquash.org
+#	
+#	The following script will decrypt gz and tar a file
+#	usage: ./targzdecrypt file.tar.gz.des2 secretpassword
+#
+#       See targzencrypt to undo it.
+Number_of_expected_args=2 
+if [ $# -ne $Number_of_expected_args ]
+  then
+    echo "Usage: `basename $0` [incorrect number of arguments used] "
+    echo "      try: `basename $0` <file tar gz decrypt> <password> "
+    exit 1
+  fi
+openssl des3 -d -salt -in $1 -k $2|tar -xz 
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+#    Created by Mike Chirico mchirico@gmail.com
+# 
+#    This program will give a listing of the TSM
+#    database. No need fill up logs. You can use
+#    this script to get a complete listing.
+#
+#    Watch mount points defined in the following file.
+#      /opt/tivoli/tsm/client/ba/bin/dsm.incex
+#
+#echo "q ba / -subdir=yes"|/usr/bin/dsmc > /home/mmc122/logs/log_02092006
+#echo "q ba / -subdir=yes"|/usr/bin/dsmc > /home/mmc122/logs/log
+echo "q ba /var/spool/imap/ -subdir=yes"|/usr/bin/dsmc > /home/mmc122/logs/log_var
+#echo "q ba /var/ -subdir=yes"|/usr/bin/dsmc > /home/mmc122/logs/log

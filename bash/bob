@@ -1,0 +1,19 @@
+#!/bin/bash
+#  Go to the repository and commit any changes.
+#  Then, fetch from bob and commit those changes
+#
+#     get remote add bob ~/git/23prime
+#
+#  Bob is the 2nd eclipse repository. Hey, I had to 
+#  name it something, and I was following the example.
+#
+#
+cd ~/dev/23prime
+clean 1
+git commit -a -m 'Pre merge'
+git push
+git fetch bob
+git merge bob/master
+git commit -a -m 'Eclipse remote before update'
+git push
+

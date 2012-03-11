@@ -1,0 +1,12 @@
+#!/bin/bash
+#	Copyright mchirico@users.sourceforge.net 2003 GPL
+# Bash script to find directories that do not have jpegs in them
+for i in `ls -d [a-zA-Z]*[0-9]*`
+do
+  num=`find ./$i -iname '*.jpg'|wc|awk '{print $1}'`
+  if [ $num -eq 0 ]
+  then
+     echo "there are no jpegs in this directory: $i"
+  fi
+ 
+done

@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+#  Only keep the most recent NUMLOGS log files
+#  that haven't changed status the last n*24 hours
+#
+#  The find command finds all '*.log' files  
+#      "-ctime +n" for files change status > n*24
+#      "-maxdepth 1" only search the current directory
+#      "-type f" standard files
+#      "-printf "%A@" returns seconds since Jan 1, 1970
+#
+#  Sort does just that ... sort
+#
+#  awk gets count > NUMLOGS and prints
+#     the name plus the path
+
+# User defined variables
+LOGFILE='*.c'
+NUMLOGS=2
+CTIME='+3'  # n*24 hours
+#
+#
+for i in `find . -ctime "${CTIME}" -type f -maxdepth 1 -name "${LOGFILE}"  -printf "%A@ %p\n" 2>/dev/null|sort |awk 'NR > '"${NUMLOGS}"' {print $2}'`
+do
+        echo $i;
+        # Change echo to rm $i once you're convinced it works
+done

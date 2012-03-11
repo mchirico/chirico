@@ -1,0 +1,65 @@
+#!/bin/bash
+while getopts "a:b:c:d:i:qhsz" Option             
+# b and d take arguments                                     
+#                                         
+do                                        
+  case $Option in                         
+    a) find  /var/spool/postfix/active/ -cmin "+$OPTARG" -type f;;
+
+    b) find  /var/spool/postfix/bounce/ -cmin "+$OPTARG" -type f;;
+
+    c) find  /var/spool/postfix/corrupt/ -cmin "+$OPTARG" -type f;;
+
+    d) find  /var/spool/postfix/deferred/ -cmin "+$OPTARG" -type f;;
+
+    i) find  /var/spool/postfix/incoming/ -cmin "+$OPTARG" -type f;;
+	 
+    q) 
+
+       echo "qshape incoming:";
+       /usr/sbin/qshape incoming;
+       echo "qshape active:";   
+       /usr/sbin/qshape active;
+       echo "qshape deferred:";
+       /usr/sbin/qshape deferred;
+       echo "qshape corrupt:";
+       /usr/sbin/qshape corrupt;
+
+       echo "imapd sessions:";
+       pgrep imapd|wc;
+       echo "loadavg";
+       cat /proc/loadavg;
+
+	echo "Incoming Immediate: ";
+	find /var/spool/postfix/incoming/ -type f|wc;
+        echo "Active  Immediate: ";
+        find /var/spool/postfix/active/ -type f|wc;;
+
+   
+    h) echo -e "-a active -b bounce -c corrupt -d deferred -i incoming  -q qshape";;
+
+    s) 
+       echo "qshape incoming:";
+       /usr/sbin/qshape -s incoming;
+       echo "qshape active:";   
+       /usr/sbin/qshape -s active;
+       echo "qshape deferred:";
+       /usr/sbin/qshape -s deferred;
+       echo "qshape corrupt:";
+       /usr/sbin/qshape -s corrupt;
+       echo "imapd sessions:";
+       ;;
+    z) 
+    
+	echo "Incoming Immediate: ";
+	find /var/spool/postfix/incoming/ -type f|wc;
+        echo "Active  Immediate: ";
+        find /var/spool/postfix/active/ -type f|wc;;
+	
+
+	
+ esac                                     
+done                                       
+shift $(($OPTIND - 1))                     
+
+

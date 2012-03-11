@@ -1,0 +1,28 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.0.1
+#
+# sfu: Uploads files to sourceforge (SourceForge Upload)
+# 
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./sfu file.tar.gz
+# will upload the file to sourceforge
+#
+#
+#
+# You'll need a ~.netrc with the following lines
+# machine upload.sourceforge.net login anonymous password m@aol.com
+    ftp <<  FTPSTRING
+open upload.sourceforge.net
+cd incoming
+put $1
+bye
+FTPSTRING
+
+
+

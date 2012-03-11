@@ -1,0 +1,23 @@
+#!/bin/bash
+# created mmc mchirico@med.upenn.edu 10.09.03
+# Emails changes on PHPUPLOAD directory
+# 
+cmd="ls -l -S /home/PHPUPLOAD "
+tmpf="/home/uploadstat/uploadstatcheck/uplist"
+
+
+if [ -e $tmpf ]
+then
+    cp $tmpf $tmpf."old"
+    eval '$cmd > $tmpf'
+    diff -B $tmpf $tmpf."old"| grep  '^<'|sed 's/< //' |  awk  ' {printf("%s %s %s [%s %s %s, %s bytes]\n",$9,$10,$11,$6,$7,$8,$5)}'  > $tmpf."change"
+    r=`cat $tmpf."change" |wc --bytes`
+    if [ ! $r == 0 ]
+	then
+	 mail  -s "PHP uploads: http://vc2000-12.med.upenn.edu/vc2000/utilities/upload.php" mchirico@users.sourceforge.net < $tmpf."change"
+
+
+    fi
+else
+    echo `$cmd > $tmpf`
+fi

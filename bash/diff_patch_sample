@@ -1,0 +1,11 @@
+#!/bin/bash
+# 
+# test1.c may have been patched, so get original
+echo "cp test1.c.original test1.c -- setting up test1.c "
+cp test1.c.original test1.c
+# create patch file
+diff -c test1.c test2.c > test1_to_test2.patch
+echo "diff -c test1.c test2.c > test1_to_test2.patch -- creating patch"
+patch < test1_to_test2.patch
+echo "patch < test1_to_test2.patch -- updating test1.c to be the same as test2.c"
+#test1 has been updated to test2.c

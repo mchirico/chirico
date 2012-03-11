@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+#  Sample ftp automated script to download
+#  file to ${dwnld}
+#
+dwnld="/work/faq/unix-faq"
+cd ${dwnld}
+ftp << FTPSTRING
+prompt off
+open rtfm.mit.edu
+cd /pub/usenet-by-group/news.answers/unix-faq/faq
+mget contents 
+mget diff  
+mget part* 
+bye
+FTPSTRING
+

@@ -1,0 +1,32 @@
+#!/bin/bash
+# Sample cronjob file to email changes in vsftp.log
+#	
+#
+# List of users to send email to
+emailuser="mchirico@users.sourceforge.net,another@mail.med.upenn.edu"
+# directory to store the comparison vsftp.log file
+cp_to_dir="/home/chirico/crontab"
+#
+vsftpfile="vsftpd.log"
+if [ -e $cp_to_dir/$vsftpfile ]
+then
+        diff -B $cp_to_dir/$vsftpfile /var/log/vsftpd.log|grep '^>'|sed 's/> //' | grep -e 'UPLOAD\|MKDIR\|DOWNLOAD' \
+        | awk -F \" ' {printf("%s %s %s  \"%s\" \n", $1,$2,$3,$4)}' > $cp_to_dir/change
+
+
+        r=`cat $cp_to_dir/change |wc --bytes`
+        if [ ! $r == 0 ]
+            then
+            mail  -s "FTP file changes" $emailusers < $cp_to_dir/change
+            cp /var/log/vsftpd.log $cp_to_dir/.
+        fi
+
+
+else
+	if [ -e /var/log/vsftpd.log ]
+        then
+        	cp /var/log/vsftpd.log $cp_to_dir/.
+	else
+		echo "vsftpd.log not found...you may not be running vsftp?"
+	fi
+fi

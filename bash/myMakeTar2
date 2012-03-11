@@ -1,0 +1,78 @@
+#!/bin/bash
+# created mmc mchirico@users.sourceforge.net CopyRight 2003 GPL
+# version 0.1.0
+#
+# Creates a tar.gz file of all files after copying them
+# into the $tarfile directory
+#
+# If you want to auto-upload to sourceforge
+# You'll need a .netrc with the following lines:
+#      machine upload.sourceforge.net login anonymous password m@aol.com
+#         or for all servers
+#      default login anonymous password user@site
+# Then, if executed with a parameter ./myMakeTar 1
+# will upload the file to sourceforge
+#
+#
+
+tarfile="bashscripts.0.0.1v"
+# These are the ones ignored
+declare -a Array
+Array[1]='.*/CVS'   # index with 1 when using seq command
+Array[2]='.*/a.out'
+Array[3]='.*~'
+Array[4]='.*/1'
+Array[5]='.*#.*'
+Array[6]='./'${tarfile:0:${#tarfile}-6}'*'
+Array[7]='./'${tarfile}.tar.gz'*'
+Array[8]='./'${tarfile}.tar'*'
+Array[9]='./junk'
+Array[10]='./main'
+Array[11]='./'`basename $0`
+
+
+
+
+
+if [ -d $tarfile ]
+then
+  echo "Directory $tarfile exist"
+else
+    mkdir $tarfile
+fi
+t=""
+dashOH=""
+for i in `seq ${#Array[@]}`
+do
+  t="${t} ${dashOH} -iregex '${Array[${i}]}'"
+  dashOH='-o'
+
+done
+
+#r="find .  \( $t \) -prune -o -type f  -print"   #testing
+r="find . \( $t \) -prune -o -type f  -exec cp -r {} ./$tarfile \;"
+#
+#
+eval $r
+tar -czf $tarfile".tar.gz" $tarfile
+
+#
+#  Standard Upload
+#
+NOARGS=1
+if [ -z $1 ]
+then
+    echo "  To upload file to sourceforge: `basename $0 ` 1"
+    exit
+else
+# You'll need a ~.netrc with the following lines
+# machine upload.sourceforge.net login anonymous password m@aol.com
+    ftp <<  FTPSTRING
+open upload.sourceforge.net
+cd incoming
+put ${tarfile}.tar.gz
+bye
+FTPSTRING
+
+
+fi

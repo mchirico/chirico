@@ -1,0 +1,33 @@
+#!/bin/bash
+#  Copyright (C) 2003  Mike Chirico mmc mchirico@users.sourceforge.net GPL
+#  http://souptonuts.sourceforge.net
+#
+#  Run from your home computer and will backup your sourceforge projects
+#
+#  This example assumes project names are [souptonuts, webstock, cpearls]
+#  You'll need to put your own project in, along with your password
+#
+
+declare -a ProjectNames
+mdate=`date "+%m%d%y"`
+
+#   Start arrays with 1 to work with seq command
+
+######## Customize these commands #########
+# Enter your project names...
+ProjectNames[1]="souptonuts"
+ProjectNames[2]="webstock"
+ProjectNames[3]="cpearls"
+SFlogin="mchirico@sf.sourceforge.net"
+YourPassword='YourPasswordHere'
+BackupDirectory="/home/BACKUP/"
+#######  END CUSTOMIZE ####################
+
+#
+# ${#ProjectNames[@]}  is the number of elements in the array
+# i will start at 1
+for i in `seq ${#ProjectNames[@]}`
+do            
+  eval  " ssh $SFlogin 'mysqldump  ${ProjectNames[$i]} -u ${ProjectNames[$i]} --host=mysql --password=$YourPassword|gzip ' >  $BackupDirectory${ProjectNames[$i]}.$mdate.sql.gz"
+done
+

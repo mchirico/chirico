@@ -1,0 +1,19 @@
+#!/bin/bash
+#	This is an example of getopts (it's plural, yes there was a getopt)
+#	All options must have a - or +  before the letter: getopts -a -e stuff
+#	"e:" means the option e must take an argument
+while getopts ":abcde:fg" Option
+do
+	case $Option in
+		a ) echo "Option a";;
+		b | c | d ) echo "Option b | c | d ";;
+		e ) echo "Option e with  option \"$OPTARG\" ";;
+		# e must have an additional argument
+		f ) echo "Option f";;
+		g ) echo "Option g";;
+		* ) echo "Unknown option ";;
+	esac
+done
+shift $(($OPTIND - 1))
+
+exit 0

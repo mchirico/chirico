@@ -1,0 +1,28 @@
+#!/bin/bash
+declare -a list
+# declaring array without size
+echo "Enter items in the list:"
+read -a list
+# need the -a above to read into a list
+echo "number of elements in list: ${#list[@]}"
+echo " "
+
+# listing elements
+for i in "${list[@]}"
+do
+	echo "$i"
+done
+
+
+# removing element 2
+if [ ${#colors[@]} > 2 ]
+then
+	echo $'\n'"Removing second element ${list[1]}"
+	unset list[1]
+fi
+
+echo " "
+for i in "${list[@]}"
+do
+	echo "$i"
+done

@@ -1,0 +1,2 @@
+#!/bin/bash
+ps -e -o pid,ppid,command
