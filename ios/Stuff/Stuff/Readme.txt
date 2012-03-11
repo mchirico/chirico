@@ -12,4 +12,8 @@ How do I programatically create buttons?
 
 Adding mapkit and twitter integration
 
+This has been moved to the
+github version
+
+
 
