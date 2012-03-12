@@ -1,3 +1,30 @@
 
-
 http://guide.macports.org/#using
+
+This is one application you should have. Plus,
+it's a good example.
+
+  sudo port install md5sha1sum
+
+You may want to update the ports:
+
+  sudo port selfupdate
+
+Now you probably want to list all the available ports
+
+  port list
+
+If you want information on a package, you can do the following:
+
+  port info wget
+
+
+
+Some packages you might want to install
+
+  sudo port install nmap
+  sudo port install md5sha1sum
+  sudo port install htop
+
+
+  port contents wget
