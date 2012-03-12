@@ -1,0 +1,31 @@
+
+Network Stats:
+
+   nettop -m tcp
+
+
+
+
+
+If running out of space, use the following command.
+
+sudo tmutil disablelocal
+
+
+Need vmstat for mac?  Try vm_stat
+
+
+You can put your java files in the following directory 
+to be accessible to all:
+
+/Library/Java/Extensions
+
+
+
+cmd-shft-3, or cmd-shft-4: Takes a screenshot
+
+
+You can run the following command to get information about
+your system.
+
+/usr/sbin/system_profiler
