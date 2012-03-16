@@ -1,0 +1,384 @@
+
+Very Good Reference:
+   http://gnosis.cx/publish/programming/charming_python_3.txt  
+
+Good reference:
+  http://www.secnetix.de/olli/Python/lambda_functions.hawk
+
+class Foo:
+      @staticmethod
+      def add(x,y):
+      	  return x+y
+
+class Times:
+      factor = 1
+      @classmethod
+      def mul(cls,x):
+      	  return cls.factor*x
+
+class TwoTimes(Times):
+      factor = 2
+	  
+
+
+
+
+def cal(h,r):
+    return 5*h*50*r
+
+
+
+
+def c_(n):
+    print("count down %d" % n)
+    k_(5)
+    while n > 0:
+    	  yield n
+	  n -=1
+    return 
+
+
+
+from Tkinter import Label
+widget = Label(None, text='Hello GUI world!')
+widget.pack()
+widget.mainloop()
+start event loop
+
+
+
+
+Spherical law
+of cosines:	d = acos(sin(lat1).sin(lat2)+cos(lat1).cos(lat2).cos(long2−long1))*6371
+
+from math import *
+
+def dist(lat1,long1,lat2,long2):
+    d=acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(long2-long1))*6371
+    return d
+
+
+
+
+
+
+
+
+
+def T(N,p=[1,2,3]):
+    return p[2]
+
+
+
+
+---------------------
+Example Clean String
+---------------------
+
+s="This   is   a  sample    string"
+
+def cleanstring(S):
+    a=S.split()
+    s2=a[0]
+    for i in a[1::]:
+    	s2=s2+" "+str(i)
+    return s2
+
+
+
+Or
+
+
+
+
+def makeInc(x):
+    def inc(y):
+        return x(y)+x(y)
+    return inc
+
+
+def p(x):
+    return x+1
+
+inc5=make(p)
+inc5(3)
+
+
+
+
+
+
+def mfun(**arg):
+    if arg.has_key('one'):
+        print arg['one']
+
+mfun(one='stuff')
+
+
+
+def mfun(F,k):
+    F(k)
+
+
+
+
+# Note, you need to do this if you
+# want to pass by reference.
+def m(n):
+    n[:]=[1,2,3]
+    return n
+
+
+# Here's what you do
+n=[]
+m(n)
+
+Now n=[1,2,3]. If you didn't have n[:] if the above code, then,
+you wouldn't have changed the value of n.
+
+
+
+
+
+Good reference on lists
+ http://effbot.org/zone/python-list.htm
+
+>>> sum(range(0,100)[::3])
+1683
+
+
+k=dict(zip(map(chr,range(97,97+26)),range(1,26)))
+
+
+
+Tip 1:  
+
+  Difference between str() and repr() is shown below.
+
+         str(0.1)  # 0.1
+	 repr(0.1) # 0.100000001
+
+
+
+
+Tip 2:
+
+from functools import partial
+from operator import add
+add1 = partial(add,1)
+add1(2)
+
+
+
+
+
+Tip 3:
+
+Ref:
+ http://code.activestate.com/recipes/52549/
+
+
+class curry:
+    def __init__(self, fun, *args, **kwargs):
+        self.fun = fun
+        self.pending = args[:]
+        self.kwargs = kwargs.copy()
+    def __call__(self, *args, **kwargs):
+        if kwargs and self.kwargs:
+            kw = self.kwargs.copy()
+            kw.update(kwargs)
+        else:
+            kw = kwargs or self.kwargs
+        return self.fun(*(self.pending + args), **kw)
+
+
+double = curry(operator.mul, 2)
+double(4)
+
+
+
+
+
+
+
+
+def p(n):
+  if (n <= 9):
+     return "0%d"%(n)
+  else:
+     return "%d"%(n)
+
+
+def sn(s,n,m):
+    for i in range(n,m):
+        print "%s%s"%(s,p(i))
+
+
+
+def foo(x, items=[]):
+    items.append(x)
+    return items
+
+import urllib
+
+m=urllib.urlopen("http://dev.mchirico.org").read()
+
+
+
+
+
+
+s="for i in range(0,10): print i"
+c=compile(s,'','exec')
+exec c
+
+
+
+
+
+def servers(s,n):
+    a=[]
+    for i in range(0,n+1):
+        a.append("%s%02g" % (s,i))
+    return a
+
+
+
+Build a prod function
+
+
+import operator
+def prod(mylist):
+    return reduct(operator.mul, mylist)
+
+
+def prod(mylist):
+    return reduce(lambda x,y:x*y,mylist)
+
+
+
+*****************
+References:
+*****************
+http://www.oracle.com/technology/pub/articles/tech_dev.html#oss
+
+
+
+
+
+
+
+    * Black 0;30
+    * Dark Gray 1;30
+    * Blue 0;34
+    * Light Blue 1;34
+    * Green 0;32
+    * Light Green 1;32
+    * Cyan 0;36
+    * Light Cyan 1;36
+    * Red 0;31
+    * Light Red 1;31
+    * Purple 0;35
+    * Light Purple 1;35
+    * Brown 0;33
+    * Yellow 1;33
+    * Light Gray 0;37
+    * White 1;37
+
+
+echo -e "This is red->\e[00;31mRED\e[00m"
+
+print '\033[0;31mTEST\033[m'
+
+
+
+
+
+This is a good reference on lambda functions:
+http://www.secnetix.de/olli/Python/lambda_functions.hawk
+
+
+
+
+
+
+
+import Queue
+import threading
+import urllib2
+import time
+          
+hosts = ["http://yahoo.com", "http://google.com", "http://amazon.com",
+          "http://ibm.com", "http://apple.com"]
+          
+queue = Queue.Queue()
+          
+class ThreadUrl(threading.Thread):
+  """Threaded Url Grab"""
+  def __init__(self, queue):
+    threading.Thread.__init__(self)
+    self.queue = queue
+  def run(self):
+    while True:
+    #grabs host from queue
+      host = self.queue.get()
+    #grabs urls of hosts and prints first 1024 bytes of page
+      url = urllib2.urlopen(host)
+      print url.read(1024)
+     #signals to queue job is done
+      self.queue.task_done()
+          
+start = time.time()
+
+
+
+
+def main():
+  #spawn a pool of threads, and pass them queue instance 
+  for i in range(5):
+    t = ThreadUrl(queue)
+    t.setDaemon(True)
+    t.start()
+              
+  #populate queue with data   
+  for host in hosts:
+    queue.put(host)
+           
+   #wait on the queue until everything has been processed     
+  queue.join()
+
+
+
+
+Facebook problem
+
+
+8809=6
+7111=0
+2172=0
+6666=4
+1111=0
+3213=0
+7662=2
+9313=1
+0000=4
+2222=0
+3333=0
+5555=0
+8193=3
+8096=5
+7777=0
+9999=4
+7756=1
+6855=3
+9881=5
+5531=0
+2581=?
+
+
+
+
+def cal(S):
+    h={0: 1, 1: 0, 2: 0, 3: 0, 5: 0, 6: 1, 7: 0, 8: 2, 9: 1}
+    n=list(S)
+    return sum(h[int(i)] for i in n)
