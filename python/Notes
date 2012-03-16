@@ -376,9 +376,28 @@ Facebook problem
 2581=?
 
 
+data["8809"]=6
+
+The problem is calculating h
+
+Assume each entry will be independent
+
+def readdata():
+    f=open('data')
+    m=f.readlines()
+    f.close()
+    m=[i.strip().split('=') for i in m]
+    return m
+
+h={}
+def calH(N):
+    # Look for 
+    
+
 
 
 def cal(S):
     h={0: 1, 1: 0, 2: 0, 3: 0, 5: 0, 6: 1, 7: 0, 8: 2, 9: 1}
     n=list(S)
     return sum(h[int(i)] for i in n)
+
