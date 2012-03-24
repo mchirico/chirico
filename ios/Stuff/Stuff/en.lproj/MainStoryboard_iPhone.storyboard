@@ -1046,6 +1046,121 @@
             <point key="canvasLocation" x="369" y="714"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="AlertsTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AlertsTVC.h"/>
+            <relationships>
+                <relationship kind="action" name="segmented:"/>
+            </relationships>
+        </class>
+        <class className="AskerGeneralViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AskerGeneralViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="button:"/>
+                <relationship kind="action" name="buttonBack:"/>
+            </relationships>
+        </class>
+        <class className="AskerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AskerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonOne:"/>
+                <relationship kind="action" name="buttonThree:"/>
+                <relationship kind="action" name="buttonTwo:"/>
+                <relationship kind="outlet" name="answerTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="questionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="slider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="textMul" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textWeight" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="DetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="action" name="stepper:"/>
+                <relationship kind="outlet" name="navbar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="textMul" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textS" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MailComposeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MailComposeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="action" name="sendButton:"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="action" name="buttonTest:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
+        <class className="OffTableViewCTL0" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OffTableViewCTL0.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="outlet" name="textMul" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="QuickNoteTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickNoteTVC.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="action" name="buttonDetail:"/>
+                <relationship kind="action" name="buttonSegmented:"/>
+            </relationships>
+        </class>
+        <class className="QuickThoughtUIView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickThoughtUIView.h"/>
+        </class>
+        <class className="QuickThoughtVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickThoughtVC.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="textMul" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="SViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonData:"/>
+                <relationship kind="outlet" name="button0" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="connectView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="textMul0" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textMulData" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="textViewS" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="TableController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TableController.h"/>
+        </class>
+        <class className="goalsTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/goalsTVC.h"/>
+            <relationships>
+                <relationship kind="action" name="button0:"/>
+            </relationships>
+        </class>
+        <class className="mindMapUIview" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/mindMapUIview.h"/>
+        </class>
+        <class className="mindMapVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/mindMapVC.h"/>
+            <relationships>
+                <relationship kind="action" name="button0:"/>
+                <relationship kind="action" name="buttonBack:"/>
+                <relationship kind="action" name="buttonScroll0:"/>
+                <relationship kind="action" name="buttonScroll1:"/>
+                <relationship kind="outlet" name="mmU" candidateClass="mindMapUIview"/>
+                <relationship kind="outlet" name="my_mindMapUIview" candidateClass="mindMapUIview"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="textS0" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
