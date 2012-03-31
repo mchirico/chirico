@@ -20,6 +20,16 @@ class TwoTimes(Times):
       factor = 2
 	  
 
+The following is the best way to do an awk program.
+s=r"""awk '/1/,/2/ {printf("(%s,%s)\n",$1,$2)}' data"""
+
+
+
+
+
+
+
+
 
 
 
