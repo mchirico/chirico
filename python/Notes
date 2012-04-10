@@ -413,3 +413,8 @@ def cal(S):
     n=list(S)
     return sum(h[int(i)] for i in n)
 
+
+
+
+import os,re
+f = open('April_1_2012.tcx','r')
