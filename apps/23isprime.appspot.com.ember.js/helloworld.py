@@ -89,7 +89,7 @@ class MainPage(webapp2.RequestHandler):
 
 """
       self.response.out.write(s)
-      self.response.out.write('Source:')
+      self.response.out.write('Source:<hr>')
       self.response.out.write('https://github.com/mchirico/chirico/tree/master/apps/23isprime.appspot.com.ember.js')
 
 
