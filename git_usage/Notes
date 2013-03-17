@@ -273,3 +273,9 @@ git push
 Currently I have 3 ssh keys
 
 
+
+
+Seeing the differences between two commits:
+
+git diff 9da581d910c9c4ac93557ca4859e767f5caf5169 \
+      ec232cddfb94e0dfd5b5855af8ded7f5eb5c90d6

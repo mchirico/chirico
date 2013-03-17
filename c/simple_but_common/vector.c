@@ -30,7 +30,9 @@ This works a bit like C++'s vector.
 
 #include <stdio.h>
 #include <stdlib.h>
+#if !defined(__APPLE__)
 #include <malloc.h>
+#endif
 #include <string.h>
 
 typedef struct

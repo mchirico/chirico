@@ -21,6 +21,7 @@
 		A50DFC581513DBEF00EB4AB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50DFC361513DBEF00EB4AB4 /* Foundation.framework */; };
 		A50DFC601513DBEF00EB4AB4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A50DFC5E1513DBEF00EB4AB4 /* InfoPlist.strings */; };
 		A50DFC631513DBEF00EB4AB4 /* StuffCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A50DFC621513DBEF00EB4AB4 /* StuffCoreTests.m */; };
+		A52C6F8C1616FCE700356CDD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A52C6F8B1616FCE700356CDD /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		A50DFC5F1513DBEF00EB4AB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A50DFC611513DBEF00EB4AB4 /* StuffCoreTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StuffCoreTests.h; sourceTree = "<group>"; };
 		A50DFC621513DBEF00EB4AB4 /* StuffCoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StuffCoreTests.m; sourceTree = "<group>"; };
+		A52C6F8B1616FCE700356CDD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		A50DFC251513DBEF00EB4AB4 = {
 			isa = PBXGroup;
 			children = (
+				A52C6F8B1616FCE700356CDD /* Default-568h@2x.png */,
 				A50DFC3A1513DBEF00EB4AB4 /* StuffCore */,
 				A50DFC5B1513DBEF00EB4AB4 /* StuffCoreTests */,
 				A50DFC331513DBEF00EB4AB4 /* Frameworks */,
@@ -228,6 +231,7 @@
 				A50DFC3F1513DBEF00EB4AB4 /* InfoPlist.strings in Resources */,
 				A50DFC481513DBEF00EB4AB4 /* MainStoryboard_iPhone.storyboard in Resources */,
 				A50DFC4B1513DBEF00EB4AB4 /* MainStoryboard_iPad.storyboard in Resources */,
+				A52C6F8C1616FCE700356CDD /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +448,7 @@
 				A50DFC681513DBEF00EB4AB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A50DFC691513DBEF00EB4AB4 /* Build configuration list for PBXNativeTarget "StuffCoreTests" */ = {
 			isa = XCConfigurationList;
@@ -452,6 +457,7 @@
 				A50DFC6B1513DBEF00EB4AB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
