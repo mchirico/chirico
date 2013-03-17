@@ -220,9 +220,10 @@ char *
 find(Key_val * c, const char *s)
 {
 	int i;
-	for (i = 0; i < c->argc; ++i)
+	for (i = 0; i < c->argc; ++i){
 		if (strcmp(c->key[i], s) == 0)
 			return c->val[i];
+	}
 
 	return NULL;
 }
@@ -282,12 +283,21 @@ main(void)
 	printf("\n\n ................ \n\n");
 
 	// Example returning key_val from the string found in vector v 
+	printf("Below pr(findK(v,\"ONE\"))\n");
 	pr(findK(v, "ONE"));
 
+	printf("Below pr(findK(v,\"TWO\"))\n");
+	pr(findK(v, "TWO"));
+
+
+
+	printf("\n");
 	s = (char *)malloc(sizeof(char) * 80);
-	strcpy(s, "two");
+	strcpy(s, "twenty two");
 	fprintf(stderr, "find(c,%s)=%s\n", s, find(k, s));
-	strcpy(s, "four");
+
+	k=findK(v,"ONE");
+	strcpy(s, "one");
 	fprintf(stderr, "find(c,%s)=%s\n", s, find(k, s));
 	free(s);
 
