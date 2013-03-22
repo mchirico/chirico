@@ -26,6 +26,12 @@
  
  //option click to split window
  
+ So far this is only setup to throw away collisions. You
+ need a way to deal with collusions. Also. Need to
+ deal with bucket types.
+ 
+ 
+ 
  */
 
 
