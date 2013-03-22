@@ -32,12 +32,36 @@
 #include <stdio.h>
 #include <string.h>
 
-/*  Begin of HashTable 
+/*  Begin HASHTABLE */
+/*
+ 
+ +---------------------------------------------------+
+ |+-------------------------------------------------+|
+ || HASHTABLE                                       ||
+ ||                                                 ||
+ ||      +--------+        +----------+             ||
+ ||      +--------+ +--->  +----------+             ||
+ ||                        +----------+             ||
+ ||                        +----------+             ||
+ ||                        +----------+             ||
+ ||                        +----------+             ||
+ ||                        +----------+             ||
+ ||   getHashCode                                   ||
+ ||   setValue                                      ||
+ ||   getValue             +  Just a few simple     ||
+ ||   getHitValue   <------+  functions             ||
+ ||   zeroValue                                     ||
+ ||                                                 ||
+ |+-------------------------------------------------+|
+ +---------------------------------------------------+
+ 
+ For the latest version of this
  https://raw.github.com/mchirico/chirico/master/c/simple_but_common/hash.c
+ 
  */
 #define HASH_TABLE_SIZE 1000
-#define HASH_INITIAL_VALUE 5381
-#define HASH_M_VALUE 33
+#define HASH_INITIAL_VALUE 5381   //Bernstein's function H
+#define HASH_M_VALUE 33           //Bernstein's function M
 #define HASH_BUCKET_LIMIT 1000
 
 
@@ -55,6 +79,10 @@ int getHitValue(char * key, HashTable ht[]);
 int zeroValue(char * key, HashTable ht[]);
 void initHashTable(HashTable ht[]);
 
+/*
+ This uses Bernstein's function.
+ 
+*/
 int getHashCode(char * key)
 {
     if (key == NULL || strlen(key) >= HASH_BUCKET_LIMIT )
@@ -138,8 +166,36 @@ void initHashTable(HashTable ht[])
         
     }
 }
-
-/*  End of HashTable */
+/*
+ 
+ int main(int argc, const char * argv[])
+ {
+ HashTable ht[HASH_TABLE_SIZE];
+ initHashTable(ht);
+ 
+ 
+ setValue("one","1",ht);
+ setValue("two","2",ht);
+ setValue("three","3",ht);
+ setValue("four","4",ht);
+ 
+ printf("Answer ->%s<-\n",getValue("Two",ht));
+ printf("Answer ->%s<-\n",getValue("two",ht));
+ printf("getValue(%s,ht)= %s\n","two",getValue("two",ht));
+ printf("getHitValue(%s,ht)= %d\n","two",getHitValue("two",ht));
+ printf("zeroValue %d\n",zeroValue("two",ht));
+ printf("zeroValue %d\n",zeroValue("two",ht));
+ printf("getHitValue %d\n",getHitValue("two",ht));
+ printf("getValue(%s,ht)= %s\n","two",getValue("two",ht));
+ 
+ 
+ 
+ 
+ return 0;
+ }
+ 
+ */
+/*  End HASHTABLE */
 
 int main(int argc, const char * argv[])
 {
