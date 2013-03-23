@@ -24,6 +24,9 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
  Location:
+ https://raw.github.com/mchirico/chirico/master/c/simple_but_common/hash.c
+ 
+ Local Version:
  /Users/mchirico/dev/github/mmc/src/Hash\ From\ Table/Hash\ From\ Table/hash.c
  
  
