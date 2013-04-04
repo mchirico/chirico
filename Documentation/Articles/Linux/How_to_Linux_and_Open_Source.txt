@@ -1,10 +1,10 @@
 Mike Chirico (mchirico@users.sourceforge.net) or (mchirico@gmail.com)
 Copyright (C) 2004 (GNU Free Documentation License) 
-Last Updated: Sat Jan 21 06:31:23 EST 2012
+Last Updated: Thu Apr  4 09:37:51 EDT 2013
 Currently 287 tips.
 
 The latest version of this document can be found at:
-http://chirico.googlecode.com/svn/trunk/Documentation/Articles/Linux/How_to_Linux_and_Open_Source.txt
+https://github.com/mchirico/chirico/blob/master/Documentation/Articles/Linux/How_to_Linux_and_Open_Source.txt
 
 Or you can download the document:
 http://prdownloads.sourceforge.net/souptonuts/How_to_Linux_and_Open_Source.txt?download
