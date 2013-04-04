@@ -1,0 +1,80 @@
+
+Tip 1:
+
+
+Finding out information about a particular user.
+
+# dscacheutil -q user -a name mchirico
+
+name: mchirico
+password: ********
+uid: 501
+gid: 20
+dir: /Users/mchirico
+shell: /bin/bash
+gecos: Mike Chirico
+
+
+
+
+Tip 2:
+
+
+Looking at the jobs are lunched.
+
+FILES
+     ~/Library/LaunchAgents         Per-user agents provided by the user.
+     /Library/LaunchAgents          Per-user agents provided by the administrator.
+     /Library/LaunchDaemons         System wide daemons provided by the administrator.
+     /System/Library/LaunchAgents   Mac OS X Per-user agents.
+     /System/Library/LaunchDaemons  Mac OS X System wide daemons.
+
+
+  launchctl list|grep chirico
+
+  plutil -lint /Library/LaunchDaemons/chirico.sysstat.plist
+
+  sudo launchctl load -w /Library/LaunchDaemons/chirico.sysstat.plist
+
+
+
+Tip 3:
+
+Changing the default shell:
+
+   chsh -s /bin/bash
+
+
+
+Tip 4:
+
+Want to know what drivers are loaded in your kernel?
+
+    kextstat
+
+
+
+
+Tip 5:
+
+To format code in eclipse, perform the following steps:
+
+    1. Select all text
+    2. ctl-shft-f
+         Mac cmd-shft-f
+
+
+
+Tip 6:
+
+Install software updates from the command line.
+
+    sudo softwareupdate -i -a
+
+
+
+Tip 7:
+
+Split window in Xcode?
+ 
+    Option click file.

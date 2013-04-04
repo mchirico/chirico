@@ -9241,6 +9241,9 @@ TIP 217:
 
           $ getconf -a
 
+      Want to know your argument limit for shell commands?
+
+          $ getconf ARG_MAX
 
 
 TIP 218:
@@ -11237,6 +11240,69 @@ TIP 288
         cpio -idvm  < ../junk.cpio 
 
 
+
+TIP 289
+
+     Problem sshing into a computer? Turn off DNS
+
+         add "UseDNS no" to /etc/ssh/sshd_config
+
+
+
+TIP 290:
+
+     Sometimes you may want to call a script, that itself, makes a call
+     to nohup, which you want to, kind of, daemonize 
+
+           nohup ./wrapperscript 0<&- &>/dev/null &
+
+
+
+TIP 291:
+
+     Using openssl to encrypt a file with a public and private key
+
+      openssl genrsa -out private.pem 2048
+      openssl rsa -in private.pem -out public.pem -outform PEM -pubout
+      echo 'My test data' > filetoEncrypt.txt
+      openssl rsautl -encrypt -inkey public.pem -pubin -in filetoEncrypt.txt -out file.enc
+
+      openssl enc -base64 -in file.enc -out file.enc.b64
+      openssl enc -d -base64 -in file.enc.b64 -out file.enc
+
+
+      openssl rsautl -decrypt -inkey private.pem -in file.enc -out decrypted.txt
+
+
+
+TIP 292:
+
+     Quick way to add message sizes to postfix
+
+          postconf -e message_size_limit=20480000
+          postconf -e mailbox_size_limit=151200000
+
+
+
+TIP 293:
+
+     Need to find how many colors your terminal supports?
+
+          tput colors
+  
+        This should return something like 256. You may need to
+        add the following to your .bash_profile
+
+          export TERM=xterm-256color
+
+
+
+
+
+
+
+
+LAST TIP:
 
 
 
