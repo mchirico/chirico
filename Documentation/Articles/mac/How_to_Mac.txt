@@ -78,3 +78,53 @@ Tip 7:
 Split window in Xcode?
  
     Option click file.
+
+
+Tip 8:
+
+    Fixing postfix to keep running.
+
+        Remove the following two elements from 
+             /System/Library/LaunchDaemons/org.postfix.master.plist:
+
+	     <string>-e</string>
+	     <string>60</string>
+
+
+	Make sure the following element is included as a child of <dict>...</dict>
+
+             <key>KeepAlive</key>
+             <true/>
+
+
+        Reload the file
+
+             cd /System/Library/LaunchDaemons
+	     launchctl unload org.postfix.master.plist 
+	     launchctl load org.postfix.master.plist
+
+
+
+Tip 9:
+
+        Getting system information.
+
+            systemsetup
+	    > systemsetup
+	    > type -help for help.
+	    >
+
+
+
+
+Tip 10:
+
+        locate not returning files created on your system?
+	Maybe you need to update the database.
+
+	      sudo su -
+	      cd /
+	      /usr/libexec/locate.updatedb
+
+
+

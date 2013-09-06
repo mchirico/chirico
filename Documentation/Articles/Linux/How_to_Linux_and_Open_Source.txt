@@ -11298,6 +11298,20 @@ TIP 293:
 
 
 
+TIP 294:
+
+     Finding the subshell level
+
+         $ echo $SHLVL
+         1
+
+         $ bash
+         $ echo $SHLVL
+         2 <---- Note the increase
+
+
+        
+   
 
 
 
