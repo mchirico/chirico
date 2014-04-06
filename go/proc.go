@@ -34,7 +34,7 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.1(alpha)"
+var VERSION string = "0.0.2"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
 
@@ -49,6 +49,10 @@ var buildScripts bool
 var help_msg = `
 The following files are created with the program:
 _loadproc.sql  proc  _proc.awk  proc.csv  proc.db  proc.go  proc.log  _procReport.sql  proc.sh
+
+Need the source? Try the following:
+curl https://raw.githubusercontent.com/mchirico/chirico/master/go/proc.go > proc.go
+
 
 
 Here are some common commands:
@@ -96,7 +100,7 @@ func init() {
 	)
 
 	flag.IntVar(&interval, "i", 1, "intervals (secs) Default is 1 second.")
-	flag.Int64Var(&counts, "c", 5, "counts num of times to sample. Default is 5")
+	flag.Int64Var(&counts, "c", 5, "counts num of times to sample. Default is int64(5). ")
 	flag.BoolVar(&buildScripts, "b", false, " Build script: proc.sh ")
 
 	flag.BoolVar(&debug, "d", false, " This is for debugging. Writes out raw logs")
