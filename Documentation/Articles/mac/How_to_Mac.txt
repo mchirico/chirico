@@ -128,3 +128,37 @@ Tip 10:
 
 
 
+
+Tip 11:
+
+	Change the root shell to bash.
+
+              chsh -s /bin/bash root
+
+        Now you can check that you really are using
+        the bash shell with the following command:
+
+              ps -p $$
+ 
+              27076 ttyp0      0:00.00 /bin/bash --noediting -i
+
+
+
+Tip 12:
+
+	Starting Apache
+
+            sudo apachectl start
+            sudo apachectl stop
+	    sudo apachectl restart
+
+	    sudo apachectl -t
+
+
+Tip 13:
+
+    Location of Python files
+
+           /Library/Python/2.7/site-packages/
+
+           ls /Library/Python/2.7/site-packages/
