@@ -206,11 +206,12 @@ func ProcRead(file string) {
    iterations: loops
 */
 func GetStats(sleep int, iterations int64) {
-	matches, err := filepath.Glob("/proc/[0-9]*/stat")
-	if err != nil {
-		panic(err)
-	}
 	for j := int64(0); j < iterations; j++ {
+		matches, err := filepath.Glob("/proc/[0-9]*/stat")
+		if err != nil {
+			panic(err)
+		}
+
 		for i := range matches {
 			if 1 == 0 {
 				fmt.Printf("matches[%v]=\t%v\n", i, matches[i])
