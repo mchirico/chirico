@@ -34,7 +34,7 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.2"
+var VERSION string = "0.0.3(loopfix)"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
 
