@@ -34,7 +34,7 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.3(loopfix)"
+var VERSION string = "0.0.3b(continue)"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
 
@@ -137,7 +137,7 @@ var rep = regexp.MustCompile("(?P<server>[a-zA-Z]+72[3-7])\\.(?P<pid>pid)\\.(?P<
 func Open(name string) (file *os.File, err error) {
 	file, err = os.OpenFile(name, os.O_RDONLY, 0)
 	if err != nil {
-		panic(err)
+//		panic(err)
 	}
 	return file, err
 }
@@ -149,14 +149,16 @@ func Read(fileFrom *os.File) string {
 	for {
 		n, err := fileFrom.Read(buf)
 		if err != nil && err != io.EOF {
-			panic(err)
+			continue
+//			panic(err)
 		}
 		if n == 0 {
 			break
 		}
 		if n > byteLen {
 			log.Printf("Problem in ReadPid. n > bytelen n=%d bytelen=%d\n", n, byteLen)
-			panic(err)
+			continue
+//			panic(err)
 
 		}
 		s = s + string(buf[:(n-1)])
@@ -190,7 +192,8 @@ func ProcRead(file string) {
 
 	f, err := Open(file)
 	if err != nil {
-		panic(err)
+		return
+//		panic(err)
 	}
 	data := Read(f)
 	CsvIze(data)
@@ -209,7 +212,8 @@ func GetStats(sleep int, iterations int64) {
 	for j := int64(0); j < iterations; j++ {
 		matches, err := filepath.Glob("/proc/[0-9]*/stat")
 		if err != nil {
-			panic(err)
+			continue
+//			panic(err)
 		}
 
 		for i := range matches {
