@@ -34,7 +34,7 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.3b(continue)"
+var VERSION string = "0.0.3c(awk_update)"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
 
@@ -235,6 +235,10 @@ func CreateSupportScripts() {
 	defer f.Close()
 	s := `#!/bin/bash
 #
+
+export MNF=$(awk 'BEGIN{FS=",";max=0}{a[NF]=a[NF]+1; if (max < a[NF]) {max=a[NF];i=NF}   }END {print i}' proc.csv)
+awk -v nf="${MNF}" '{if(NF=nf){ print $0}}' proc.csv > proc.${MNF}.csv
+
 echo -e "
 BEGIN{FS=\",\"}
 {c=NF;}
@@ -248,18 +252,18 @@ END {
 }
 "> _proc.awk
 
-awk -f _proc.awk proc.csv >  _loadproc.sql
+awk -f _proc.awk proc.${MNF}.csv >  _loadproc.sql
 
 echo -e "
 .separator \",\"
-.import proc.csv ps
+.import proc.${MNF}.csv ps
 ">>_loadproc.sql
 rm -f ./proc.db
 sqlite3 proc.db < _loadproc.sql
 
 echo -e "
 
-select 'Version 0.0.0(alpha)';
+select 'Version 0.0.1';
 select 'mchirico@gmail.com';
 select 'Generated from ./proc.go -b  && ./prog.sh ';
 select '';
