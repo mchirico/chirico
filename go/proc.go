@@ -302,13 +302,13 @@ order by (strftime(\"%s\",d)/300)*300,max(n14)-min(n14) desc,max(n15)-min(n15);
 select '';
 select '----------------------------------------------------------------------------------------';
 select '----------------------------------------------------------------------------------------';
-select 'Summary each 10 minute interval';
+select 'Summary each 10 minute interval. 15 min diff > 50';
 select '';
 
 select (strftime(\"%s\",d)/600)*600,max(d),min(d),p,v,max(n14)-min(n14),max(n15)-min(n15),max(n16)-min(n16),max(n17)-min(n17)
 from ps 
 group by (strftime(\"%s\",d)/600)*600,p,v
-having   (max(n15)-min(n15))+ (max(n15)-min(n15))      > 5
+having   (max(n15)-min(n15))+ (max(n15)-min(n15))      > 50
 order by (strftime(\"%s\",d)/600)*600,max(n14)-min(n14) desc,max(n15)-min(n15);
 
 
