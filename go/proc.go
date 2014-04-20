@@ -1,15 +1,23 @@
 /*
 
-Create a program to track cpu per pid over time, but you also
-want it to do the following:
+Create a program to track cpu per pid over time, but you also want it
+to do the following:
 
   - output in .csv format
   - load into sqlite3 database
   - provide custom scripts to execute
 
-By automatically putting the data in a database you find
-processes that use a lot of cpu during 2.5min, 5min or
-10min intervals across the whole day.
+By automatically putting the data in a database you find processes
+that use a lot of cpu during 2.5min, 5min or 10min intervals across
+the whole day.
+
+
+This program also does a 2nd function. It will find the max ","
+delimited lines and extract those lines out for loading into
+sqlite3. If a string is surrounded with quotes, it stops counting ",".
+
+
+http://play.golang.org/p/sjKdLIQeQs
 
 
 */
@@ -27,7 +35,6 @@ import (
 	"strings"
 	"time"
 	"bufio"
-
 	//	"strings"
 	//	"time"
 )
@@ -63,9 +70,9 @@ Here are some common commands:
 
 ./proc -i 3  -c 10
 
-nohup ./proc -i 60 -c 1000  >/dev/null 2>&1 &
+nohup ./proc -i 300 -c 1000  >/dev/null 2>&1 &
 
-nohup ./proc -i 60 -c 10000000000000000  >/dev/null 2>&1 &  # You can use very large counts. Check disk space.
+nohup ./proc -i 300 -c 100000  >/dev/null 2>&1 &  # You can use very large counts. Check disk space.
 
 ./proc -b
 ./proc.sh
