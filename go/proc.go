@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"bufio"
 
 	//	"strings"
 	//	"time"
@@ -34,9 +35,11 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.3c(awk_update)"
+var VERSION string = "0.0.3d(awk_update_debug_too)"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
+
+var PROCf string =""
 
 var debug bool
 var version bool
@@ -102,6 +105,7 @@ func init() {
 	flag.IntVar(&interval, "i", 1, "intervals (secs) Default is 1 second.")
 	flag.Int64Var(&counts, "c", 5, "counts num of times to sample. Default is int64(5). ")
 	flag.BoolVar(&buildScripts, "b", false, " Build script: proc.sh ")
+	flag.StringVar(&PROCf,"p","","proc.csv to check. May contain 44,45,46 fields. This fixes things.")
 
 	flag.BoolVar(&debug, "d", false, " This is for debugging. Writes out raw logs")
 	flag.BoolVar(&version, "v", false, versionText+" ")
@@ -137,6 +141,9 @@ var rep = regexp.MustCompile("(?P<server>[a-zA-Z]+72[3-7])\\.(?P<pid>pid)\\.(?P<
 func Open(name string) (file *os.File, err error) {
 	file, err = os.OpenFile(name, os.O_RDONLY, 0)
 	if err != nil {
+		if(debug) {
+			fmt.Println("err in: func Open. name:",name)
+		}
 //		panic(err)
 	}
 	return file, err
@@ -149,6 +156,10 @@ func Read(fileFrom *os.File) string {
 	for {
 		n, err := fileFrom.Read(buf)
 		if err != nil && err != io.EOF {
+		if(debug) {
+			fmt.Println("err in: func Read")
+		}
+
 			continue
 //			panic(err)
 		}
@@ -192,6 +203,9 @@ func ProcRead(file string) {
 
 	f, err := Open(file)
 	if err != nil {
+		if(debug) {
+			fmt.Println("err in: ProcRead file:",file)
+		}
 		return
 //		panic(err)
 	}
@@ -212,6 +226,9 @@ func GetStats(sleep int, iterations int64) {
 	for j := int64(0); j < iterations; j++ {
 		matches, err := filepath.Glob("/proc/[0-9]*/stat")
 		if err != nil {
+		if(debug) {
+			fmt.Println("err in: func GetStats")
+		}
 			continue
 //			panic(err)
 		}
@@ -332,6 +349,91 @@ sqlite3 proc.db < _procReport.sql
 
 }
 
+
+
+
+
+
+
+func Procf(file string) {
+
+	
+
+	H := make(map[int]int)
+	fd, err := os.Open(file)
+        reader := bufio.NewReader(fd)
+        if err != nil {
+                fmt.Printf("Cannot open the file.\n")
+                return
+        }
+	for {
+                line, err := reader.ReadString('\n')
+                if err != nil {
+                        //log.Printf("ERROR = %v\n", err)
+                        break
+                }
+		mlen:=len(strings.Split(line, ","))
+		if mlen >0 && mlen <= 600 {
+			H[mlen]=H[mlen]+1
+		}
+		
+		
+        }
+	max:=-1
+	iH:=-1
+	for k, v := range H {
+		if max < v {
+			max=v
+			iH=k
+		}
+
+        }
+	fmt.Printf("There are %v record(s) with length %v.\n",H[iH],iH)
+	fmt.Printf("So we're going to build proc.%v.csv\n",iH)
+	fileOut:=fmt.Sprintf("proc.%v.csv",iH)
+	WriteCsvN(file,fileOut,iH) 
+
+
+}
+
+
+func WriteCsvN(file string,fileOut string, NLINES int) {
+
+	fo, err := os.Create(fileOut)
+	if err != nil {
+                return
+        }
+	defer fo.Close()
+
+	fd, err := os.Open(file)
+        reader := bufio.NewReader(fd)
+        if err != nil {
+                fmt.Printf("Cannot open the file.\n")
+                return
+        }
+	for {
+                line, err := reader.ReadString('\n')
+                if err != nil {
+                        //log.Printf("ERROR = %v\n", err)
+                        break
+                }
+		mlen:=len(strings.Split(line, ","))
+
+		if mlen == NLINES  {
+			fo.WriteString(line)
+		}
+		
+		
+        }
+
+
+}
+
+
+
+
+
+
 func main() {
 
 	flag.Parse()
@@ -344,8 +446,19 @@ func main() {
 		os.Exit(1)
 	}
 
+	if PROCf != "" {
+		Procf(PROCf)
+		os.Exit(1)
+	}
+
+
+
+
 	logf, err := os.OpenFile("proc.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
+		if(debug) {
+			fmt.Println("err in: logf, err:= os.OpenFile")
+		}
 		log.Fatalln(err)
 	}
 	defer logf.Close()
