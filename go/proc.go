@@ -35,7 +35,7 @@ import (
 /*
    -- STANDARD HEADING --
 */
-var VERSION string = "0.0.3d(awk_update_debug_too)"
+var VERSION string = "0.0.3e(-p option)"
 var AUTHORS string = "mchirico@gmail.com"
 var SRC string = "mmc/src/go/proc.go"
 
@@ -105,7 +105,7 @@ func init() {
 	flag.IntVar(&interval, "i", 1, "intervals (secs) Default is 1 second.")
 	flag.Int64Var(&counts, "c", 5, "counts num of times to sample. Default is int64(5). ")
 	flag.BoolVar(&buildScripts, "b", false, " Build script: proc.sh ")
-	flag.StringVar(&PROCf,"p","","proc.csv to check. May contain 44,45,46 fields. This fixes things.")
+	flag.StringVar(&PROCf,"p","","proc.csv to check. May contain 44,45,46 fields. This fixes things and account for quotes.")
 
 	flag.BoolVar(&debug, "d", false, " This is for debugging. Writes out raw logs")
 	flag.BoolVar(&version, "v", false, versionText+" ")
@@ -349,16 +349,31 @@ sqlite3 proc.db < _procReport.sql
 
 }
 
+func countD(s string, d0 string, d1 string) (int) {
+	count := 0
+	del_flag := -1
+	for i := 0; i < len(s); i++ {
+		if s[i] == d1[0] {
+			if del_flag >= 0 {
+				del_flag = -1
+			} else {
+				del_flag = 0
+			}
+			
+		}
+		if s[i] == d0[0] && del_flag == -1 {
+			count++
+		}
+
+	}
+	return count
+}
 
 
-
-
-
-
+/*
+What if you have commas inside quotes? one,34,",onetwo,three"
+*/
 func Procf(file string) {
-
-	
-
 	H := make(map[int]int)
 	fd, err := os.Open(file)
         reader := bufio.NewReader(fd)
@@ -372,12 +387,10 @@ func Procf(file string) {
                         //log.Printf("ERROR = %v\n", err)
                         break
                 }
-		mlen:=len(strings.Split(line, ","))
+		mlen:=countD(line,",",`"`)
 		if mlen >0 && mlen <= 600 {
 			H[mlen]=H[mlen]+1
 		}
-		
-		
         }
 	max:=-1
 	iH:=-1
@@ -390,6 +403,8 @@ func Procf(file string) {
         }
 	fmt.Printf("There are %v record(s) with length %v.\n",H[iH],iH)
 	fmt.Printf("So we're going to build proc.%v.csv\n",iH)
+	fmt.Printf("%s\n",os.Args[0])
+	fmt.Printf("file:proc.%v.csv\n",iH)
 	fileOut:=fmt.Sprintf("proc.%v.csv",iH)
 	WriteCsvN(file,fileOut,iH) 
 
@@ -417,21 +432,13 @@ func WriteCsvN(file string,fileOut string, NLINES int) {
                         //log.Printf("ERROR = %v\n", err)
                         break
                 }
-		mlen:=len(strings.Split(line, ","))
+		mlen:=countD(line,",",`"`)
 
 		if mlen == NLINES  {
 			fo.WriteString(line)
 		}
-		
-		
         }
-
-
 }
-
-
-
-
 
 
 func main() {
@@ -441,17 +448,16 @@ func main() {
 	sigChan := make(chan int, 0)
 	setupSignal(sigChan)
 
-	if buildScripts {
-		CreateSupportScripts()
-		os.Exit(1)
-	}
-
 	if PROCf != "" {
 		Procf(PROCf)
 		os.Exit(1)
 	}
 
 
+	if buildScripts {
+		CreateSupportScripts()
+		os.Exit(1)
+	}
 
 
 	logf, err := os.OpenFile("proc.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)

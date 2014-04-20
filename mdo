@@ -1,0 +1,14 @@
+#!/bin/bash
+clean 1
+git checkout master
+git pull
+if [ $(hostname -s) == 'Clausewitz' ]
+then
+	cp ../mmc/src/go/proc.go go/proc.go 
+	
+fi
+git commit -a --file=msg
+git push
+
+
+
