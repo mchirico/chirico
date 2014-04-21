@@ -112,7 +112,8 @@ func init() {
 	flag.IntVar(&interval, "i", 1, "intervals (secs) Default is 1 second.")
 	flag.Int64Var(&counts, "c", 5, "counts num of times to sample. Default is int64(5). ")
 	flag.BoolVar(&buildScripts, "b", false, " Build script: proc.sh ")
-	flag.StringVar(&PROCf,"p","","proc.csv to check. May contain 44,45,46 fields. This fixes things and account for quotes.")
+	flag.StringVar(&PROCf,"p","",
+		"proc.csv to check. May contain 44,45,46 fields. This fixes things and account for quotes. Bounded, between 1,1000.")
 
 	flag.BoolVar(&debug, "d", false, " This is for debugging. Writes out raw logs")
 	flag.BoolVar(&version, "v", false, versionText+" ")
@@ -395,7 +396,7 @@ func Procf(file string) {
                         break
                 }
 		mlen:=countD(line,",",`"`)
-		if mlen >0 && mlen <= 600 {
+		if mlen >0 && mlen <= 1000 {
 			H[mlen]=H[mlen]+1
 		}
         }
